@@ -146,6 +146,14 @@ export default function Footer() {
           </div>
         </div>
       </div>
+      <div className="border-t border-gray-300 mt-8 pt-6">
+          <div className="text-center">
+            <p className="text-sm text-gray-600">
+              <span className="text-blue-600 font-medium">Copyright © 2025 Digital SolTech.</span>
+              <span className="text-orange-500 ml-1">All rights reserved.</span>
+            </p>
+          </div>
+        </div>      
     </footer>
   );
 }

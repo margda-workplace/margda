@@ -24,7 +24,7 @@ export default function Navbar() {
           {menuItems.map((item, idx) => (
             <button
               key={idx}
-              className="group flex items-center gap-2 bg-[linear-gradient(to_right,_#EF9B00,_#FDDBAC)] border border-white/30 rounded-xl px-3 py-2 shadow-sm transition hover:scale-105 hover:shadow-lg duration-300"
+              className="group flex items-center gap-2 bg-[linear-gradient(to_right,_#EF9B00,_#FDDBAC)] rounded-xl px-3 py-2 shadow-sm transition hover:scale-105 hover:shadow-lg duration-300"
             >
               <span className="relative h-10 w-10 flex-shrink-0">
                 <img src={item.icon} alt={item.label} className="h-10 w-auto" />
