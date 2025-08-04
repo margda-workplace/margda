@@ -11,7 +11,7 @@ export default function Navbar() {
       {/* NAVBAR */}
       <nav className="fixed top-0 w-full z-50 px-4 sm:px-6 py-3 flex items-center justify-between  bg-white/10 backdrop-blur-sm">
         {/* Logo Button */}
-        <button className="group flex items-center bg-white border border-white/30 rounded-2xl px-3 py-2 shadow-sm backdrop-blur-md hover:scale-105 hover:shadow-lg transition-all duration-300 mx-3">
+        <button className="group flex items-center bg-[linear-gradient(to_right,_#FFFFFF,_#1568E5)] rounded-2xl px-3 py-2 shadow-sm backdrop-blur-md hover:scale-105 hover:shadow-lg transition-all duration-300 mx-3">
           <img
             src="/logo.webp"
             alt="Margda Workplace"
@@ -24,7 +24,7 @@ export default function Navbar() {
           {menuItems.map((item, idx) => (
             <button
               key={idx}
-              className="group flex items-center gap-2 bg-white border border-white/30 rounded-xl px-3 py-2 shadow-sm transition hover:scale-105 hover:shadow-lg duration-300"
+              className="group flex items-center gap-2 bg-[linear-gradient(to_right,_#EF9B00,_#FDDBAC)] border border-white/30 rounded-xl px-3 py-2 shadow-sm transition hover:scale-105 hover:shadow-lg duration-300"
             >
               <span className="relative h-10 w-10 flex-shrink-0">
                 <img src={item.icon} alt={item.label} className="h-10 w-auto" />
@@ -71,7 +71,7 @@ export default function Navbar() {
           {menuItems.map((item, idx) => (
             <button
               key={idx}
-              className="flex items-center gap-3 border border-gray-200 rounded-xl px-3 py-3 shadow-sm bg-white hover:scale-105 hover:shadow-lg transition-all duration-300 my-4"
+              className="flex items-center gap-3 bg-[linear-gradient(to_right,_#EF9B00,_#FDDBAC)] rounded-xl px-3 py-3 shadow-sm bg-white hover:scale-105 hover:shadow-lg transition-all duration-300 my-4"
               onClick={() => setIsOpen(false)}
             >
               <span className="h-10 w-10">
@@ -88,8 +88,8 @@ export default function Navbar() {
 
 // Menu items
 const menuItems = [
-  { label: "Smart Tools", icon: "service-tools.gif" },
-  { label: "Service Exchange", icon: "briefcase.gif" },
-  { label: "Mart Seva", icon: "shopping-cart.gif" },
-  { label: "Login", icon: "login.gif" },
+  { label: "Smart Tools", icon: "service-tools-rmvd-bg.gif" },
+  { label: "Service Exchange", icon: "briefcase-rmvd-bg.gif" },
+  { label: "Mart Seva", icon: "shopping-cart-rmvd-bg.gif" },
+  { label: "Login", icon: "login-rmvd-bg.gif" },
 ];
