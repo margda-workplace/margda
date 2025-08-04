@@ -365,8 +365,7 @@ export default function Home() {
                 <ul className="list-disc list-inside space-y-1 text-xl  ">
                   {[
                     "Computer, I.T. and Apps",
-                    "Career, Education and Training",
-                    "Career, Education and Training",
+                    "Career, Education and Training",                    
                     "Health and Wellness",
                     "HR and Recruitment",
                     "Legal and Protection",
@@ -375,6 +374,7 @@ export default function Home() {
                     "Sales, Support and Repair",
                     "Travel & Logistics",
                     "Sports and Recreation",
+                    "Manufacturing and Production"
                   ].map((item, index) => (
                     <li key={index}>
                       <a href="#" className="hover:text-orange-500 transition">
