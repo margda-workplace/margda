@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import CommunicationCard from "./components/CommunicationCards";
+import Footer from "./components/footer";
 
 export default function Home() {
   const scrollRef = useRef(null);
@@ -160,6 +161,18 @@ export default function Home() {
 
   return (
     <>
+      <style>
+        {`
+          @keyframes float {
+            0%, 100% {
+              transform: translateY(0);
+            }
+            50% {
+              transform: translateY(-10px);
+            }
+          }
+        `}
+      </style>
       <div className="flex flex-col items-center my-8 lg:my-15 px-4">
         <h1 className="flex flex-col sm:flex-row items-center text-2xl sm:text-3xl lg:text-4xl mb-4 text-center">
           <img
@@ -179,7 +192,7 @@ export default function Home() {
         </p>
 
         {/* Sticky Button */}
-        <div className="sticky top-16 sm:top-20 lg:top-24 z-30 flex justify-center mb-4">
+        <div className="top-16 sm:top-20 lg:top-24 z-30 flex justify-center mb-4">
           <button className="flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full text-white text-sm sm:text-base font-semibold bg-gradient-to-r from-purple-500 to-blue-500 shadow-md hover:opacity-90 transition">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -218,6 +231,201 @@ export default function Home() {
             ))}
           </div>
         </div>
+      </div>
+      <div className="flex flex-col items-center my-8 lg:my-15 px-4">
+        <h1 className="flex flex-col sm:flex-row items-center text-2xl sm:text-3xl lg:text-4xl mb-4 text-center">
+          <img
+            src="tool2.png"
+            className="h-8 sm:h-10 w-auto mb-2 sm:mb-0 sm:mr-2 transition-transform duration-300 hover:-rotate-12"
+            alt="comm"
+          />
+          <span className="bg-gradient-to-r from-blue-500 to-blue-800 bg-clip-text text-transparent">
+            Smart Tools to Automate Processes
+          </span>
+        </h1>
+        <div className="flex flex-col-reverse lg:flex-row items-start lg:items-center w-full max-w-6xl gap-8 my-10">
+          <div className="w-full lg:w-1/2">
+            <h2 className="text-xl font-semibold mb-3 flex items-center">
+              <img src="folder.png" alt="Data Icon" className="h-6 w-6 mr-2" />
+              Data and Lead Generation:
+            </h2>
+            <ul className="list-disc list-inside space-y-1 text-sm sm:text-base marker:text-blue-600">
+              {[
+                "Business Data - Local and Global",
+                "Email campaigns",
+                "Email verification",
+                "Email warming",
+                "Email CRM",
+                "WhatsApp campaigns",
+                "Business Data - Local and Global",
+                "WhatsApp CRM",
+                "SMS campaigns",
+                "SMS CRM",
+                "HR management",
+                "Job posting",
+                "Work-seekers data",
+                "Teamwork reports",
+                "Sales and Counselling",
+                "Training and development",
+                "Study organiser with progress meter",
+                "Unified communication with timeline",
+              ].map((item, index) => (
+                <li key={index}>
+                  <a
+                    href="#"
+                    className="text-black hover:underline hover:text-blue-600 transition-colors"
+                  >
+                    {item}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="w-full lg:w-1/2 flex justify-center">
+            <img
+              src="lead-generation-new.png"
+              style={{ animation: "float 3s ease-in-out infinite" }}
+              alt="Illustration"
+              className="w-full max-w-md"
+            />
+          </div>
+        </div>
+
+        {/* Service Exchange Section */}
+        <div className="w-screen min-h-[600px] md:min-h-[700px] lg:min-h-[800px] flex items-center justify-center px-4 sm:px-6 md:px-8 lg:px-16 xl:px-20 py-16 md:py-20 lg:py-24 bg-[linear-gradient(to_right,_#000000,_#2600FF)] text-white shadow-lg shadow-grey-300">
+          <div className="w-full max-w-7xl mx-auto flex flex-col gap-12 md:gap-16">
+            {/* Heading: Icon + Text */}
+            <div className="flex items-center gap-3 justify-center">
+              <img
+                src="customer-service.png"
+                alt="icon"
+                className="h-10 w-10 transition-transform duration-300 hover:-rotate-12"
+              />
+              <h2 className="text-3xl md:text-5xl ">
+                <span className="text-orange-500">Service</span> Exchange
+              </h2>
+            </div>
+
+            {/* Service Buttons */}
+            <div className="flex flex-col sm:flex-row justify-center gap-8 md:gap-10">
+              <div className="bg-white rounded-xl shadow-md p-5 md:p-6 flex items-center gap-3 w-full sm:w-auto sm:min-w-[300px] md:min-w-[350px] hover:bg-[linear-gradient(to_right,_#EF9B00,_#FDDBAC)] hover:scale-105 hover:shadow-lg transition-all duration-300 mx-3">
+                <img
+                  src="helpdesk-rmvd-bg.gif"
+                  alt="Service Required"
+                  className="h-8 w-8"
+                />
+                <div>
+                  <a
+                    href="#"
+                    className="text-blue-600 text-lg font-semibold hover:underline"
+                  >
+                    Service Required
+                  </a>
+                  <p className="text-sm text-gray-600">
+                    Outsource and get work done
+                  </p>
+                </div>
+              </div>
+
+              <div className="bg-white rounded-xl shadow-md p-5 md:p-6 flex items-center gap-3 w-full sm:w-auto sm:min-w-[300px] md:min-w-[350px] hover:bg-[linear-gradient(to_right,_#EF9B00,_#FDDBAC)] hover:scale-105 hover:shadow-lg transition-all duration-300 mx-3">
+                <img
+                  src="helpdesk2-rmvd-bg.gif"
+                  alt="Service Offered"
+                  className="h-8 w-8"
+                />
+                <div>
+                  <a
+                    href="#"
+                    className="text-blue-600 text-lg font-semibold hover:underline"
+                  >
+                    Service Offered
+                  </a>
+                  <p className="text-sm text-gray-600">
+                    Complete work to earn instantly
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Bottom Section: Image & Links */}
+            <div className="flex flex-col lg:flex-row items-center lg:items-start gap-12 md:gap-16 lg:gap-20">
+              {/* Left: Illustration */}
+              <div className="w-full lg:w-1/2 flex justify-center lg:justify-start">
+                <img
+                  src="heroimage2.png"
+                  alt="Illustration"
+                  style={{ animation: "float 3s ease-in-out infinite" }}
+                  className="w-full max-w-md md:max-w-lg lg:max-w-xl mx-30"
+                />
+              </div>
+
+              {/* Right: Links List */}
+              <div className="w-full lg:w-1/2 lg:my-10 md:my-10 mx-30">
+                <ul className="list-disc list-inside space-y-1 text-xl  ">
+                  {[
+                    "Computer, I.T. and Apps",
+                    "Career, Education and Training",
+                    "Career, Education and Training",
+                    "Health and Wellness",
+                    "HR and Recruitment",
+                    "Legal and Protection",
+                    "Properties and Housing",
+                    "Relationships & Matrimony",
+                    "Sales, Support and Repair",
+                    "Travel & Logistics",
+                    "Sports and Recreation",
+                  ].map((item, index) => (
+                    <li key={index}>
+                      <a href="#" className="hover:text-orange-500 transition">
+                        {item}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
+          <div className="bg-[linear-gradient(to_right,_#000000,_#2600FF)] rounded-2xl sm:rounded-3xl px-6 sm:px-8 lg:px-12 py-10 sm:py-12 lg:py-16 text-center text-white shadow-2xl">
+            {/* Heading */}
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl mb-4 sm:mb-6 leading-tight">
+              Ready to <span className="text-orange-400">boost</span> your
+              business?
+            </h2>
+
+            {/* Subtext */}
+            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-200 mb-6 sm:mb-8 lg:mb-10 max-w-xs sm:max-w-md lg:max-w-lg xl:max-w-xl mx-auto leading-relaxed">
+              Book a demo to see Margda Workplace in action.
+            </p>
+
+            {/* Buttons */}
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 lg:gap-6 justify-center items-center">
+              <button className="w-full sm:w-auto bg-white text-blue-800 font-semibold px-6 sm:px-8 lg:px-10 py-3 sm:py-4 lg:py-5 rounded-full hover:bg-orange-300 hover:scale-105 transition-transform transition-colors duration-200 flex items-center justify-center gap-2 shadow-lg text-sm sm:text-base lg:text-lg">
+                Request a demo
+                <svg
+                  className="w-4 h-4 sm:w-5 sm:h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+              </button>
+
+              <button className="w-full sm:w-auto border-2 border-orange-300 text-orange-300 font-semibold px-6 sm:px-8 lg:px-10 py-3 sm:py-4 lg:py-5 rounded-full hover:bg-orange-300 hover:text-blue-500 hover:scale-105 transition-transform transition-all duration-200 shadow-lg text-sm sm:text-base lg:text-lg">
+                Start Free Trial
+              </button>
+            </div>
+          </div>
+        </section>
+        <Footer/>
       </div>
     </>
   );

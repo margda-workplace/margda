@@ -36,7 +36,7 @@ export default function Navbar() {
 
         {/* Hamburger Button */}
         <button
-          className="xl:hidden flex items-center justify-center rounded-lg p-2 hover:bg-white/20 transition"
+          className="xl:hidden flex items-center justify-center rounded-lg p-2 hover:bg-white/20 transition bg-orange-500"
           onClick={() => setIsOpen(!isOpen)}
         >
           {isOpen ? (
