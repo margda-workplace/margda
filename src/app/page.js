@@ -175,7 +175,7 @@ export default function Home() {
         <p className="text-center max-w-xl mb-6 text-sm sm:text-base px-4">
           Browser-integrated SIM+API-based multichannel communication like
           Calls, WhatsApp, SMS, Email, Virtual Meetings, and Visit Tracking with
-          clients' timelines.
+          clients&apos; timelines.
         </p>
 
         {/* Sticky Button */}
