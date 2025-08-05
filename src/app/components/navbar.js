@@ -81,7 +81,7 @@ export default function Navbar() {
           {menuItems.map((item, idx) => (
             <button
               key={idx}
-              className="flex items-center gap-3 bg-[linear-gradient(to_right,_#EF9B00,_#FDDBAC)] rounded-xl px-3 py-3 shadow-sm bg-white hover:scale-105 hover:shadow-lg transition-all duration-300 my-4"
+              className="flex items-center gap-3 bg-[#FA7D00] rounded-xl px-3 py-3 shadow-sm  hover:scale-105 hover:shadow-lg transition-all duration-300 my-4"
               onClick={() => setIsOpen(false)}
             >
               <span className="h-10 w-10">
