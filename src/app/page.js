@@ -277,7 +277,7 @@ export default function Home() {
 
       {/* Service Exchange Section */}
       <RevealOnScroll>
-        <div className="w-screen min-h-[600px] md:min-h-[700px] lg:min-h-[800px] flex items-center justify-center px-4 sm:px-6 md:px-8 lg:px-16 xl:px-20 py-16 md:py-20 lg:py-24 bg-[linear-gradient(to_right,_#000000,_#2600FF)] text-white shadow-lg shadow-grey-300">
+        <div className="w-screen min-h-[600px] md:min-h-[700px] lg:min-h-[800px] flex items-center justify-center px-4 sm:px-6 md:px-8 lg:px-16 xl:px-20 py-16 md:py-20 lg:py-24 bg-[linear-gradient(to_right,_#2976B5,_#001CAA)] text-white shadow-lg shadow-grey-300">
           <div className="w-full max-w-7xl mx-auto flex flex-col gap-12 md:gap-16">
             {/* Heading: Icon + Text */}
             <div className="flex items-center gap-3 justify-center">
@@ -294,7 +294,28 @@ export default function Home() {
 
             {/* Service Buttons */}
             <div className="flex flex-col sm:flex-row justify-center gap-8 md:gap-10">
-              <div className=" rounded-xl shadow-md p-5 md:p-6 flex items-center gap-3 w-full sm:w-auto sm:min-w-[300px] md:min-w-[350px] bg-orange-400 hover:scale-105 hover:shadow-lg transition-all duration-300 mx-3">
+              <div
+                className=" rounded-xl 
+                shadow-lg 
+                p-5 md:p-6 
+                flex items-center gap-3 
+                w-full sm:w-auto 
+                sm:min-w-[300px] md:min-w-[350px] 
+                bg-gradient-to-l from-white/20 to-orange-400/30
+                backdrop-blur-md                
+                hover:from-white/30 hover:to-orange-400/40
+                hover:scale-105 
+                hover:shadow-xl
+                hover:-translate-y-1
+                active:scale-100
+                active:translate-y-0
+                transition-all 
+                duration-300 
+                ease-out
+                mx-3
+                text-white
+                font-medium"
+              >
                 <img
                   src="helpdesk-rmvd-bg.gif"
                   alt="Service Required"
@@ -304,17 +325,39 @@ export default function Home() {
                 <div>
                   <a
                     href="#"
-                    className="text-blue-600 text-lg font-semibold hover:underline"
+                    className="text-white text-lg font-semibold hover:underline"
                   >
                     Service Required
                   </a>
-                  <p className="text-sm text-blue-600">
+                  <p className="text-sm text-white">
                     Outsource and get work done
                   </p>
                 </div>
               </div>
 
-              <div className=" rounded-xl shadow-md p-5 md:p-6 flex items-center gap-3 w-full sm:w-auto sm:min-w-[300px] md:min-w-[350px] bg-orange-400 hover:scale-105 hover:shadow-lg transition-all duration-300 mx-3">
+              <div
+                className="  rounded-xl 
+                shadow-lg 
+                p-5 md:p-6 
+                flex items-center gap-3 
+                w-full sm:w-auto 
+                sm:min-w-[300px] md:min-w-[350px] 
+                bg-gradient-to-l from-white/20 to-orange-200/30
+                backdrop-blur-md
+                border border-orange-400/20
+                hover:from-white/30 hover:to-orange-400/40
+                hover:scale-105 
+                hover:shadow-xl
+                hover:-translate-y-1
+                active:scale-100
+                active:translate-y-0
+                transition-all 
+                duration-300 
+                ease-out
+                mx-3
+                text-white
+                font-medium"
+              >
                 <img
                   src="helpdesk2-rmvd-bg.gif"
                   alt="Service Offered"
@@ -324,11 +367,11 @@ export default function Home() {
                 <div>
                   <a
                     href="#"
-                    className="text-blue-600 text-lg font-semibold hover:underline"
+                    className="text-white text-lg font-semibold hover:underline"
                   >
                     Service Offered
                   </a>
-                  <p className="text-sm text-blue-600">
+                  <p className="text-sm text-white">
                     Complete work to earn instantly
                   </p>
                 </div>
@@ -380,7 +423,7 @@ export default function Home() {
       </RevealOnScroll>
       <RevealOnScroll>
         <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
-          <div className="bg-[linear-gradient(to_right,_#000000,_#2600FF)] rounded-2xl sm:rounded-3xl px-6 sm:px-8 lg:px-12 py-10 sm:py-12 lg:py-16 text-center text-white shadow-2xl">
+          <div className="bg-[linear-gradient(to_right,_#2976B5,_#001CAA)] rounded-2xl sm:rounded-3xl px-6 sm:px-8 lg:px-12 py-10 sm:py-12 lg:py-16 text-center text-white shadow-2xl">
             {/* Heading */}
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl mb-4 sm:mb-6 leading-tight">
               Ready to <span className="text-orange-400">boost</span> your
@@ -394,7 +437,10 @@ export default function Home() {
 
             {/* Buttons */}
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 lg:gap-6 justify-center items-center">
-              <button className="w-full sm:w-auto bg-white text-blue-800 font-semibold px-6 sm:px-8 lg:px-10 py-3 sm:py-4 lg:py-5 rounded-full hover:bg-orange-300 hover:scale-105 transition-transform transition-colors duration-200 flex items-center justify-center gap-2 shadow-lg text-sm sm:text-base lg:text-lg">
+              <button
+                className="w-full sm:w-auto bg-gradient-to-l from-white/30 to-orange-400/30
+                backdrop-blur-md hover:border-1 border-orange-200 hover:from-white/30 hover:to-orange-400/40 text-white font-semibold px-6 sm:px-8 lg:px-10 py-3 sm:py-4 lg:py-5 rounded-full hover:scale-105 transition-transform transition-colors duration-200 flex items-center justify-center gap-2 shadow-lg text-sm sm:text-base lg:text-lg"
+              >
                 Request a demo
                 <svg
                   className="w-4 h-4 sm:w-5 sm:h-5"
@@ -411,7 +457,8 @@ export default function Home() {
                 </svg>
               </button>
 
-              <button className="w-full sm:w-auto border-2 border-orange-300 text-orange-300 font-semibold px-6 sm:px-8 lg:px-10 py-3 sm:py-4 lg:py-5 rounded-full hover:bg-orange-300 hover:text-blue-500 hover:scale-105 transition-transform transition-all duration-200 shadow-lg text-sm sm:text-base lg:text-lg">
+              <button className="w-full sm:w-auto border-1 border-orange-300 hover:bg-gradient-to-l from-white/20 to-orange-200/30
+                backdrop-blur-md text-orange-300 hover:from-white/30 hover:to-orange-400/40 font-semibold px-6 sm:px-8 lg:px-10 py-3 sm:py-4 lg:py-5 rounded-full hover:text-white hover:scale-105 transition-transform transition-all duration-200 shadow-lg text-sm sm:text-base lg:text-lg">
                 Start Free Trial
               </button>
             </div>

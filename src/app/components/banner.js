@@ -100,7 +100,7 @@ const Banner = () => {
 
       <section
         ref={bannerRef}
-        className={`w-screen min-h-[500px] md:min-h-[600px] lg:h-[700px] flex items-center justify-center px-4 sm:px-6 md:px-8 lg:px-12 py-12 md:py-16 lg:py-20 bg-[linear-gradient(to_right,_#000000,_#2600FF)] text-white shadow-lg shadow-grey-300 slide-in-right ${
+        className={`w-screen min-h-[500px] md:min-h-[600px] lg:h-[700px] flex items-center justify-center px-4 sm:px-6 md:px-8 lg:px-12 py-12 md:py-16 lg:py-20 bg-[linear-gradient(to_right,_#2976B5,_#001CAA)] text-white shadow-lg shadow-grey-300 slide-in-right ${
           isVisible ? "active" : ""
         }`}
       >
@@ -136,7 +136,8 @@ const Banner = () => {
 
             
 
-            <button className="mt-6 md:mt-8 px-6 py-3 bg-[#FA7D00] text-black font-semibold rounded-xl hover:scale-105 hover:text-white transition duration-200 text-sm md:text-base slide-in-3">
+            <button className="mt-6 md:mt-8 px-6 py-3 bg-gradient-to-l from-white/20 to-orange-400/30
+                backdrop-blur-md text-black font-semibold rounded-xl hover:scale-105 hover:from-white/30 hover:to-orange-300/50 text-white transition duration-200 text-sm md:text-base slide-in-3">
               Get Started
             </button>
           </div>

@@ -21,7 +21,27 @@ export default function Navbar() {
         className="fixed top-0 w-full z-50 px-4 sm:px-6 py-3 flex items-center justify-between  bg-white/10 backdrop-blur-sm"
       >
         {/* Logo Button */}
-        <button className="group flex items-center bg-[linear-gradient(to_right,_#FFFFFF,_#1568E5)] rounded-2xl px-3 py-2 shadow-sm backdrop-blur-md hover:scale-105 hover:shadow-lg transition-all duration-300 mx-3">
+        <button
+          className="group flex items-center 
+                       bg-gradient-to-r from-white/20 to-blue-500/30
+                       backdrop-blur-md 
+                       rounded-2xl 
+                       px-6 py-3 
+                       shadow-lg 
+                       border border-white/20
+                       hover:from-white/30 hover:to-blue-400/40
+                       hover:scale-105 
+                       hover:shadow-xl
+                       hover:-translate-y-1
+                       active:scale-100
+                       active:translate-y-0
+                       transition-all 
+                       duration-300 
+                       ease-out
+                       mx-3
+                       text-white 
+                       font-medium"
+        >
           <img
             src="/logo.webp"
             alt="Margda Workplace"
@@ -34,7 +54,23 @@ export default function Navbar() {
           {menuItems.map((item, idx) => (
             <button
               key={idx}
-              className="group flex items-center gap-2 bg-[#FA7D00] rounded-xl px-3 py-2 shadow-sm transition hover:scale-105 hover:shadow-lg duration-300 hover:text-white"
+              className="group flex items-center gap-2 
+             bg-gradient-to-l from-orange-500/30 to-orange-400/40
+                backdrop-blur-md
+             rounded-xl 
+             px-3 py-2 
+             shadow-lg             
+             hover:from-orange-400/40 hover:to-orange-300/30
+             hover:scale-105 
+             hover:shadow-xl
+             hover:-translate-y-1
+             active:scale-100
+             active:translate-y-0
+             transition-all 
+             duration-300 
+             ease-out
+             text-black
+             font-medium"
             >
               <span className="relative h-10 w-10 flex-shrink-0">
                 <img src={item.icon} alt={item.label} className="h-10 w-auto" />
@@ -46,7 +82,8 @@ export default function Navbar() {
 
         {/* Hamburger Button */}
         <button
-          className="xl:hidden flex items-center justify-center rounded-lg p-2 hover:bg-white/20 transition bg-orange-500"
+          className="xl:hidden flex items-center justify-center rounded-lg p-2 hover:bg-white/20 transition bg-gradient-to-l from-orange-500/70 to-orange-400/60
+                backdrop-blur-md"
           onClick={() => setIsOpen(!isOpen)}
         >
           {isOpen ? (
@@ -81,7 +118,22 @@ export default function Navbar() {
           {menuItems.map((item, idx) => (
             <button
               key={idx}
-              className="flex items-center gap-3 bg-[#FA7D00] rounded-xl px-3 py-3 shadow-sm  hover:scale-105 hover:shadow-lg transition-all duration-300 my-4"
+              className="group flex items-center gap-2 
+             bg-gradient-to-l from-orange-500/30 to-orange-400/40
+             rounded-xl 
+             px-3 py-2 
+             shadow-lg             
+             hover:from-white/30 hover:to-orange-400/40
+             hover:scale-105 
+             hover:shadow-xl
+             hover:-translate-y-1
+             active:scale-100
+             active:translate-y-0
+             transition-all 
+             duration-300 
+             ease-out
+             text-black
+             font-medium"
               onClick={() => setIsOpen(false)}
             >
               <span className="h-10 w-10">
