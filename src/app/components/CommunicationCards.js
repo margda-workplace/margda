@@ -1,4 +1,6 @@
-export default function CommunicationCard({ type, date, time, content }) {
+import React from 'react';
+
+function CommunicationCard({ type, date, time, content }) {
   const typeStyles = {
     Call: { bg: "bg-blue-500", text: "text-blue-800", border: "border-blue-500" },
     Email: { bg: "bg-red-500", text: "text-red-800", border: "border-red-500" },
@@ -30,3 +32,5 @@ export default function CommunicationCard({ type, date, time, content }) {
     </div>
   );
 }
+
+export default React.memo(CommunicationCard);

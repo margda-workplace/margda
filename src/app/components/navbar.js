@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
+import { motion } from "framer-motion";
+import Image from "next/image";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -9,7 +11,15 @@ export default function Navbar() {
   return (
     <>
       {/* NAVBAR */}
-      <nav className="fixed top-0 w-full z-50 px-4 sm:px-6 py-3 flex items-center justify-between  bg-white/10 backdrop-blur-sm">
+      <motion.nav
+        initial={{ y: -80, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{
+          duration: 0.3,
+          ease: "easeOut",
+        }}
+        className="fixed top-0 w-full z-50 px-4 sm:px-6 py-3 flex items-center justify-between  bg-white/10 backdrop-blur-sm"
+      >
         {/* Logo Button */}
         <button className="group flex items-center bg-[linear-gradient(to_right,_#FFFFFF,_#1568E5)] rounded-2xl px-3 py-2 shadow-sm backdrop-blur-md hover:scale-105 hover:shadow-lg transition-all duration-300 mx-3">
           <img
@@ -24,7 +34,7 @@ export default function Navbar() {
           {menuItems.map((item, idx) => (
             <button
               key={idx}
-              className="group flex items-center gap-2 bg-[linear-gradient(to_right,_#EF9B00,_#FDDBAC)] rounded-xl px-3 py-2 shadow-sm transition hover:scale-105 hover:shadow-lg duration-300"
+              className="group flex items-center gap-2 bg-[#FA7D00] rounded-xl px-3 py-2 shadow-sm transition hover:scale-105 hover:shadow-lg duration-300 hover:text-white"
             >
               <span className="relative h-10 w-10 flex-shrink-0">
                 <img src={item.icon} alt={item.label} className="h-10 w-auto" />
@@ -45,7 +55,7 @@ export default function Navbar() {
             <Menu className="h-6 w-6 text-white" />
           )}
         </button>
-      </nav>
+      </motion.nav>
 
       {/* SIDEBAR - moved outside nav */}
       <div
