@@ -107,19 +107,11 @@ const Banner = () => {
         <div className="flex flex-col-reverse md:flex-row items-center justify-between max-w-7xl w-full gap-6 md:gap-8 lg:gap-12 py-7">
           {/* Left side: Text */}
           <div className="max-w-xl text-center md:text-left flex-1">
-            <h1 className="text-3xl sm:text-4xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight slide-in-1">
+            <h1 className="text-3xl sm:text-4xl md:text-4xl lg:text-5xl xl:text-6xl leading-tight slide-in-1">
               Business and <br />
               Income <span className="text-[#FA7D00]">Platform</span>
             </h1>
-
-            <p className="mt-4 md:mt-6 text-base md:text-lg lg:text-xl text-white/90 leading-relaxed slide-in-2">
-              Margda Workplace is a SaaS-driven tech platform that helps to
-              simplify work and get it done. It offers smart tools and digital
-              solutions to achieve more with less effort. Boost productivity,
-              drive growth, and automate multiple income streams.
-            </p>
-
-            <p className="mt-4 md:mt-6 text-base md:text-sm lg:text-lg text-white/90 leading-relaxed slide-in-2">
+            <p className="mt-4 md:mt-6 text-base md:text-lg lg:text-lg text-orange-500 leading-relaxed slide-in-2 font-bold">
               <ReactTyped
                 strings={[
                   "Your Business Engine",
@@ -134,6 +126,15 @@ const Banner = () => {
                 cursorChar="|"
               />
             </p>
+
+            <p className="mt-4 md:mt-6 text-base md:text-lg lg:text-xl text-white/90 leading-relaxed slide-in-2">
+              Margda Workplace is a SaaS-driven tech platform that helps to
+              simplify work and get it done. It offers smart tools and digital
+              solutions to achieve more with less effort. Boost productivity,
+              drive growth, and automate multiple income streams.
+            </p>
+
+            
 
             <button className="mt-6 md:mt-8 px-6 py-3 bg-[#FA7D00] text-black font-semibold rounded-xl hover:scale-105 hover:text-white transition duration-200 text-sm md:text-base slide-in-3">
               Get Started

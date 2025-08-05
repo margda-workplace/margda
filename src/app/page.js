@@ -182,7 +182,7 @@ export default function Home() {
 
           {/* Sticky Button */}
           <div className="top-16 sm:top-20 lg:top-24 z-30 flex justify-center mb-4">
-            <button className="flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full text-white text-sm sm:text-base font-semibold bg-gradient-to-r from-purple-500 to-blue-500 shadow-md hover:opacity-90 transition group hover:scale-105">
+            <button className="flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full text-white text-sm sm:text-base font-semibold bg-gradient-to-r from-blue-500 to-blue-800 shadow-md hover:opacity-90 transition group hover:scale-105">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-3 sm:h-4 w-3 sm:w-4 transition-transform duration-200 group-hover:-rotate-20"
@@ -294,7 +294,7 @@ export default function Home() {
 
             {/* Service Buttons */}
             <div className="flex flex-col sm:flex-row justify-center gap-8 md:gap-10">
-              <div className="bg-white rounded-xl shadow-md p-5 md:p-6 flex items-center gap-3 w-full sm:w-auto sm:min-w-[300px] md:min-w-[350px] hover:bg-[linear-gradient(to_right,_#EF9B00,_#FDDBAC)] hover:scale-105 hover:shadow-lg transition-all duration-300 mx-3">
+              <div className=" rounded-xl shadow-md p-5 md:p-6 flex items-center gap-3 w-full sm:w-auto sm:min-w-[300px] md:min-w-[350px] bg-orange-400 hover:scale-105 hover:shadow-lg transition-all duration-300 mx-3">
                 <img
                   src="helpdesk-rmvd-bg.gif"
                   alt="Service Required"
@@ -308,13 +308,13 @@ export default function Home() {
                   >
                     Service Required
                   </a>
-                  <p className="text-sm text-gray-600">
+                  <p className="text-sm text-blue-600">
                     Outsource and get work done
                   </p>
                 </div>
               </div>
 
-              <div className="bg-white rounded-xl shadow-md p-5 md:p-6 flex items-center gap-3 w-full sm:w-auto sm:min-w-[300px] md:min-w-[350px] hover:bg-[linear-gradient(to_right,_#EF9B00,_#FDDBAC)] hover:scale-105 hover:shadow-lg transition-all duration-300 mx-3">
+              <div className=" rounded-xl shadow-md p-5 md:p-6 flex items-center gap-3 w-full sm:w-auto sm:min-w-[300px] md:min-w-[350px] bg-orange-400 hover:scale-105 hover:shadow-lg transition-all duration-300 mx-3">
                 <img
                   src="helpdesk2-rmvd-bg.gif"
                   alt="Service Offered"
@@ -328,7 +328,7 @@ export default function Home() {
                   >
                     Service Offered
                   </a>
-                  <p className="text-sm text-gray-600">
+                  <p className="text-sm text-blue-600">
                     Complete work to earn instantly
                   </p>
                 </div>
