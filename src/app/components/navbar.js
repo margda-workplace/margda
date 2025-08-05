@@ -20,10 +20,11 @@ export default function Navbar() {
         }}
         className="fixed top-0 w-full z-50 px-4 sm:px-6 py-3 flex items-center justify-between  bg-white/10 backdrop-blur-sm"
       >
+        
         {/* Logo Button */}
         <button
           className="group flex items-center 
-                       bg-gradient-to-r from-white/20 to-blue-500/30
+                       bg-gradient-to-r from-blue-500/30 to-blue-300/30
                        backdrop-blur-md 
                        rounded-2xl 
                        px-6 py-3 
