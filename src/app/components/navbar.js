@@ -56,12 +56,12 @@ export default function Navbar() {
             <button
               key={idx}
               className="group flex items-center gap-2 
-             bg-gradient-to-l from-orange-500/30 to-orange-400/40
+             bg-gradient-to-l from-orange-500/70 to-orange-400/60
                 backdrop-blur-md
              rounded-xl 
              px-3 py-2 
              shadow-lg             
-             hover:from-orange-400/40 hover:to-orange-300/30
+             hover:from-orange-500/50 hover:to-orange-400/50
              hover:scale-105 
              hover:shadow-xl
              hover:-translate-y-1
@@ -120,7 +120,7 @@ export default function Navbar() {
             <button
               key={idx}
               className="group flex items-center gap-2 
-             bg-gradient-to-l from-orange-500/30 to-orange-400/40
+             bg-gradient-to-l from-orange-500/70 to-orange-400/60
              rounded-xl 
              px-3 py-2 
              shadow-lg             

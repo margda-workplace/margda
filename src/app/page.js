@@ -301,7 +301,7 @@ export default function Home() {
                 flex items-center gap-3 
                 w-full sm:w-auto 
                 sm:min-w-[300px] md:min-w-[350px] 
-                bg-gradient-to-l from-white/20 to-orange-400/30
+                bg-gradient-to-l from-orange-500/70 to-orange-400/60
                 backdrop-blur-md                
                 hover:from-white/30 hover:to-orange-400/40
                 hover:scale-105 
@@ -342,7 +342,7 @@ export default function Home() {
                 flex items-center gap-3 
                 w-full sm:w-auto 
                 sm:min-w-[300px] md:min-w-[350px] 
-                bg-gradient-to-l from-white/20 to-orange-200/30
+                bg-gradient-to-l from-orange-500/70 to-orange-400/60
                 backdrop-blur-md
                 border border-orange-400/20
                 hover:from-white/30 hover:to-orange-400/40
@@ -439,7 +439,7 @@ export default function Home() {
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 lg:gap-6 justify-center items-center">
               <button
                 className="w-full sm:w-auto bg-gradient-to-l from-white/30 to-orange-400/30
-                backdrop-blur-md hover:border-1 border-orange-200 hover:from-white/30 hover:to-orange-400/40 text-white font-semibold px-6 sm:px-8 lg:px-10 py-3 sm:py-4 lg:py-5 rounded-full hover:scale-105 transition-transform transition-colors duration-200 flex items-center justify-center gap-2 shadow-lg text-sm sm:text-base lg:text-lg"
+                backdrop-blur-md hover:border-1 border-orange-200 hover:from-orange-500/70  hover:to-orange-400/60 text-white font-semibold px-6 sm:px-8 lg:px-10 py-3 sm:py-4 lg:py-5 rounded-full hover:scale-105 transition-transform transition-colors duration-200 flex items-center justify-center gap-2 shadow-lg text-sm sm:text-base lg:text-lg"
               >
                 Request a demo
                 <svg
@@ -457,8 +457,8 @@ export default function Home() {
                 </svg>
               </button>
 
-              <button className="w-full sm:w-auto border-1 border-orange-300 hover:bg-gradient-to-l from-white/20 to-orange-200/30
-                backdrop-blur-md text-orange-300 hover:from-white/30 hover:to-orange-400/40 font-semibold px-6 sm:px-8 lg:px-10 py-3 sm:py-4 lg:py-5 rounded-full hover:text-white hover:scale-105 transition-transform transition-all duration-200 shadow-lg text-sm sm:text-base lg:text-lg">
+              <button className="w-full sm:w-auto hover:border-1 border-white bg-gradient-to-l from-white/30 to-orange-400/30 hover:from-orange-500/70  hover:to-orange-400/60
+                backdrop-blur-md text-white font-semibold px-6 sm:px-8 lg:px-10 py-3 sm:py-4 lg:py-5 rounded-full hover:text-white hover:scale-105 transition-transform transition-all duration-200 shadow-lg text-sm sm:text-base lg:text-lg">
                 Start Free Trial
               </button>
             </div>

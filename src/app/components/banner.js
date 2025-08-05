@@ -136,7 +136,7 @@ const Banner = () => {
 
             
 
-            <button className="mt-6 md:mt-8 px-6 py-3 bg-gradient-to-l from-white/20 to-orange-400/30
+            <button className="mt-6 md:mt-8 px-6 py-3 bg-gradient-to-l from-orange-300/70 to-orange-400/80
                 backdrop-blur-md text-black font-semibold rounded-xl hover:scale-105 hover:from-white/30 hover:to-orange-300/50 text-white transition duration-200 text-sm md:text-base slide-in-3">
               Get Started
             </button>
