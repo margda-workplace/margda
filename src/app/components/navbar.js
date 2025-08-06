@@ -5,7 +5,7 @@ import { Menu, X } from "lucide-react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 
-export default function Navbar() {
+export default function Navbar({navItems}) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -52,7 +52,7 @@ export default function Navbar() {
 
         {/* Desktop Menu */}
         <div className="hidden xl:flex gap-4">
-          {menuItems.map((item, idx) => (
+          {navItems.map((item, idx) => (
             <button
               key={idx}
               className="group flex items-center gap-2 
@@ -116,7 +116,7 @@ export default function Navbar() {
           </div>
 
           {/* Menu Items */}
-          {menuItems.map((item, idx) => (
+          {navItems.map((item, idx) => (
             <button
               key={idx}
               className="group flex items-center gap-2 

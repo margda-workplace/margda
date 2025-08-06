@@ -5,9 +5,18 @@ import Footer from "./components/footer";
 import { motion, useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import Image from "next/image";
+import Navbar from "./components/navbar";
+import Banner from "./components/banner";
 
 export default function Home() {
   const scrollRef = useRef(null);
+
+  const navItems = [
+  { label: "Smart Tools", icon: "service-tools-rmvd-bg.gif" },
+  { label: "Service Exchange", icon: "briefcase-rmvd-bg.gif" },
+  { label: "Mart Seva", icon: "shopping-cart-rmvd-bg.gif" },
+  { label: "Login", icon: "login-rmvd-bg.gif" },
+];
 
   // Animation controls for scroll-on-reveal
   const fadeInVariants = {
@@ -160,6 +169,8 @@ export default function Home() {
           }
         `}
       </style>
+      <Navbar navItems={navItems} />
+        <Banner />
       <RevealOnScroll>
         <div className="flex flex-col items-center my-8 lg:my-15 px-4">
           <h1 className="flex flex-col sm:flex-row items-center text-2xl sm:text-3xl lg:text-4xl mb-4 text-center">
