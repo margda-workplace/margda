@@ -144,7 +144,7 @@ const AddList = () => {
           </motion.div>
 
           {/* Section: Table Toolbar */}
-          <motion.div
+          {/* <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
@@ -184,7 +184,7 @@ const AddList = () => {
                 Search
               </button>
             </div>
-          </motion.div>
+          </motion.div> */}
 
           {/* Section: Table */}
           <motion.div className="bg-white p-6 rounded-xl shadow overflow-x-auto">
