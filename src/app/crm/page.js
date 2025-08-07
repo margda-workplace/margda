@@ -3,8 +3,6 @@ import Navbar from "../components/navbar";
 import Sidebar from "../components/sidebar";
 import AddList from "../components/addList";
 
-
-
 const page = () => {
   const navItems = [
     { label: "CRM", icon: "service-tools-rmvd-bg.gif" },
@@ -19,14 +17,11 @@ const page = () => {
       <nav>
         <Navbar navItems={navItems} />
       </nav>
-      <Sidebar/>
+      <Sidebar />
       {/* form and dataTable */}
-      <section className="w-max mt-30 max-w-full bg-gray-100/20 overflow-x-hidden flex items-center justify-center mt-25 lg:mt-40 mx-auto  px-4 sm:px-2 border border-green-200">
-  <div className="w-max h-auto bg-grey-200 p-4 rounded">
 
-    <AddList />
-  </div>
-</section>    
+      
+        <AddList />
       
     </>
   );
