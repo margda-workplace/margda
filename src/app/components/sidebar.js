@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 
 const Sidebar = () => {
   const [isCrmOpen, setIsCrmOpen] = useState(false);
+  const [isCrmListOpen, setIsCrmListOpen] = useState(false);
   const [isToolsOpen, setIsToolsOpen] = useState(false);
   const [isServiceOpen, setIsServiceOpen] = useState(false);
   const [isMartOpen, setIsMartOpen] = useState(false);
@@ -57,9 +58,9 @@ const Sidebar = () => {
         exit="hidden"
       >
         <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50">
-          <a href="#" className="flex items-center ps-2.5 mb-5">
+          {/* <a href="#" className="flex items-center ps-2.5 mb-5">
             <img src="/logo.webp" className="h-10 me-3 sm:h-7" alt="Logo" />
-          </a>
+          </a> */}
 
           <ul className="space-y-2 font-medium">
             <li>
@@ -94,9 +95,70 @@ const Sidebar = () => {
                 }`}
               >
                 <li>
-                  <a href="#" className="block p-2 rounded hover:bg-gray-100">
-                    CRM List
-                  </a>
+                  <button
+                    onClick={() => setIsCrmListOpen(!isCrmListOpen)}
+                    className="flex items-center w-full p-2 text-gray-900 rounded-lg hover:bg-gray-100 group"
+                  >
+                    <span className="ms-3">CRM List</span>
+                    <svg
+                      className={`w-4 h-4 ml-auto transition-transform duration-300 ${
+                        isCrmListOpen ? "rotate-180" : ""
+                      }`}
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </button>
+
+                  <ul
+                    className={`pl-6 mt-2 space-y-1 text-sm text-gray-700 overflow-hidden transition-all duration-300 ease-in-out ${
+                      isCrmListOpen ? "max-h-96" : "max-h-0"
+                    }`}
+                  >
+                    <li>
+                      <a
+                        href="#"
+                        className="block p-2 rounded hover:bg-gray-100"
+                      >
+                        ➕Add List
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="#"
+                        className="block p-2 rounded hover:bg-gray-100"
+                      >
+                        ➕Add Data
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="#"
+                        className="block p-2 rounded hover:bg-gray-100"
+                      >
+                        ➖Remove Data
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="#"
+                        className="block p-2 rounded hover:bg-gray-100"
+                      >
+                        Verify Emails
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="#"
+                        className="block p-2 rounded hover:bg-gray-100"
+                      >
+                        Manage Lists
+                      </a>
+                    </li>
+                  </ul>
                 </li>
                 <li>
                   <a href="#" className="block p-2 rounded hover:bg-gray-100">
