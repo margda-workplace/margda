@@ -21,7 +21,7 @@ const page = () => {
       </nav>
       <Sidebar/>
       {/* form and dataTable */}
-      <section className="w-max max-w-full bg-gray-100/20 overflow-x-hidden flex items-center justify-center mt-25 lg:mt-40 mx-auto  px-4 sm:px-2">
+      <section className="w-max mt-30 max-w-full bg-gray-100/20 overflow-x-hidden flex items-center justify-center mt-25 lg:mt-40 mx-auto  px-4 sm:px-2 border border-green-200">
   <div className="w-max h-auto bg-grey-200 p-4 rounded">
 
     <AddList />

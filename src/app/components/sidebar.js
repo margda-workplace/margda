@@ -16,7 +16,7 @@ const Sidebar = () => {
   // Check if device is mobile
   useEffect(() => {
     const checkIsMobile = () => {
-      setIsMobile(window.innerWidth < 768);
+      setIsMobile(window.innerWidth <1025);
     };
     
     checkIsMobile();
@@ -104,8 +104,8 @@ const Sidebar = () => {
       <button
         id="hamburger-button"
         onClick={toggleSidebar}
-        className="fixed top-23 left-4 z-[60] md:hidden p-2 text-gray-600 bg-white/20 backdrop-blur-lg rounded-lg shadow-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-200
-"
+        className="fixed top-20 left-4 z-[60] max-[1025px]:block hidden p-2 text-gray-600 bg-white/20 backdrop-blur-lg rounded-lg shadow-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-200"
+
         aria-label="Toggle sidebar"
       >
         <motion.div

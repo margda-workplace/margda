@@ -66,7 +66,7 @@ const AddList = () => {
 
   return (
     <motion.div
-      className="mx-auto p-4 sm:p-6 lg:p-8 lg:w-max mx-10 min-h-0"
+      className="p-4 sm:p-6 lg:p-8 min-h-0 mx-4 sm:mx-10 lg:mx-10 lg:w-max md:max-w-screen-md md:mx-auto"
       variants={containerVariants}
       initial="hidden"
       animate={mounted ? "visible" : "hidden"}
