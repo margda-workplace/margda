@@ -8,7 +8,7 @@ const page = () => {
     { label: "CRM", icon: "service-tools-rmvd-bg.gif" },
     { label: "Tools", icon: "briefcase-rmvd-bg.gif" },
     { label: "Service", icon: "shopping-cart-rmvd-bg.gif" },
-    { label: "Mart", icon: "login-rmvd-bg.gif" },
+    { label: "Mart", icon: "shopping-cart-rmvd-bg.gif" },
     { label: "Login", icon: "login-rmvd-bg.gif" },
   ];
 
