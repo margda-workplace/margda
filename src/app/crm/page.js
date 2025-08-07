@@ -19,15 +19,14 @@ const page = () => {
       <nav>
         <Navbar navItems={navItems} />
       </nav>
+      <Sidebar/>
       {/* form and dataTable */}
-      <section className="w-screen h-auto flex justify-center items-center mx-30 mt-25 bg-gray-100">
-        <AddList/>
-      </section>
-      
-        <Sidebar/>
-      
-      
-      
+      <section className="w-max max-w-full bg-gray-100/20 overflow-x-hidden flex items-center justify-center mt-25 lg:mt-40 mx-auto  px-4 sm:px-2">
+  <div className="w-max h-auto bg-grey-200 p-4 rounded">
+
+    <AddList />
+  </div>
+</section>    
       
     </>
   );
