@@ -17,7 +17,7 @@ const page = () => {
       <nav>
         <Navbar navItems={navItems} />
       </nav>
-      <Sidebar />
+      <Sidebar  />
       {/* form and dataTable */}
 
       

@@ -55,7 +55,7 @@ const AddList = () => {
         initial="hidden"
         animate={mounted ? "visible" : "hidden"}
         variants={variants}
-        className="w-screen px-4 sm:px-6 lg:pl-[250px] lg:pr-10 py-10 bg-gray-100 mt-16"
+        className="w-screen px-4 sm:px-6 md:pl-[320px] md:pr-6 lg:pl-[300px] lg:pr-10 py-10 bg-gray-100 mt-16"
       >
         <div className="max-w-[1440px] mx-auto space-y-8">
           <h1 className="text-3xl font-semibold text-gray-800">
