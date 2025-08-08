@@ -5,30 +5,49 @@ import Sidebar from "../components/sidebar";
 import AddList from "../components/addList";
 import AddData from "../components/addData";
 import RemoveData from "../components/removeData";
+import CrmNavbar from "../components/crmNavbar";
 
 const Page = () => {
   const [showAddList, setShowAddList] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
-  const navItems = [
-    { label: "CRM", icon: "service-tools-rmvd-bg.gif" },
-    { label: "Tools", icon: "briefcase-rmvd-bg.gif" },
-    { label: "Service", icon: "shopping-cart-rmvd-bg.gif" },
-    { label: "Mart", icon: "shopping-cart-rmvd-bg.gif" },
-    { label: "Login", icon: "login-rmvd-bg.gif" },
-  ];
+  // Handle sidebar state changes
+  const handleSidebarStateChange = (isOpen, isMobile) => {
+    setSidebarCollapsed(!isOpen && !isMobile);
+  };
 
   return (
-    <>
-      <nav>
-        <Navbar navItems={navItems} />
-      </nav>
-      <Sidebar onAddListClick={() => setShowAddList(true)} />
+    <div className="min-h-screen bg-gray-100">
+      {/* Fixed Navbar */}
+      <CrmNavbar sidebarCollapsed={sidebarCollapsed} />
+      
+      {/* Sidebar */}
+      <Sidebar 
+        onAddListClick={() => setShowAddList(true)}
+        onSidebarStateChange={handleSidebarStateChange}
+      />
 
-      {/* Only render AddList if showAddList is true */}
-      {showAddList && <AddList />}
-      {/* <AddData/> */}
-      <RemoveData/>
-    </>
+      {/* Main Content */}
+      <main 
+        className={`transition-all duration-300 ${
+          sidebarCollapsed 
+            ? 'md:ml-20' // Collapsed sidebar width
+            : 'md:ml-64' // Expanded sidebar width
+        }`}
+        style={{ paddingTop: '80px' }} // Account for fixed navbar
+      >
+        {/* Only render AddList if showAddList is true */}
+        {showAddList && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+            <div className="relative">
+              <AddList onClose={() => setShowAddList(false)} />
+            </div>
+          </div>
+        )}
+        
+        <RemoveData sidebarCollapsed={sidebarCollapsed} />
+      </main>
+    </div>
   );
 };
 

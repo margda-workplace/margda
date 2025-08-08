@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Button from "./button";
 import Toaster from "./toaster";
 
-const RemoveData = () => {
+const RemoveData = ({ sidebarCollapsed }) => {
   const [mounted, setMounted] = useState(false);
   const [toast, setToast] = useState({ message: "", type: "success" });
   const [selectedList, setSelectedList] = useState("");
@@ -133,15 +133,15 @@ const RemoveData = () => {
   );
 
   return (
-    <div className="overflow-x-hidden">
+    <div className="w-full">
       <motion.div
         initial="hidden"
         animate={mounted ? "visible" : "hidden"}
         variants={variants}
-        className="w-screen px-4 sm:px-6 md:pl-[320px] md:pr-6 lg:pl-[300px] lg:pr-10 py-10 bg-gray-100 mt-16"
+        className="w-full px-4 sm:px-6 py-10 bg-gray-100"
       >
-        <div className="max-w-[1440px] mx-auto space-y-8">
-          <h1 className="text-3xl font-semibold text-gray-800">➖ Remove Data</h1>
+        <div className="max-w-full mx-auto space-y-8">
+          <h1 className="text-xl font-semibold text-gray-800">➖ Remove Data</h1>
 
           {/* Remove Data Form */}
           <motion.div className="bg-white p-6 rounded-xl shadow space-y-4">
@@ -166,7 +166,7 @@ const RemoveData = () => {
                 </select>
               </div>
               <Button
-                bgColor="bg-gradient-to-l from-red-500/50 to-red-400/40"
+                bgColor="bg-gradient-to-l from-red-500/50 to-red-400/50"
                 text="Remove"
                 onClick={handleRemove}
               />
