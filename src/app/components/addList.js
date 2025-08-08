@@ -103,7 +103,7 @@ const AddList = () => {
                   id="listName"
                   value={listName}
                   onChange={(e) => setListName(e.target.value)}
-                  className="w-full border border-gray-200 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  className="w-1/2 border border-gray-200 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
                   placeholder="Enter list name"
                 />
               </div>
