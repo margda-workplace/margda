@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-const Sidebar = () => {
+const Sidebar = ({ onAddListClick }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isCrmOpen, setIsCrmOpen] = useState(false);
   const [isCrmListOpen, setIsCrmListOpen] = useState(false);
@@ -256,7 +256,7 @@ const Sidebar = () => {
                             }`}
                           >
                             <li>
-                              <a href="#" className="block p-2 rounded hover:bg-gray-100 transition-colors duration-200">
+                              <a href="#" className="block p-2 rounded hover:bg-gray-100 transition-colors duration-200" onClick={onAddListClick}>
                                 ➕ Add List
                               </a>
                             </li>

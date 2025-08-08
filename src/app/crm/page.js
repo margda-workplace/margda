@@ -1,9 +1,14 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import Navbar from "../components/navbar";
 import Sidebar from "../components/sidebar";
 import AddList from "../components/addList";
+import AddData from "../components/addData";
+import RemoveData from "../components/removeData";
 
-const page = () => {
+const Page = () => {
+  const [showAddList, setShowAddList] = useState(false);
+
   const navItems = [
     { label: "CRM", icon: "service-tools-rmvd-bg.gif" },
     { label: "Tools", icon: "briefcase-rmvd-bg.gif" },
@@ -17,14 +22,14 @@ const page = () => {
       <nav>
         <Navbar navItems={navItems} />
       </nav>
-      <Sidebar  />
-      {/* form and dataTable */}
+      <Sidebar onAddListClick={() => setShowAddList(true)} />
 
-      
-        <AddList />
-      
+      {/* Only render AddList if showAddList is true */}
+      {showAddList && <AddList />}
+      {/* <AddData/> */}
+      <RemoveData/>
     </>
   );
 };
 
-export default page;
+export default Page;
