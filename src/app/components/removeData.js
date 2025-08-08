@@ -78,12 +78,17 @@ const RemoveData = ({ sidebarCollapsed }) => {
       showToast("Please select items to remove", "error");
       return;
     }
-    
+
     // Remove selected items
-    const updatedLists = lists.filter((_, index) => !selectedItems.includes(index));
+    const updatedLists = lists.filter(
+      (_, index) => !selectedItems.includes(index)
+    );
     setLists(updatedLists);
     setSelectedItems([]);
-    showToast(`${selectedItems.length} item(s) removed successfully`, "success");
+    showToast(
+      `${selectedItems.length} item(s) removed successfully`,
+      "success"
+    );
   };
 
   const handleDelete = (indexToDelete) => {
@@ -99,21 +104,23 @@ const RemoveData = ({ sidebarCollapsed }) => {
     if (isChecked) {
       setSelectedItems([...selectedItems, globalIndex]);
     } else {
-      setSelectedItems(selectedItems.filter(item => item !== globalIndex));
+      setSelectedItems(selectedItems.filter((item) => item !== globalIndex));
     }
   };
 
   const handleSelectAll = (isChecked) => {
     if (isChecked) {
-      const allCurrentIndexes = currentLists.map((_, index) => 
-        (currentPage - 1) * itemsPerPage + index
+      const allCurrentIndexes = currentLists.map(
+        (_, index) => (currentPage - 1) * itemsPerPage + index
       );
       setSelectedItems([...new Set([...selectedItems, ...allCurrentIndexes])]);
     } else {
-      const currentIndexes = currentLists.map((_, index) => 
-        (currentPage - 1) * itemsPerPage + index
+      const currentIndexes = currentLists.map(
+        (_, index) => (currentPage - 1) * itemsPerPage + index
       );
-      setSelectedItems(selectedItems.filter(item => !currentIndexes.includes(item)));
+      setSelectedItems(
+        selectedItems.filter((item) => !currentIndexes.includes(item))
+      );
     }
   };
 
@@ -128,9 +135,11 @@ const RemoveData = ({ sidebarCollapsed }) => {
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const currentLists = lists.slice(startIndex, startIndex + itemsPerPage);
-  const isAllCurrentSelected = currentLists.length > 0 && currentLists.every((_, index) => 
-    selectedItems.includes((currentPage - 1) * itemsPerPage + index)
-  );
+  const isAllCurrentSelected =
+    currentLists.length > 0 &&
+    currentLists.every((_, index) =>
+      selectedItems.includes((currentPage - 1) * itemsPerPage + index)
+    );
 
   return (
     <div className="w-full">
@@ -141,7 +150,9 @@ const RemoveData = ({ sidebarCollapsed }) => {
         className="w-full px-4 sm:px-6 py-10 bg-gray-100"
       >
         <div className="max-w-full mx-auto space-y-8">
-          <h1 className="text-xl font-semibold text-gray-800">➖ Remove Data</h1>
+          <h1 className="text-xl font-semibold text-gray-800">
+            ➖ Remove Data
+          </h1>
 
           {/* Remove Data Form */}
           <motion.div className="bg-white p-6 rounded-xl shadow space-y-4">
@@ -149,14 +160,16 @@ const RemoveData = ({ sidebarCollapsed }) => {
               Select List to Remove Data
             </h2>
             <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-end">
-              <div className="flex-1">
+              <div className="w-full sm:w-2/3">
+                {" "}
+                {/* This is the key change */}
                 <label className="block mb-2 text-sm font-medium text-gray-700">
                   List
                 </label>
                 <select
                   value={selectedList}
                   onChange={(e) => setSelectedList(e.target.value)}
-                  className="border border-gray-300 rounded-lg p-3 w-full sm:w-2/3 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  className="border border-gray-300 rounded-lg p-3 w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
                 >
                   <option value="">Select List</option>
                   <option value="List1">List 1</option>
@@ -166,7 +179,7 @@ const RemoveData = ({ sidebarCollapsed }) => {
                 </select>
               </div>
               <Button
-                bgColor="bg-gradient-to-l from-red-500/50 to-red-400/50"
+                bgColor="bg-gradient-to-l from-red-500/50 to-red-400/40"
                 text="Remove"
                 onClick={handleRemove}
               />
@@ -177,7 +190,7 @@ const RemoveData = ({ sidebarCollapsed }) => {
           <motion.div className="bg-white p-6 rounded-xl shadow space-y-4">
             <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
               <div className="flex flex-wrap items-center gap-4">
-                <label className="text-sm text-gray-700">
+                <label className="flex items-center text-sm text-gray-700 whitespace-nowrap">
                   Show
                   <input
                     type="number"
@@ -187,14 +200,14 @@ const RemoveData = ({ sidebarCollapsed }) => {
                   />
                   records
                 </label>
-                <label className="text-sm text-gray-700">
+                <label className="flex items-center text-sm text-gray-700 whitespace-nowrap">
                   From
                   <input
                     type="date"
                     className="ml-2 border border-gray-300 rounded-md p-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
                   />
                 </label>
-                <label className="text-sm text-gray-700">
+                <label className="flex items-center text-sm text-gray-700 whitespace-nowrap">
                   To
                   <input
                     type="date"
@@ -202,12 +215,15 @@ const RemoveData = ({ sidebarCollapsed }) => {
                   />
                 </label>
               </div>
-              <div className="flex w-max justify-center items-center">
+              <div className="flex items-center gap-4 w-full lg:w-max">
                 <input
                   type="text"
                   placeholder="🔍 Search"
-                  className="w-full lg:w-64 border border-gray-300 rounded-md p-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  className="flex-grow border border-gray-300 rounded-md p-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
                 />
+                <button className="px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-400 text-white rounded-md shadow-sm hover:opacity-90 transition-opacity whitespace-nowrap">
+                  Search
+                </button>
               </div>
             </div>
           </motion.div>
@@ -226,8 +242,8 @@ const RemoveData = ({ sidebarCollapsed }) => {
                   key={idx}
                   type="button"
                   className={`${
-                    action === "➖ Remove Data" 
-                      ? "bg-red-100 text-red-800 ring-2 ring-red-200" 
+                    action === "➖ Remove Data"
+                      ? "bg-red-100 text-red-800 ring-2 ring-red-200"
                       : "bg-blue-100 text-blue-800"
                   } rounded-full px-5 py-2 text-sm font-medium shadow hover:scale-105 transition-transform`}
                 >
@@ -288,14 +304,21 @@ const RemoveData = ({ sidebarCollapsed }) => {
                     {currentLists.map((row, i) => {
                       const globalIndex = (currentPage - 1) * itemsPerPage + i;
                       const isSelected = selectedItems.includes(globalIndex);
-                      
+
                       return (
-                        <tr key={i} className={`text-center align-middle ${isSelected ? 'bg-red-50' : ''}`}>
+                        <tr
+                          key={i}
+                          className={`text-center align-middle ${
+                            isSelected ? "bg-red-50" : ""
+                          }`}
+                        >
                           <td className="p-3 align-middle">
                             <input
                               type="checkbox"
                               checked={isSelected}
-                              onChange={(e) => handleCheckboxChange(i, e.target.checked)}
+                              onChange={(e) =>
+                                handleCheckboxChange(i, e.target.checked)
+                              }
                               className="rounded focus:ring-2 focus:ring-blue-400"
                             />
                           </td>
@@ -307,7 +330,9 @@ const RemoveData = ({ sidebarCollapsed }) => {
                                   : "bg-red-100 text-red-700"
                               }`}
                             >
-                              {row.listStatus.replace("✅", "🟢").replace("❌", "🔴")}
+                              {row.listStatus
+                                .replace("✅", "🟢")
+                                .replace("❌", "🔴")}
                             </span>
                           </td>
                           {[
@@ -359,18 +384,14 @@ const RemoveData = ({ sidebarCollapsed }) => {
             <div className="flex gap-2 items-center">
               <Button
                 text="Previous"
-                bgColor={
-                  "bg-gradient-to-l from-blue-500/70 to-blue-400/60"
-                }
+                bgColor={"bg-gradient-to-l from-blue-500/70 to-blue-400/60"}
                 onClick={handlePrevious}
                 disabled={currentPage === 1}
               />
               <span>Page {currentPage}</span>
               <Button
                 text="Next"
-                bgColor={
-                  "bg-gradient-to-l from-blue-500/70 to-blue-400/60"
-                }
+                bgColor={"bg-gradient-to-l from-blue-500/70 to-blue-400/60"}
                 onClick={handleNext}
                 disabled={
                   currentPage === Math.ceil(lists.length / itemsPerPage)

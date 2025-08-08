@@ -10,31 +10,35 @@ import CrmNavbar from "../components/crmNavbar";
 const Page = () => {
   const [showAddList, setShowAddList] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   // Handle sidebar state changes
-  const handleSidebarStateChange = (isOpen, isMobile) => {
-    setSidebarCollapsed(!isOpen && !isMobile);
+  const handleSidebarStateChange = (isOpen, mobile) => {
+    setSidebarCollapsed(!isOpen && !mobile);
+    setIsMobile(mobile);
   };
 
   return (
     <div className="min-h-screen bg-gray-100">
       {/* Fixed Navbar */}
       <CrmNavbar sidebarCollapsed={sidebarCollapsed} />
-      
+
       {/* Sidebar */}
-      <Sidebar 
+      <Sidebar
         onAddListClick={() => setShowAddList(true)}
         onSidebarStateChange={handleSidebarStateChange}
       />
 
       {/* Main Content */}
-      <main 
+      <main
         className={`transition-all duration-300 ${
-          sidebarCollapsed 
-            ? 'md:ml-20' // Collapsed sidebar width
-            : 'md:ml-64' // Expanded sidebar width
+          isMobile
+            ? "ml-0" // Mobile view: sidebar overlays, so no margin
+            : sidebarCollapsed
+            ? "ml-0 md:ml-20" // Collapsed sidebar on tablet/desktop
+            : "ml-0 md:ml-64" // Expanded sidebar on tablet/desktop
         }`}
-        style={{ paddingTop: '80px' }} // Account for fixed navbar
+        style={{ paddingTop: "80px" }} // Account for fixed navbar
       >
         {/* Only render AddList if showAddList is true */}
         {showAddList && (
@@ -44,7 +48,7 @@ const Page = () => {
             </div>
           </div>
         )}
-        
+
         <RemoveData sidebarCollapsed={sidebarCollapsed} />
       </main>
     </div>

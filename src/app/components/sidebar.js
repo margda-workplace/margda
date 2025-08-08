@@ -19,7 +19,8 @@ import {
   Gift,
   ChevronDown,
   ChevronLeft,
-  Menu
+  Menu,
+  X,
 } from "lucide-react";
 
 const Sidebar = ({ onAddListClick, onSidebarStateChange }) => {
@@ -39,7 +40,6 @@ const Sidebar = ({ onAddListClick, onSidebarStateChange }) => {
     return () => window.removeEventListener("resize", checkIsMobile);
   }, []);
 
-  // Notify parent component about sidebar state changes
   useEffect(() => {
     if (onSidebarStateChange) {
       onSidebarStateChange(isSidebarOpen, isMobile);
@@ -53,7 +53,8 @@ const Sidebar = ({ onAddListClick, onSidebarStateChange }) => {
         isSidebarOpen &&
         !event.target.closest("#logo-sidebar") &&
         !event.target.closest("#sidebar-toggle-btn") &&
-        !event.target.closest("#mobile-hamburger-btn")
+        !event.target.closest("#mobile-hamburger-btn") &&
+        !event.target.closest("#mobile-close-btn")
       ) {
         setIsSidebarOpen(false);
       }
@@ -96,16 +97,11 @@ const Sidebar = ({ onAddListClick, onSidebarStateChange }) => {
         {
           title: "CRM List",
           children: [
-            {
-              title: "List Options",
-              children: [
-                { title: "➕ Add List", action: onAddListClick },
-                { title: "➕ Add Data" },
-                { title: "➖ Remove Data" },
-                { title: "📧 Verify Emails" },
-                { title: "📋 Manage Lists" },
-              ],
-            },
+            { title: "➕ Add List", action: onAddListClick },
+            { title: "➕ Add Data" },
+            { title: "➖ Remove Data" },
+            { title: "📧 Verify Emails" },
+            { title: "📋 Manage Lists" },
           ],
         },
         { title: "CRM Template" },
@@ -142,7 +138,7 @@ const Sidebar = ({ onAddListClick, onSidebarStateChange }) => {
       children: [
         { title: "Login 1" },
         { title: "Login 2" },
-        { title: "Login 3" }
+        { title: "Login 3" },
       ],
     },
   ];
@@ -150,13 +146,12 @@ const Sidebar = ({ onAddListClick, onSidebarStateChange }) => {
   const renderMenu = (items, parentKey = "") =>
     items.map((item, index) => {
       const key = `${parentKey}${item.title}-${index}`;
-      const Icon = item.icon || ChevronDown;
+      const hasChildren = item.children && item.children.length > 0;
+      const Icon = item.icon || (hasChildren ? ChevronDown : null);
       return (
         <li key={key} className="w-full">
           <button
-            onClick={() =>
-              item.children ? toggleMenu(key) : item.action?.()
-            }
+            onClick={() => (hasChildren ? toggleMenu(key) : item.action?.())}
             className="flex items-center w-full p-2 text-gray-900 rounded-lg hover:bg-gray-100 transition-colors duration-200 group relative"
           >
             {item.icon && <Icon className="w-5 h-5 text-blue-500" />}
@@ -168,7 +163,7 @@ const Sidebar = ({ onAddListClick, onSidebarStateChange }) => {
                 {item.title}
               </span>
             )}
-            {item.children && isSidebarOpen && (
+            {hasChildren && isSidebarOpen && (
               <ChevronDown
                 className={`w-4 h-4 transition-transform duration-300 ${
                   openMenu === key ? "rotate-180" : ""
@@ -176,7 +171,7 @@ const Sidebar = ({ onAddListClick, onSidebarStateChange }) => {
               />
             )}
           </button>
-          {item.children && isSidebarOpen && (
+          {hasChildren && isSidebarOpen && (
             <AnimatePresence initial={false}>
               {openMenu === key && (
                 <motion.ul
@@ -227,7 +222,9 @@ const Sidebar = ({ onAddListClick, onSidebarStateChange }) => {
         {(isSidebarOpen || !isMobile) && (
           <motion.aside
             id="logo-sidebar"
-            className={`fixed top-0 left-0 z-[50] h-screen bg-white shadow-lg ${isSidebarOpen ? "w-64" : "w-20"} transition-all duration-300`}
+            className={`fixed top-0 left-0 z-[100] h-screen bg-white shadow-lg
+    ${isSidebarOpen ? "w-64" : isMobile ? "w-0" : "md:w-0 lg:w-20"} 
+    transition-all duration-300`}
             aria-label="Sidebar"
             variants={sidebarVariants}
             initial="hidden"
@@ -235,32 +232,78 @@ const Sidebar = ({ onAddListClick, onSidebarStateChange }) => {
             exit="hidden"
           >
             <div className="h-full overflow-y-auto space-y-4 pt-6">
-              
               {/* Logo + Toggle Button */}
               <div className="flex items-center justify-between px-3 py-4 border-b border-gray-200">
                 <div className="flex items-center gap-2">
-                  {isSidebarOpen ? <img src="/logo.webp" alt="Margda Logo" className="h-8 w-auto" /> : ""}
+                  {isSidebarOpen ? (
+                    <img
+                      src="/logo.webp"
+                      alt="Margda Logo"
+                      className="h-8 w-auto"
+                    />
+                  ) : (
+                    ""
+                  )}
                 </div>
-                <button
-                  id="sidebar-toggle-btn"
-                  onClick={toggleSidebar}
-                  className="p-1 hover:bg-gray-100 rounded"
-                >
-                  {isSidebarOpen ? <ChevronLeft size={20} /> : <Menu size={20} />}
-                </button>
+                {/* Close button for mobile */}
+                {isMobile && isSidebarOpen ? (
+                  <button
+                    id="mobile-close-btn"
+                    onClick={() => setIsSidebarOpen(false)}
+                    className="p-1 hover:bg-gray-100 rounded"
+                  >
+                    <X size={20} />
+                  </button>
+                ) : (
+                  <button
+                    id="sidebar-toggle-btn"
+                    onClick={toggleSidebar}
+                    className="p-1 hover:bg-gray-100 rounded"
+                  >
+                    {isSidebarOpen ? (
+                      <ChevronLeft size={20} />
+                    ) : (
+                      <Menu size={20} />
+                    )}
+                  </button>
+                )}
               </div>
 
               {/* Account Info */}
               {isSidebarOpen && (
                 <div className="bg-white px-4 py-3 rounded-lg shadow space-y-2 text-sm">
-                  <div className="flex items-center"><MessageSquare className="w-4 h-4 mr-2 text-green-500"/>Messages: 0</div>
-                  <div className="flex items-center"><Database className="w-4 h-4 mr-2 text-purple-500"/>Data: ₹0</div>
-                  <div className="flex items-center"><Briefcase className="w-4 h-4 mr-2 text-yellow-500"/>Business: ₹0</div>
-                  <div className="flex items-center"><Wallet className="w-4 h-4 mr-2 text-orange-500"/>Wallet: ₹0.00</div>
-                  <div className="flex items-center"><CreditCard className="w-4 h-4 mr-2 text-pink-500"/>Account: ₹0.00</div>
-                  <div className="flex items-center"><TrendingUp className="w-4 h-4 mr-2 text-blue-500"/>Income: ₹0.00</div>
-                  <div className="flex items-center"><PlusCircle className="w-4 h-4 mr-2 text-indigo-500"/>Recharge: ₹0.00</div>
-                  <div className="flex items-center"><Calendar className="w-4 h-4 mr-2 text-red-500"/>Validity: 9/8/2025</div>
+                  <div className="flex items-center">
+                    <MessageSquare className="w-4 h-4 mr-2 text-green-500" />
+                    Messages: 0
+                  </div>
+                  <div className="flex items-center">
+                    <Database className="w-4 h-4 mr-2 text-purple-500" />
+                    Data: ₹0
+                  </div>
+                  <div className="flex items-center">
+                    <Briefcase className="w-4 h-4 mr-2 text-yellow-500" />
+                    Business: ₹0
+                  </div>
+                  <div className="flex items-center">
+                    <Wallet className="w-4 h-4 mr-2 text-orange-500" />
+                    Wallet: ₹0.00
+                  </div>
+                  <div className="flex items-center">
+                    <CreditCard className="w-4 h-4 mr-2 text-pink-500" />
+                    Account: ₹0.00
+                  </div>
+                  <div className="flex items-center">
+                    <TrendingUp className="w-4 h-4 mr-2 text-blue-500" />
+                    Income: ₹0.00
+                  </div>
+                  <div className="flex items-center">
+                    <PlusCircle className="w-4 h-4 mr-2 text-indigo-500" />
+                    Recharge: ₹0.00
+                  </div>
+                  <div className="flex items-center">
+                    <Calendar className="w-4 h-4 mr-2 text-red-500" />
+                    Validity: 9/8/2025
+                  </div>
                 </div>
               )}
 
@@ -268,15 +311,46 @@ const Sidebar = ({ onAddListClick, onSidebarStateChange }) => {
               <div className="bg-white p-4 rounded-lg shadow">
                 <ul className="space-y-1 text-sm">
                   {[
-                    { icon: Share2, color: "text-blue-500", title: "Data Share" },
-                    { icon: Lock, color: "text-red-500", title: "Authorisation" },
-                    { icon: Crown, color: "text-yellow-500", title: "Knowledge Royalty" },
-                    { icon: Key, color: "text-purple-500", title: "Credential" },
-                    { icon: Mail, color: "text-green-500", title: "Email App Password" },
-                    { icon: QrCode, color: "text-indigo-500", title: "WhatsApp Scan" },
-                    { icon: Gift, color: "text-pink-500", title: "Refer Code DOELN" },
+                    {
+                      icon: Share2,
+                      color: "text-blue-500",
+                      title: "Data Share",
+                    },
+                    {
+                      icon: Lock,
+                      color: "text-red-500",
+                      title: "Authorisation",
+                    },
+                    {
+                      icon: Crown,
+                      color: "text-yellow-500",
+                      title: "Knowledge Royalty",
+                    },
+                    {
+                      icon: Key,
+                      color: "text-purple-500",
+                      title: "Credential",
+                    },
+                    {
+                      icon: Mail,
+                      color: "text-green-500",
+                      title: "Email App Password",
+                    },
+                    {
+                      icon: QrCode,
+                      color: "text-indigo-500",
+                      title: "WhatsApp Scan",
+                    },
+                    {
+                      icon: Gift,
+                      color: "text-pink-500",
+                      title: "Refer Code DOELN",
+                    },
                   ].map(({ icon: Icon, color, title }) => (
-                    <li key={title} className="flex items-center p-2 hover:bg-gray-100 rounded group relative">
+                    <li
+                      key={title}
+                      className="flex items-center p-2 hover:bg-gray-100 rounded group relative"
+                    >
                       <Icon className={`w-4 h-4 ${color}`} />
                       {isSidebarOpen && <span className="ml-2">{title}</span>}
                       {!isSidebarOpen && (
