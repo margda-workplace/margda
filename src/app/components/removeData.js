@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Pencil, Trash2 } from "lucide-react";
 import Button from "./button";
 import Toaster from "./toaster";
 
@@ -179,10 +180,11 @@ const RemoveData = ({ sidebarCollapsed }) => {
                 </select>
               </div>
               <Button
-                bgColor="bg-gradient-to-l from-red-500/50 to-red-400/40"
+                bgColor="bg-gradient-to-l from-red-500/70 to-red-400/60"
                 text="Remove"
                 onClick={handleRemove}
               />
+              
             </div>
           </motion.div>
 
@@ -349,21 +351,17 @@ const RemoveData = ({ sidebarCollapsed }) => {
                             </td>
                           ))}
                           <td className="p-3 align-middle">
-                            <div className="flex justify-center gap-2">
-                              <button
-                                type="button"
-                                className="bg-yellow-400 rounded-full px-5 py-2 text-sm font-medium text-white shadow hover:scale-105 transition-transform"
-                              >
-                                Edit
-                              </button>
-                              <button
-                                type="button"
-                                className="bg-red-400 rounded-full px-5 py-2 text-sm font-medium text-white shadow hover:scale-105 transition-transform"
-                                onClick={() => handleDelete(i)}
-                              >
-                                Delete
-                              </button>
-                            </div>
+                            <div className="flex justify-center gap-3">
+                            <Pencil
+                              size={18}
+                              className="text-yellow-500 cursor-pointer hover:scale-110 transition-transform"
+                            />
+                            <Trash2
+                              size={18}
+                              className="text-red-500 cursor-pointer hover:scale-110 transition-transform"
+                              onClick={() => handleDeleteList(i)}
+                            />
+                          </div>
                           </td>
                         </tr>
                       );

@@ -23,7 +23,7 @@ import {
   X,
 } from "lucide-react";
 
-const Sidebar = ({ onAddListClick, onAddDataClick, onRemoveDataClick, onSidebarStateChange }) => {
+const Sidebar = ({ onAddListClick, onAddDataClick, onRemoveDataClick, onVerifyEmailsClick ,onSidebarStateChange }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [openMenus, setOpenMenus] = useState(new Set());
   const [isMobile, setIsMobile] = useState(false);
@@ -113,7 +113,7 @@ const Sidebar = ({ onAddListClick, onAddDataClick, onRemoveDataClick, onSidebarS
             { title: "➕ Add List", action: onAddListClick },
             { title: "➕ Add Data", action: onAddDataClick },
             { title: "➖ Remove Data", action: onRemoveDataClick },
-            { title: "📧 Verify Emails" },
+            { title: "📧 Verify Emails", action: onVerifyEmailsClick },
             { title: "📋 Manage Lists" },
           ],
         },

@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Button from "./button";
+import { Pencil, Trash2 } from "lucide-react";
 import Toaster from "./toaster";
 
 const AddList = () => {
@@ -64,7 +65,7 @@ const AddList = () => {
       showToast("Please enter a list name", "error");
       return;
     }
-    
+
     const newList = {
       listStatus: "✅ " + listName,
       records: "0",
@@ -75,7 +76,7 @@ const AddList = () => {
       bounced: "0",
       unsubscribed: "0",
     };
-    
+
     setLists([newList, ...lists]);
     setListName("");
     showToast("List created successfully");
@@ -130,11 +131,17 @@ const AddList = () => {
                   className="border border-gray-300 rounded-lg p-3 w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
                 />
               </div>
-              <Button
+              {/* <Button
                 bgColor="bg-gradient-to-l from-blue-500/50 to-blue-400/40"
                 text="Create List"
                 type="submit"
-              />
+              /> */}
+              <button
+                className="bg-gradient-to-l from-blue-500/70 to-blue-400/60 text-gray-800 rounded-full px-5 py-2 text-sm font-medium shadow hover:scale-105 transition-transform"
+                type="submit"
+              >
+                Create List
+              </button>
             </form>
           </motion.div>
 
@@ -255,7 +262,9 @@ const AddList = () => {
                                 : "bg-red-100 text-red-700"
                             }`}
                           >
-                            {row.listStatus.replace("✅", "🟢").replace("❌", "🔴")}
+                            {row.listStatus
+                              .replace("✅", "🟢")
+                              .replace("❌", "🔴")}
                           </span>
                         </td>
                         {[
@@ -272,20 +281,16 @@ const AddList = () => {
                           </td>
                         ))}
                         <td className="p-3 align-middle">
-                          <div className="flex justify-center gap-2">
-                            <button
-                              type="button"
-                              className="bg-yellow-400 rounded-full px-5 py-2 text-sm font-medium text-white shadow hover:scale-105 transition-transform"
-                            >
-                              Edit
-                            </button>
-                            <button
-                              type="button"
-                              className="bg-red-400 rounded-full px-5 py-2 text-sm font-medium text-white shadow hover:scale-105 transition-transform"
-                              onClick={() => handleDelete(i)}
-                            >
-                              Delete
-                            </button>
+                          <div className="flex justify-center gap-3">
+                            <Pencil
+                              size={18}
+                              className="text-yellow-500 cursor-pointer hover:scale-110 transition-transform"
+                            />
+                            <Trash2
+                              size={18}
+                              className="text-red-500 cursor-pointer hover:scale-110 transition-transform"
+                              onClick={() => handleDeleteResult(i)}
+                            />
                           </div>
                         </td>
                       </tr>
@@ -304,16 +309,23 @@ const AddList = () => {
               {lists.length} records
             </div>
             <div className="flex gap-2 items-center">
-              <Button
+              {/* <Button
                 text="Previous"
-                bgColor={
-                  "bg-gradient-to-l from-blue-500/70 to-blue-400/60"
-                }
+                bgColor={"bg-gradient-to-l from-blue-500/70 to-blue-400/60"}
                 onClick={handlePrevious}
                 disabled={currentPage === 1}
-              />
+              /> */}
+              <button
+                className="bg-gradient-to-l from-blue-500/70 to-blue-400/60 text-gray-800 rounded-full px-5 py-2 text-sm font-medium shadow hover:scale-105 transition-transform"
+                onClick={handleNext}
+                disabled={
+                  currentPage === Math.ceil(lists.length / itemsPerPage)
+                }
+              >
+                Previous
+              </button>
               <span>Page {currentPage}</span>
-              <Button
+              {/* <Button
                 text="Next"
                 bgColor={
                   "bg-gradient-to-l from-blue-500/70 to-blue-400/60"
@@ -322,7 +334,16 @@ const AddList = () => {
                 disabled={
                   currentPage === Math.ceil(lists.length / itemsPerPage)
                 }
-              />
+              /> */}
+              <button
+                className="bg-gradient-to-l from-blue-500/70 to-blue-400/60 text-gray-800 rounded-full px-5 py-2 text-sm font-medium shadow hover:scale-105 transition-transform"
+                onClick={handleNext}
+                disabled={
+                  currentPage === Math.ceil(lists.length / itemsPerPage)
+                }
+              >
+                Next
+              </button>
             </div>
           </motion.div>
         </div>

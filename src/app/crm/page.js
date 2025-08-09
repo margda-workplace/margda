@@ -6,6 +6,7 @@ import AddList from "../components/addList";
 import AddData from "../components/addData";
 import RemoveData from "../components/removeData";
 import CrmNavbar from "../components/crmNavbar";
+import VerifyEmails from "../components/verifyEmails";
 
 const Page = () => {
   const [activeComponent, setActiveComponent] = useState(null); // Track which component to show
@@ -32,6 +33,8 @@ const Page = () => {
         return <AddData sidebarCollapsed={sidebarCollapsed} />;
       case 'removeData':
         return <RemoveData sidebarCollapsed={sidebarCollapsed} />;
+        case 'verifyEmail':
+        return <VerifyEmails sidebarCollapsed={sidebarCollapsed}/>
       default:
         return (
           <div className="p-6">
@@ -54,6 +57,7 @@ const Page = () => {
         onAddListClick={() => handleComponentChange('addList')}
         onAddDataClick={() => handleComponentChange('addData')}
         onRemoveDataClick={() => handleComponentChange('removeData')}
+        onVerifyEmailsClick = {()=> handleComponentChange('verifyEmail')}
         onSidebarStateChange={handleSidebarStateChange}
       />
 
