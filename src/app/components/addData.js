@@ -108,15 +108,15 @@ const AddData = () => {
   const currentLists = lists.slice(startIndex, startIndex + itemsPerPage);
 
   return (
-    <div className="overflow-x-hidden">
+    <div className="w-full">
       <motion.div
         initial="hidden"
         animate={mounted ? "visible" : "hidden"}
         variants={variants}
-        className="w-screen px-4 sm:px-6 md:pl-[320px] md:pr-6 lg:pl-[300px] lg:pr-10 py-10 bg-gray-100 mt-16"
+        className="w-full px-4 sm:px-6 py-10 bg-gray-100"
       >
-        <div className="max-w-[1440px] mx-auto space-y-8">
-          <h1 className="text-3xl font-semibold text-gray-800">➕ Add Data</h1>
+        <div className="max-w-full mx-auto space-y-8">
+          <h1 className="text-xl font-semibold text-gray-800">➕ Add Data</h1>
 
           {/* Option 1 */}
           <motion.div className="bg-white p-6 rounded-xl shadow space-y-4">
@@ -240,7 +240,7 @@ const AddData = () => {
           <motion.div className="bg-white p-6 rounded-xl shadow space-y-4">
             <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
               <div className="flex flex-wrap items-center gap-4">
-                <label className="text-sm text-gray-700">
+                <label className="flex items-center text-sm text-gray-700 whitespace-nowrap">
                   Show
                   <input
                     type="number"
@@ -250,14 +250,14 @@ const AddData = () => {
                   />
                   records
                 </label>
-                <label className="text-sm text-gray-700">
+                <label className="flex items-center text-sm text-gray-700 whitespace-nowrap">
                   From
                   <input
                     type="date"
                     className="ml-2 border border-gray-300 rounded-md p-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
                   />
                 </label>
-                <label className="text-sm text-gray-700">
+                <label className="flex items-center text-sm text-gray-700 whitespace-nowrap">
                   To
                   <input
                     type="date"
@@ -265,12 +265,15 @@ const AddData = () => {
                   />
                 </label>
               </div>
-              <div className="flex w-max justify-center items-center">
+              <div className="flex items-center gap-4 w-full lg:w-max">
                 <input
                   type="text"
                   placeholder="🔍 Search"
-                  className="w-full lg:w-64 border border-gray-300 rounded-md p-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  className="flex-grow border border-gray-300 rounded-md p-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
                 />
+                <button className="px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-400 text-white rounded-md shadow-sm hover:opacity-90 transition-opacity whitespace-nowrap">
+                  Search
+                </button>
               </div>
             </div>
           </motion.div>
@@ -288,7 +291,11 @@ const AddData = () => {
                 <button
                   key={idx}
                   type="button"
-                  className="bg-blue-100 text-blue-800 rounded-full px-5 py-2 text-sm font-medium shadow hover:scale-105 transition-transform"
+                  className={`${
+                    action === "➕ Add Data"
+                      ? "bg-green-100 text-green-800 ring-2 ring-green-200"
+                      : "bg-blue-100 text-blue-800"
+                  } rounded-full px-5 py-2 text-sm font-medium shadow hover:scale-105 transition-transform`}
                 >
                   {action}
                 </button>

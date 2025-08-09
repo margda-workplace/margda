@@ -23,9 +23,9 @@ import {
   X,
 } from "lucide-react";
 
-const Sidebar = ({ onAddListClick, onSidebarStateChange }) => {
+const Sidebar = ({ onAddListClick, onAddDataClick, onRemoveDataClick, onSidebarStateChange }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const [openMenu, setOpenMenu] = useState(null);
+  const [openMenus, setOpenMenus] = useState(new Set());
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -64,7 +64,20 @@ const Sidebar = ({ onAddListClick, onSidebarStateChange }) => {
   }, [isMobile, isSidebarOpen]);
 
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
-  const toggleMenu = (menu) => setOpenMenu(openMenu === menu ? null : menu);
+  const toggleMenu = (menu) => {
+    setOpenMenus(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(menu)) {
+        // Close this menu and all its children
+        const menusToClose = Array.from(newSet).filter(m => m.startsWith(menu));
+        menusToClose.forEach(m => newSet.delete(m));
+      } else {
+        // Open this menu
+        newSet.add(menu);
+      }
+      return newSet;
+    });
+  };
 
   const sidebarVariants = {
     hidden: { x: isMobile ? -320 : -80, opacity: isMobile ? 0 : 1 },
@@ -98,8 +111,8 @@ const Sidebar = ({ onAddListClick, onSidebarStateChange }) => {
           title: "CRM List",
           children: [
             { title: "➕ Add List", action: onAddListClick },
-            { title: "➕ Add Data" },
-            { title: "➖ Remove Data" },
+            { title: "➕ Add Data", action: onAddDataClick },
+            { title: "➖ Remove Data", action: onRemoveDataClick },
             { title: "📧 Verify Emails" },
             { title: "📋 Manage Lists" },
           ],
@@ -143,48 +156,64 @@ const Sidebar = ({ onAddListClick, onSidebarStateChange }) => {
     },
   ];
 
-  const renderMenu = (items, parentKey = "") =>
+  const handleMenuClick = (e, key, hasChildren, action) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    if (hasChildren) {
+      toggleMenu(key);
+    } else if (action) {
+      action();
+    }
+  };
+
+  const renderMenu = (items, parentKey = "", level = 0) =>
     items.map((item, index) => {
       const key = `${parentKey}${item.title}-${index}`;
       const hasChildren = item.children && item.children.length > 0;
-      const Icon = item.icon || (hasChildren ? ChevronDown : null);
+      const Icon = item.icon;
+      const isOpen = openMenus.has(key);
+      
       return (
         <li key={key} className="w-full">
           <button
-            onClick={() => (hasChildren ? toggleMenu(key) : item.action?.())}
-            className="flex items-center w-full p-2 text-gray-900 rounded-lg hover:bg-gray-100 transition-colors duration-200 group relative"
+            type="button"
+            onClick={(e) => handleMenuClick(e, key, hasChildren, item.action)}
+            className={`flex items-center w-full p-2 text-gray-900 rounded-lg hover:bg-gray-100 transition-colors duration-200 group relative ${
+              level > 0 ? 'text-sm' : ''
+            }`}
           >
-            {item.icon && <Icon className="w-5 h-5 text-blue-500" />}
+            {Icon && <Icon className="w-5 h-5 text-blue-500" />}
             {isSidebarOpen && (
-              <span className="flex-1 text-left ml-3">{item.title}</span>
+              <>
+                <span className={`flex-1 text-left ${Icon ? 'ml-3' : level > 0 ? 'ml-4' : ''}`}>
+                  {item.title}
+                </span>
+                {hasChildren && (
+                  <ChevronDown
+                    className={`w-4 h-4 transition-transform duration-300 ${
+                      isOpen ? "rotate-180" : ""
+                    }`}
+                  />
+                )}
+              </>
             )}
             {!isSidebarOpen && (
-              <span className="absolute left-12 bg-black text-white text-xs rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity z-50">
+              <span className="absolute left-12 bg-black text-white text-xs rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity z-50 whitespace-nowrap">
                 {item.title}
               </span>
             )}
-            {hasChildren && isSidebarOpen && (
-              <ChevronDown
-                className={`w-4 h-4 transition-transform duration-300 ${
-                  openMenu === key ? "rotate-180" : ""
-                }`}
-              />
-            )}
           </button>
-          {hasChildren && isSidebarOpen && (
-            <AnimatePresence initial={false}>
-              {openMenu === key && (
-                <motion.ul
-                  variants={dropdownVariants}
-                  initial="hidden"
-                  animate="visible"
-                  exit="hidden"
-                  className="pl-6 mt-1 space-y-1"
-                >
-                  {renderMenu(item.children, `${key}-`)}
-                </motion.ul>
-              )}
-            </AnimatePresence>
+          {hasChildren && isSidebarOpen && isOpen && (
+            <motion.ul
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+              className={`mt-1 space-y-1 overflow-hidden ${level === 0 ? 'pl-6' : 'pl-8'}`}
+            >
+              {renderMenu(item.children, `${key}-`, level + 1)}
+            </motion.ul>
           )}
         </li>
       );
@@ -365,7 +394,7 @@ const Sidebar = ({ onAddListClick, onSidebarStateChange }) => {
 
               {/* Main Menu */}
               <div className="bg-white p-4 rounded-lg shadow">
-                <ul className="space-y-1 text-sm">{renderMenu(menuItems)}</ul>
+                <ul className="space-y-1 text-sm">{renderMenu(menuItems, "", 0)}</ul>
               </div>
             </div>
           </motion.aside>

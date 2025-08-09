@@ -8,7 +8,7 @@ import RemoveData from "../components/removeData";
 import CrmNavbar from "../components/crmNavbar";
 
 const Page = () => {
-  const [showAddList, setShowAddList] = useState(false);
+  const [activeComponent, setActiveComponent] = useState(null); // Track which component to show
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -18,6 +18,32 @@ const Page = () => {
     setIsMobile(mobile);
   };
 
+  // Handle component selection from sidebar
+  const handleComponentChange = (componentName) => {
+    setActiveComponent(componentName);
+  };
+
+  // Render the active component
+  const renderActiveComponent = () => {
+    switch (activeComponent) {
+      case 'addList':
+        return <AddList sidebarCollapsed={sidebarCollapsed} />;
+      case 'addData':
+        return <AddData sidebarCollapsed={sidebarCollapsed} />;
+      case 'removeData':
+        return <RemoveData sidebarCollapsed={sidebarCollapsed} />;
+      default:
+        return (
+          <div className="p-6">
+            <div className="bg-white rounded-lg shadow-sm p-8 text-center">
+              <h2 className="text-2xl font-semibold text-gray-700 mb-4">Welcome to CRM</h2>
+              <p className="text-gray-500">Select an option from the sidebar to get started.</p>
+            </div>
+          </div>
+        );
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-100">
       {/* Fixed Navbar */}
@@ -25,7 +51,9 @@ const Page = () => {
 
       {/* Sidebar */}
       <Sidebar
-        onAddListClick={() => setShowAddList(true)}
+        onAddListClick={() => handleComponentChange('addList')}
+        onAddDataClick={() => handleComponentChange('addData')}
+        onRemoveDataClick={() => handleComponentChange('removeData')}
         onSidebarStateChange={handleSidebarStateChange}
       />
 
@@ -40,16 +68,8 @@ const Page = () => {
         }`}
         style={{ paddingTop: "80px" }} // Account for fixed navbar
       >
-        {/* Only render AddList if showAddList is true */}
-        {showAddList && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-            <div className="relative">
-              <AddList onClose={() => setShowAddList(false)} />
-            </div>
-          </div>
-        )}
-
-        <RemoveData sidebarCollapsed={sidebarCollapsed} />
+        {/* Conditionally render components based on activeComponent state */}
+        {renderActiveComponent()}
       </main>
     </div>
   );

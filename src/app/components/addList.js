@@ -1,24 +1,49 @@
 "use client";
 import { useState, useEffect } from "react";
-import Button from "./button";
 import { motion, AnimatePresence } from "framer-motion";
+import Button from "./button";
 import Toaster from "./toaster";
 
 const AddList = () => {
   const [mounted, setMounted] = useState(false);
-  const [listName, setListName] = useState("Enter List Name");
-  const [lists, setLists] = useState([]);
   const [toast, setToast] = useState({ message: "", type: "success" });
+  const [listName, setListName] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [lists, setLists] = useState([
+    {
+      listStatus: "✅ Marketing Campaign",
+      records: "150",
+      name: "John Doe",
+      emails: "john@example.com",
+      whatsapp: "+1234567890",
+      mobile: "+1234567890",
+      bounced: "5",
+      unsubscribed: "2",
+    },
+    {
+      listStatus: "✅ Customer List",
+      records: "200",
+      name: "Jane Smith",
+      emails: "jane@example.com",
+      whatsapp: "+1234567891",
+      mobile: "+1234567891",
+      bounced: "3",
+      unsubscribed: "1",
+    },
+    {
+      listStatus: "❌ Old Prospects",
+      records: "89",
+      name: "Bob Johnson",
+      emails: "bob@example.com",
+      whatsapp: "+1234567892",
+      mobile: "+1234567892",
+      bounced: "12",
+      unsubscribed: "5",
+    },
+  ]);
   const itemsPerPage = 4;
 
-  const showToast = (message, type = "success") => {
-    setToast({ message, type });
-  };
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  useEffect(() => setMounted(true), []);
 
   const variants = {
     hidden: { opacity: 0, y: 20 },
@@ -27,6 +52,33 @@ const AddList = () => {
       y: 0,
       transition: { duration: 0.6, ease: "easeOut" },
     },
+  };
+
+  const showToast = (message, type = "success") => {
+    setToast({ message, type });
+  };
+
+  const handleCreateList = (e) => {
+    e.preventDefault();
+    if (!listName.trim()) {
+      showToast("Please enter a list name", "error");
+      return;
+    }
+    
+    const newList = {
+      listStatus: "✅ " + listName,
+      records: "0",
+      name: "0",
+      emails: "0",
+      whatsapp: "0",
+      mobile: "0",
+      bounced: "0",
+      unsubscribed: "0",
+    };
+    
+    setLists([newList, ...lists]);
+    setListName("");
+    showToast("List created successfully");
   };
 
   const handleDelete = (indexToDelete) => {
@@ -50,66 +102,38 @@ const AddList = () => {
   const currentLists = lists.slice(startIndex, startIndex + itemsPerPage);
 
   return (
-    <div className="overflow-x-hidden">
+    <div className="w-full">
       <motion.div
         initial="hidden"
         animate={mounted ? "visible" : "hidden"}
         variants={variants}
-        className="w-screen h-screen px-4 sm:px-6 md:pl-[320px] md:pr-6 lg:pl-[300px] lg:pr-10 py-10 bg-gray-100 mt-16"
+        className="w-full px-4 sm:px-6 py-10 bg-gray-100"
       >
-        <div className="max-w-[1440px] mx-auto space-y-8">
-          <h1 className="text-3xl font-semibold text-gray-800">
-            📋 CRM List Manager
-          </h1>
+        <div className="max-w-full mx-auto space-y-8">
+          <h1 className="text-xl font-semibold text-gray-800">➕ Add List</h1>
 
-          {/* Form */}
+          {/* Create New List Form */}
           <motion.div className="bg-white p-6 rounded-xl shadow space-y-4">
             <h2 className="text-xl font-semibold text-gray-700">
-              ➕ Create New List
+              Create New List
             </h2>
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                if (!listName.trim()) {
-                  showToast("List name cannot be empty", "error");
-                  return;
-                }
-                setLists([
-                  ...lists,
-                  {
-                    listStatus: `✅ ${listName}`,
-                    records: "testRecords",
-                    name: "testName",
-                    emails: "testemail",
-                    whatsapp: "testWhatsapp",
-                    mobile: "testmobile",
-                    bounced: "testbounced",
-                    unsubscribed: "testUnsubscribed",
-                  },
-                ]);
-                setListName("");
-                showToast("List added successfully", "success");
-              }}
-            >
-              <div className="mb-4">
-                <label
-                  className="block mb-2 text-sm font-medium text-gray-700"
-                  htmlFor="listName"
-                >
+            <form onSubmit={handleCreateList} className="space-y-4">
+              <div>
+                <label className="block mb-2 text-sm font-medium text-gray-700">
                   List Name
                 </label>
                 <input
                   type="text"
-                  id="listName"
+                  placeholder="Enter List Name"
                   value={listName}
                   onChange={(e) => setListName(e.target.value)}
-                  className=" w-2/3  border border-gray-200 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
-                  placeholder="Enter list name"
+                  className="border border-gray-300 rounded-lg p-3 w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
                 />
               </div>
               <Button
                 bgColor="bg-gradient-to-l from-blue-500/50 to-blue-400/40"
-                text="Submit"
+                text="Create List"
+                type="submit"
               />
             </form>
           </motion.div>
@@ -118,7 +142,7 @@ const AddList = () => {
           <motion.div className="bg-white p-6 rounded-xl shadow space-y-4">
             <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
               <div className="flex flex-wrap items-center gap-4">
-                <label className="text-sm text-gray-700">
+                <label className="flex items-center text-sm text-gray-700 whitespace-nowrap">
                   Show
                   <input
                     type="number"
@@ -128,14 +152,14 @@ const AddList = () => {
                   />
                   records
                 </label>
-                <label className="text-sm text-gray-700">
+                <label className="flex items-center text-sm text-gray-700 whitespace-nowrap">
                   From
                   <input
                     type="date"
                     className="ml-2 border border-gray-300 rounded-md p-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
                   />
                 </label>
-                <label className="text-sm text-gray-700">
+                <label className="flex items-center text-sm text-gray-700 whitespace-nowrap">
                   To
                   <input
                     type="date"
@@ -143,13 +167,15 @@ const AddList = () => {
                   />
                 </label>
               </div>
-              <div className="flex w-max justify-center items-center">
+              <div className="flex items-center gap-4 w-full lg:w-max">
                 <input
                   type="text"
                   placeholder="🔍 Search"
-                  className="w-full lg:w-64 border border-gray-300 rounded-md p-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  className="flex-grow border border-gray-300 rounded-md p-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
                 />
-                
+                <button className="px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-400 text-white rounded-md shadow-sm hover:opacity-90 transition-opacity whitespace-nowrap">
+                  Search
+                </button>
               </div>
             </div>
           </motion.div>
@@ -157,11 +183,21 @@ const AddList = () => {
           {/* Actions Section */}
           <motion.div className="bg-white p-6 rounded-xl shadow space-y-4">
             <div className="flex flex-wrap gap-4 justify-start">
-              {["➕ Add List", "➕ Add Data", "➖ Remove Data", "✅ Verify Emails", "🛠️ Manage Lists"].map((action, idx) => (
+              {[
+                "➕ Add List",
+                "➕ Add Data",
+                "➖ Remove Data",
+                "✅ Verify Emails",
+                "🛠️ Manage Lists",
+              ].map((action, idx) => (
                 <button
                   key={idx}
                   type="button"
-                  className="bg-blue-100 text-blue-800 rounded-full px-5 py-2 text-sm font-medium shadow hover:scale-105 transition-transform"
+                  className={`${
+                    action === "➕ Add List"
+                      ? "bg-green-100 text-green-800 ring-2 ring-green-200"
+                      : "bg-blue-100 text-blue-800"
+                  } rounded-full px-5 py-2 text-sm font-medium shadow hover:scale-105 transition-transform`}
                 >
                   {action}
                 </button>
@@ -219,9 +255,7 @@ const AddList = () => {
                                 : "bg-red-100 text-red-700"
                             }`}
                           >
-                            {row.listStatus
-                              .replace("✅", "🟢")
-                              .replace("❌", "🔴")}
+                            {row.listStatus.replace("✅", "🟢").replace("❌", "🔴")}
                           </span>
                         </td>
                         {[
