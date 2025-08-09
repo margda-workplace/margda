@@ -13,9 +13,8 @@ const VerifyEmails = () => {
   const [showResults, setShowResults] = useState(false); // toggle results
   const [showLists, setShowLists] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 4;
-  const startIndex = (currentPage - 1) * itemsPerPage;
-
+  const [selectedList, setSelectedList] = useState("");
+  const [selectedItems, setSelectedItems] = useState([]);
   const [lists, setLists] = useState([
     {
       listStatus: "✅ List2",
@@ -38,6 +37,25 @@ const VerifyEmails = () => {
       unsubscribed: "1",
     },
   ]);
+
+  const itemsPerPage = 4;
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const currentLists = lists.slice(startIndex, startIndex + itemsPerPage);
+  const isAllCurrentSelected =
+    currentLists.length > 0 &&
+    currentLists.every((_, index) =>
+      selectedItems.includes((currentPage - 1) * itemsPerPage + index)
+    );
+
+  const handleRemove = () => {
+    if (!selectedList) {
+      showToast("Please select a list to remove", "error");
+      return;
+    }
+    setLists((prev) => prev.filter((list) => list.name !== selectedList));
+    setSelectedList("");
+    showToast("List removed successfully", "success");
+  };
 
   const handlePrevious = () => {
     if (currentPage > 1) setCurrentPage((prev) => prev - 1);
@@ -103,10 +121,6 @@ const VerifyEmails = () => {
   };
 
   const startIndexList = (currentPageList - 1) * itemsPerPage;
-  const currentLists = lists.slice(
-    startIndexList,
-    startIndexList + itemsPerPage
-  );
 
   const startIndexResults = (currentPageResults - 1) * itemsPerPage;
   const currentResults = results.slice(
@@ -142,6 +156,44 @@ const VerifyEmails = () => {
               </button>
             ))}
           </div>
+          {/* //Select List to verify email */}
+          <motion.div className="bg-white p-6 rounded-xl shadow space-y-4">
+            <h2 className="text-xl font-semibold text-gray-700">
+              Select List to Verify email
+            </h2>
+            <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-end">
+              <div className="w-full sm:w-2/3">
+                {" "}
+                {/* This is the key change */}
+                <label className="block mb-2 text-sm font-medium text-gray-700">
+                  List
+                </label>
+                <select
+                  value={selectedList}
+                  onChange={(e) => setSelectedList(e.target.value)}
+                  className="border border-gray-300 rounded-lg p-3 w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
+                >
+                  <option value="">Select List</option>
+                  <option value="List1">List 1</option>
+                  <option value="List2">List 2</option>
+                  <option value="MarketingList">Marketing List</option>
+                  <option value="CustomerList">Customer List</option>
+                </select>
+              </div>
+              {/* <Button
+                bgColor="bg-gradient-to-l from-red-500/70 to-red-400/60"
+                text="Remove"
+                onClick={handleRemove}
+              /> */}
+              <button
+                className="bg-gradient-to-l from-red-500/70 to-red-400/60 text-gray-800 rounded-full px-5 py-2 text-sm font-medium shadow hover:scale-105 transition-transform h-12 w-auto "
+                type="submit"
+                onClick={handleRemove}
+              >
+                Remove
+              </button>
+            </div>
+          </motion.div>
 
           {/* Filters */}
           <motion.div className="bg-white p-6 rounded-xl shadow space-y-4">
@@ -268,7 +320,8 @@ const VerifyEmails = () => {
                     transition={{ duration: 0.3 }}
                     className="bg-white divide-y divide-gray-100"
                   >
-                    {currentLists.map((row, i) => (
+                    
+                    {currentLists.map((row, i) => (                        
                       <tr key={i} className="text-center align-middle">
                         <td className="p-3">
                           <span
