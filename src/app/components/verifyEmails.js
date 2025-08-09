@@ -186,11 +186,11 @@ const VerifyEmails = () => {
                 onClick={handleRemove}
               /> */}
               <button
-                className="bg-gradient-to-l from-red-500/70 to-red-400/60 text-gray-800 rounded-full px-5 py-2 text-sm font-medium shadow hover:scale-105 transition-transform h-12 w-auto "
+                className="bg-gradient-to-l from-green-500/70 to-green-400/60 text-gray-800 rounded-full px-5 py-2 text-sm font-medium shadow hover:scale-105 transition-transform h-12 w-auto "
                 type="submit"
                 onClick={handleRemove}
               >
-                Remove
+                Verify
               </button>
             </div>
           </motion.div>
