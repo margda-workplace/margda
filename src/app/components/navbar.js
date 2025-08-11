@@ -1,12 +1,21 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 
 export default function Navbar({navItems}) {
   const [isOpen, setIsOpen] = useState(false);
+  const [isTop, setIsTop] = useState(true);
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsTop(window.scrollY === 0);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <>
@@ -18,7 +27,7 @@ export default function Navbar({navItems}) {
           duration: 0.3,
           ease: "easeOut",
         }}
-        className="fixed top-0 w-full z-50 px-4 sm:px-6 py-3 flex items-center justify-between  bg-white/10 backdrop-blur-sm"
+        className={`fixed top-0 w-full z-50 px-4 sm:px-6 py-3 flex items-center justify-between ${isTop ? "bg-transparent" : "bg-white/40 backdrop-blur-sm"}  `}
       >
         
         {/* Logo Button */}
@@ -52,15 +61,14 @@ export default function Navbar({navItems}) {
         {/* Desktop Menu */}
         <div className="hidden xl:flex gap-4">
           {navItems.map((item, idx) => (
-            <button
+            <button 
               key={idx}
-              className="group flex items-center gap-2 
-             bg-gradient-to-l from-orange-500/70 to-orange-400/60
-                backdrop-blur-md
+              className={`group flex items-center gap-2 
+             ${isTop ? "bg-white" : "bg-blue-400/60 "}
              rounded-xl 
              px-3 py-2 
              shadow-lg             
-             hover:from-orange-500/50 hover:to-orange-400/50
+             hover:bg-orange-400 hover:text-white
              hover:scale-105 
              hover:shadow-xl
              hover:-translate-y-1
@@ -70,7 +78,7 @@ export default function Navbar({navItems}) {
              duration-300 
              ease-out
              text-black
-             font-medium"
+             font-medium`}
             >
               <span className="relative h-10 w-10 flex-shrink-0">
                 <img src={item.icon} alt={item.label} className="h-10 w-auto" />
@@ -82,7 +90,7 @@ export default function Navbar({navItems}) {
 
         {/* Hamburger Button */}
         <button
-          className="xl:hidden flex items-center justify-center rounded-lg p-2 hover:bg-white/20 transition bg-gradient-to-l from-orange-500/70 to-orange-400/60
+          className="xl:hidden flex items-center justify-center rounded-lg p-2 hover:bg-white/20 transition bg-gradient-to-l from-blue-500/70 to-blue-400/60
                 backdrop-blur-md"
           onClick={() => setIsOpen(!isOpen)}
         >

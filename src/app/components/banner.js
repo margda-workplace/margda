@@ -146,7 +146,7 @@ const Banner = () => {
               earnings and 24/7 automated income.
             </p>
 
-            <div className="w-full flex flex-col sm:flex-row items-center justify-center gap-5 my-5 lg:mx-[-75px] md:mx-[-75px]">
+            <div className="w-full flex flex-col sm:flex-row items-center justify-center gap-5 my-5 lg:mx-[-75px]">
               <button
                 className="w-full sm:w-auto bg-gradient-to-l from-orange-500/70 to-orange-400/60
       backdrop-blur-md hover:from-orange-500/70 hover:to-orange-400/60
