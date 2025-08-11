@@ -7,6 +7,9 @@ import { useInView } from "react-intersection-observer";
 import Image from "next/image";
 import Navbar from "./components/navbar";
 import Banner from "./components/banner";
+import { Mails } from "lucide-react";
+import { SendHorizontal } from "lucide-react";
+import { FileUser } from "lucide-react";
 
 export default function Home() {
   const scrollRef = useRef(null);
@@ -222,54 +225,70 @@ export default function Home() {
             </div>
           </section>
         </RevealOnScroll>
-        <div className="flex flex-col items-center my-8 lg:my-15 px-4">
-          <h1 className="flex flex-col sm:flex-row items-center text-2xl sm:text-3xl lg:text-4xl mb-4 text-center">
-            <img
-              src="communication.png"
-              className="h-8 sm:h-10 w-auto mb-2 sm:mb-0 sm:mr-2 transition-transform duration-300 hover:-rotate-12"
-              alt="comm"
-              loading="lazy"
-            />
-            <span className="bg-gradient-to-r from-blue-500 to-blue-800 bg-clip-text text-transparent">
-              Unified Communication(CRM):
-            </span>
-          </h1>
-
-          <p className="text-left max-w-xl mb-6 text-sm sm:text-base px-4">
-            Browser-integrated SIM+API-based multichannel communication like
-            Calls, WhatsApp, SMS, Email, Virtual Meetings, and Visit Tracking
-            with clients&apos; timelines.
-            <div className="text-left">
-            <br />
-            1. CRM and Campaigns - Email, WhatsApp, SMS, Call and Social.
-            <br />
-            2. Unified communication with timeline.
-            <br />
-            3. Teamwork reports
-            </div>
-          </p>
-
-          {/* Sticky Button */}
-          <div className="top-16 sm:top-20 lg:top-24 z-30 flex justify-center mb-4">
-            <button className="flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full text-white text-sm sm:text-base font-semibold bg-gradient-to-r from-blue-500 to-blue-800 shadow-md hover:opacity-90 transition group hover:scale-105">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-3 sm:h-4 w-3 sm:w-4 transition-transform duration-200 group-hover:-rotate-20"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
-              </svg>
-              <span className="hidden sm:inline">
-                Client Timeline Dashboard
+        <RevealOnScroll>
+          <div className="flex flex-col items-center my-8 lg:my-15 px-4">
+            <h1 className="flex flex-col sm:flex-row items-center text-2xl sm:text-3xl lg:text-4xl mb-4 text-center">
+              <img
+                src="communication.png"
+                className="h-8 sm:h-10 w-auto mb-2 sm:mb-0 sm:mr-2 transition-transform duration-300 hover:-rotate-12"
+                alt="comm"
+                loading="lazy"
+              />
+              <span className="bg-gradient-to-r from-blue-500 to-blue-800 bg-clip-text text-transparent">
+                Unified Communication(CRM):
               </span>
-              <span className="sm:hidden">Timeline</span>
-            </button>
-          </div>
+            </h1>
 
-          {/* Scrollable Cards Container */}
-          <ScrollableCardsContainer cardData={cardData} scrollRef={scrollRef} />
-        </div>
+            <p className="text-left max-w-xl mb-6 text-sm sm:text-base px-4">
+              Browser-integrated SIM+API-based multichannel communication like
+              Calls, WhatsApp, SMS, Email, Virtual Meetings, and Visit Tracking
+              with clients&apos; timelines.
+              <br />
+              <div className="space-y-2 text-left max-w-xl mb-6 text-sm sm:text-base px-4 my-2">
+                <div className="flex items-center gap-2">
+                  <Mails />
+                  <span>
+                    CRM and Campaigns - Email, WhatsApp, SMS, Call and Social.
+                  </span>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <SendHorizontal />
+                  <span>Unified communication with timeline.</span>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <FileUser />
+                  <span>Teamwork reports</span>
+                </div>
+              </div>
+            </p>
+
+            {/* Sticky Button */}
+            <div className="top-16 sm:top-20 lg:top-24 z-30 flex justify-center mb-4">
+              <button className="flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full text-white text-sm sm:text-base font-semibold bg-gradient-to-r from-blue-500 to-blue-800 shadow-md hover:opacity-90 transition group hover:scale-105">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-3 sm:h-4 w-3 sm:w-4 transition-transform duration-200 group-hover:-rotate-20"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
+                </svg>
+                <span className="hidden sm:inline">
+                  Client Timeline Dashboard
+                </span>
+                <span className="sm:hidden">Timeline</span>
+              </button>
+            </div>
+
+            {/* Scrollable Cards Container */}
+            <ScrollableCardsContainer
+              cardData={cardData}
+              scrollRef={scrollRef}
+            />
+          </div>
+        </RevealOnScroll>
       </RevealOnScroll>
 
       <RevealOnScroll>
