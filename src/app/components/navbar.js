@@ -24,12 +24,11 @@ export default function Navbar({navItems}) {
         {/* Logo Button */}
         <button
           className="group flex items-center 
-                       bg-gradient-to-r from-blue-500/30 to-blue-300/30
-                       backdrop-blur-md 
+                       bg-white                       
                        rounded-2xl 
                        px-6 py-3 
                        shadow-lg 
-                       border border-white/20
+                       border border-gray-200
                        hover:from-white/30 hover:to-blue-400/40
                        hover:scale-105 
                        hover:shadow-xl

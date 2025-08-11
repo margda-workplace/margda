@@ -100,17 +100,17 @@ const Banner = () => {
 
       <section
         ref={bannerRef}
-        className={`w-screen min-h-[500px] md:min-h-[600px] lg:h-[700px] flex items-center justify-center px-4 sm:px-6 md:px-8 lg:px-12 py-12 md:py-16 lg:py-20 bg-[linear-gradient(to_right,_#2976B5,_#001CAA)] text-white shadow-lg shadow-grey-300 slide-in-right ${
+        className={`w-screen h-max md:h-max lg:h-max flex items-center justify-center px-4 sm:px-6 md:px-8 lg:px-12 py-12 md:py-16 lg:py-20 bg-[linear-gradient(to_right,_#2976B5,_#001CAA)] text-white shadow-lg shadow-grey-300 slide-in-right ${
           isVisible ? "active" : ""
         }`}
       >
         <div className="flex flex-col-reverse md:flex-row items-center justify-between max-w-7xl w-full gap-6 md:gap-8 lg:gap-12 py-7">
           {/* Left side: Text */}
-          <div className="max-w-xl text-center md:text-left flex-1">
-            <h1 className="text-3xl sm:text-4xl md:text-4xl lg:text-5xl xl:text-6xl leading-tight slide-in-1">
-               Business: Achieve<span className="text-[#FA7D00]"> More </span>With Less <span className="text-[#FA7D00]"> Effort</span> <br />
-              </h1>
-            <p className="mt-4 md:mt-6 text-base md:text-lg lg:text-lg text-orange-500 leading-relaxed slide-in-2 font-bold">
+          <div className="max-w-xl text-center md:text-left flex-1 my-7">
+            <h1 className="text-4xl sm:text-4xl md:text-4xl lg:text-4xl xl:text-4xl leading-tight slide-in-1 text-orange-400 font-bold">
+              Business: Achieve More With Less Effort <br />
+            </h1>
+            <p className="mt-4 md:mt-6 text-base md:text-lg lg:text-lg text-white leading-relaxed slide-in-2 font-bold">
               <ReactTyped
                 strings={[
                   "Your Business Engine",
@@ -127,16 +127,60 @@ const Banner = () => {
             </p>
 
             <p className="mt-4 md:mt-6 text-base md:text-lg lg:text-xl text-white/90 leading-relaxed slide-in-2">
-             Margda Workplace is a SaaS platform integrated with a <span className="text-[#FA7D00]">Unified CRM</span>, <span className="text-[#FA7D00]">Smart Tools</span>, and <span className="text-[#FA7D00]">Service Exchange</span> — to help businesses streamline operations, enhance productivity, and drive growth by outsourcing their requirements and getting the work done.
+              Margda Workplace is a SaaS platform integrated with a Unified
+              CRMSmart Tools, and Service Exchange — to help businesses
+              streamline operations, enhance productivity, and drive growth by
+              outsourcing their requirements and getting the work done.
+            </p>
+            <br />
+            <br />
+
+            <h1 className="text-4xl sm:text-3xl md:text-4xl lg:text-4xl xl:text-4xl leading-tight slide-in-1 font-bold text-orange-400">
+              Professional: Create Multiple Income Streams
+            </h1>
+
+            <p className="mt-4 md:mt-6 text-base md:text-lg lg:text-xl text-white/90 leading-relaxed slide-in-2">
+              Margda Workplace platform empowers people to work from anywhere,
+              at any time, flexibly and complete the tasks based on their
+              interest, skills, and ability for instant payouts, fixed long-term
+              earnings and 24/7 automated income.
             </p>
 
-            
+            <div className="w-full flex flex-col sm:flex-row items-center justify-center gap-5 my-5 lg:mx-[-75px] md:mx-[-75px]">
+              <button
+                className="w-full sm:w-auto bg-gradient-to-l from-orange-500/70 to-orange-400/60
+      backdrop-blur-md hover:from-orange-500/70 hover:to-orange-400/60
+      text-white font-semibold px-6 sm:px-8 lg:px-10 py-3 sm:py-4 lg:py-5
+      rounded-full hover:scale-105 transition-transform transition-colors
+      duration-200 flex items-center justify-center gap-2 shadow-lg
+      text-sm sm:text-base lg:text-lg"
+              >
+                Request a demo
+                <svg
+                  className="w-4 h-4 sm:w-5 sm:h-5"
+                  fill="none"
+                  stroke="white"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+              </button>
 
-            <button className="mt-6 md:mt-8 px-6 py-3  bg-gradient-to-l from-orange-500/70 to-orange-400/60
-                
-                backdrop-blur-md text-blue-500 font-semibold rounded-xl hover:scale-105 hover:from-white/30 hover:to-orange-300/50 text-white transition duration-200 text-sm md:text-base slide-in-3">
-              Get Started
-            </button>
+              <button
+                className="w-full sm:w-auto bg-gradient-to-l from-orange-500/70 to-orange-400/60
+      backdrop-blur-md text-white font-semibold px-6 sm:px-8 lg:px-10
+      py-3 sm:py-4 lg:py-5 rounded-full hover:scale-105
+      transition-transform transition-all duration-200 shadow-lg
+      text-sm sm:text-base lg:text-lg"
+              >
+                Start Free Trial
+              </button>
+            </div>
           </div>
 
           {/* Right side: Image */}
