@@ -108,9 +108,8 @@ const Banner = () => {
           {/* Left side: Text */}
           <div className="max-w-xl text-center md:text-left flex-1">
             <h1 className="text-3xl sm:text-4xl md:text-4xl lg:text-5xl xl:text-6xl leading-tight slide-in-1">
-              Business and <br />
-              Income <span className="text-[#FA7D00]">Platform</span>
-            </h1>
+               Business: Achieve<span className="text-[#FA7D00]"> More </span>With Less <span className="text-[#FA7D00]"> Effort</span> <br />
+              </h1>
             <p className="mt-4 md:mt-6 text-base md:text-lg lg:text-lg text-orange-500 leading-relaxed slide-in-2 font-bold">
               <ReactTyped
                 strings={[
@@ -128,16 +127,14 @@ const Banner = () => {
             </p>
 
             <p className="mt-4 md:mt-6 text-base md:text-lg lg:text-xl text-white/90 leading-relaxed slide-in-2">
-              Margda Workplace is a SaaS-driven tech platform that helps to
-              simplify work and get it done. It offers smart tools and digital
-              solutions to achieve more with less effort. Boost productivity,
-              drive growth, and automate multiple income streams.
+             Margda Workplace is a SaaS platform integrated with a <span className="text-[#FA7D00]">Unified CRM</span>, <span className="text-[#FA7D00]">Smart Tools</span>, and <span className="text-[#FA7D00]">Service Exchange</span> — to help businesses streamline operations, enhance productivity, and drive growth by outsourcing their requirements and getting the work done.
             </p>
 
             
 
-            <button className="mt-6 md:mt-8 px-6 py-3 bg-gradient-to-l from-orange-300/70 to-orange-400/80
-                backdrop-blur-md text-black font-semibold rounded-xl hover:scale-105 hover:from-white/30 hover:to-orange-300/50 text-white transition duration-200 text-sm md:text-base slide-in-3">
+            <button className="mt-6 md:mt-8 px-6 py-3  bg-gradient-to-l from-orange-500/70 to-orange-400/60
+                
+                backdrop-blur-md text-blue-500 font-semibold rounded-xl hover:scale-105 hover:from-white/30 hover:to-orange-300/50 text-white transition duration-200 text-sm md:text-base slide-in-3">
               Get Started
             </button>
           </div>

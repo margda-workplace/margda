@@ -12,11 +12,12 @@ export default function Home() {
   const scrollRef = useRef(null);
 
   const navItems = [
-  { label: "Smart Tools", icon: "service-tools-rmvd-bg.gif" },
-  { label: "Service Exchange", icon: "briefcase-rmvd-bg.gif" },
-  { label: "Mart Seva", icon: "shopping-cart-rmvd-bg.gif" },
-  { label: "Login", icon: "login-rmvd-bg.gif" },
-];
+    { label: "CRM", icon: "crm-rmvd-bg.gif" },
+    { label: "Smart Tools", icon: "service-tools-rmvd-bg.gif" },
+    { label: "Service Exchange", icon: "briefcase-rmvd-bg.gif" },
+    { label: "Mart Seva", icon: "shopping-cart-rmvd-bg.gif" },
+    { label: "Login", icon: "login-rmvd-bg.gif" },
+  ];
 
   // Animation controls for scroll-on-reveal
   const fadeInVariants = {
@@ -170,8 +171,57 @@ export default function Home() {
         `}
       </style>
       <Navbar navItems={navItems} />
-        <Banner />
+      <Banner />
       <RevealOnScroll>
+        <RevealOnScroll>
+          <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
+            <div className="bg-white rounded-2xl sm:rounded-3xl px-6 sm:px-8 lg:px-12 py-10 sm:py-12 lg:py-16 text-center text-white shadow-lg">
+              {/* Heading */}
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl mb-4 sm:mb-6 leading-tight text-blue-500">
+                <span className="text-[#FA7D00]">Professional:</span> Create
+                Multiple Income Streams
+              </h2>
+
+              {/* Subtext */}
+              <p className="text-base sm:text-lg md:text-lg lg:text-lg mb-6 sm:mb-8 lg:mb-10 max-w-xs sm:max-w-md lg:max-w-lg xl:max-w-xl mx-auto leading-relaxed text-blue-500">
+                Margda Workplace platform empowers people to work from anywhere,
+                at any time, flexibly and complete the tasks based on their
+                interest, skills, and ability for instant payouts, fixed
+                long-term earnings and 24/7 automated income.
+              </p>
+
+              {/* Buttons */}
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 lg:gap-6 justify-center items-center">
+                <button
+                  className="w-full sm:w-auto  bg-gradient-to-l from-orange-500/70 to-orange-400/60
+                backdrop-blur-md hover:from-orange-500/70  hover:to-orange-400/60 text-blue-500 font-semibold px-6 sm:px-8 lg:px-10 py-3 sm:py-4 lg:py-5 rounded-full hover:scale-105 transition-transform transition-colors duration-200 flex items-center justify-center gap-2 shadow-lg text-sm sm:text-base lg:text-lg"
+                >
+                  Request a demo
+                  <svg
+                    className="w-4 h-4 sm:w-5 sm:h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
+                </button>
+
+                <button
+                  className="w-full sm:w-auto bg-gradient-to-l from-orange-500/70 to-orange-400/60 hover:border-1 from-orange-500/70 to-orange-400/60
+                backdrop-blur-md  text-blue-500 font-semibold px-6 sm:px-8 lg:px-10 py-3 sm:py-4 lg:py-5 rounded-full hover:text-blue-500 hover:scale-105 transition-transform transition-all duration-200 shadow-lg text-sm sm:text-base lg:text-lg"
+                >
+                  Start Free Trial
+                </button>
+              </div>
+            </div>
+          </section>
+        </RevealOnScroll>
         <div className="flex flex-col items-center my-8 lg:my-15 px-4">
           <h1 className="flex flex-col sm:flex-row items-center text-2xl sm:text-3xl lg:text-4xl mb-4 text-center">
             <img
@@ -181,14 +231,22 @@ export default function Home() {
               loading="lazy"
             />
             <span className="bg-gradient-to-r from-blue-500 to-blue-800 bg-clip-text text-transparent">
-              Unified Communication:
+              Unified Communication(CRM):
             </span>
           </h1>
 
-          <p className="text-center max-w-xl mb-6 text-sm sm:text-base px-4">
+          <p className="text-left max-w-xl mb-6 text-sm sm:text-base px-4">
             Browser-integrated SIM+API-based multichannel communication like
             Calls, WhatsApp, SMS, Email, Virtual Meetings, and Visit Tracking
             with clients&apos; timelines.
+            <div className="text-left">
+            <br />
+            1. CRM and Campaigns - Email, WhatsApp, SMS, Call and Social.
+            <br />
+            2. Unified communication with timeline.
+            <br />
+            3. Teamwork reports
+            </div>
           </p>
 
           {/* Sticky Button */}
@@ -468,8 +526,10 @@ export default function Home() {
                 </svg>
               </button>
 
-              <button className="w-full sm:w-auto hover:border-1 border-white bg-gradient-to-l from-white/30 to-orange-400/30 hover:from-orange-500/70  hover:to-orange-400/60
-                backdrop-blur-md text-white font-semibold px-6 sm:px-8 lg:px-10 py-3 sm:py-4 lg:py-5 rounded-full hover:text-white hover:scale-105 transition-transform transition-all duration-200 shadow-lg text-sm sm:text-base lg:text-lg">
+              <button
+                className="w-full sm:w-auto hover:border-1 border-white bg-gradient-to-l from-white/30 to-orange-400/30 hover:from-orange-500/70  hover:to-orange-400/60
+                backdrop-blur-md text-white font-semibold px-6 sm:px-8 lg:px-10 py-3 sm:py-4 lg:py-5 rounded-full hover:text-white hover:scale-105 transition-transform transition-all duration-200 shadow-lg text-sm sm:text-base lg:text-lg"
+              >
                 Start Free Trial
               </button>
             </div>
