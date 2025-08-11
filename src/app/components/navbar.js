@@ -27,17 +27,16 @@ export default function Navbar({navItems}) {
           duration: 0.3,
           ease: "easeOut",
         }}
-        className={`fixed top-0 w-full z-50 px-4 sm:px-6 py-3 flex items-center justify-between ${isTop ? "bg-transparent" : "bg-white/40 backdrop-blur-sm"}  `}
+        className={`fixed top-0 w-full z-50 px-4 sm:px-6 py-3 flex items-center justify-between ${isTop ? "bg-transparent" : "bg-gray-100"}  `}
       >
         
         {/* Logo Button */}
         <button
-          className="group flex items-center 
-                       bg-white                       
+          className={`group flex items-center 
+                       ${isTop ? "bg-white" : "bg-transparent"}                       
                        rounded-2xl 
                        px-6 py-3 
-                       shadow-lg 
-                       border border-gray-200
+                       shadow-lg                       
                        hover:from-white/30 hover:to-blue-400/40
                        hover:scale-105 
                        hover:shadow-xl
@@ -49,7 +48,7 @@ export default function Navbar({navItems}) {
                        ease-out
                        mx-3
                        text-white 
-                       font-medium"
+                       font-medium`}
         >
           <img
             src="/logo.webp"
@@ -64,11 +63,11 @@ export default function Navbar({navItems}) {
             <button 
               key={idx}
               className={`group flex items-center gap-2 
-             ${isTop ? "bg-white" : "bg-blue-400/60 "}
+             ${isTop ? "bg-white" : "bg-[linear-gradient(to_right,_#284E9E,_#6C17D3)] text-white"}
              rounded-xl 
              px-3 py-2 
              shadow-lg             
-             hover:bg-orange-400 hover:text-white
+              hover:text-white
              hover:scale-105 
              hover:shadow-xl
              hover:-translate-y-1

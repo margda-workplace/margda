@@ -9,7 +9,14 @@ import Navbar from "./components/navbar";
 import Banner from "./components/banner";
 import { Mails } from "lucide-react";
 import { SendHorizontal } from "lucide-react";
-import { FileUser } from "lucide-react";
+import {
+  FileUser,
+  GraduationCap,
+  TrendingUp,
+  Users,
+  BookOpen,
+  BarChart3,
+} from "lucide-react";
 
 export default function Home() {
   const scrollRef = useRef(null);
@@ -175,75 +182,78 @@ export default function Home() {
       </style>
       <Navbar navItems={navItems} />
       <Banner />
-      
-        <RevealOnScroll>
-          <div className="flex flex-col items-center my-8 lg:my-15 px-4">
-            <h1 className="flex flex-col sm:flex-row items-center text-2xl sm:text-3xl lg:text-4xl mb-4 text-center">
-              <img
-                src="communication.png"
-                className="h-8 sm:h-10 w-auto mb-2 sm:mb-0 sm:mr-2 transition-transform duration-300 hover:-rotate-12"
-                alt="comm"
-                loading="lazy"
-              />
-              <span className="bg-gradient-to-r from-blue-500 to-blue-800 bg-clip-text text-transparent">
-                Unified Communication(CRM):
-              </span>
-            </h1>
-
-            <div className="text-left max-w-xl mb-6 text-sm sm:text-base px-4">
-              Browser-integrated SIM+API-based multichannel communication like
-              Calls, WhatsApp, SMS, Email, Virtual Meetings, and Visit Tracking
-              with clients&apos; timelines.
-              <br />
-              <div className="space-y-2 text-left max-w-xl mb-6 text-sm sm:text-base px-4 my-2">
-                <div className="flex items-center gap-2">
-                  <Mails />
-                  <span>
-                    <link className="hover:text-blue-500"/>CRM and Campaigns - Email, WhatsApp, SMS, Call and Social.
-                  </span>
-                </div>
-
-                <div className="flex items-center gap-2">
-                  <SendHorizontal />
-                  <span><link className="hover:text-blue-500"/>Unified communication with timeline.</span>
-                </div>
-
-                <div className="flex items-center gap-2">
-                  <FileUser />
-                  <span><link className="hover:text-blue-500"/>Teamwork reports</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Sticky Button */}
-            <div className="top-16 sm:top-20 lg:top-24 z-30 flex justify-center mb-4">
-              <button className="flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full text-white text-sm sm:text-base font-semibold bg-gradient-to-r from-blue-500 to-blue-800 shadow-md hover:opacity-90 transition group hover:scale-105">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-3 sm:h-4 w-3 sm:w-4 transition-transform duration-200 group-hover:-rotate-20"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
-                </svg>
-                <span className="hidden sm:inline">
-                  Client Timeline Dashboard
-                </span>
-                <span className="sm:hidden">Timeline</span>
-              </button>
-            </div>
-
-            {/* Scrollable Cards Container */}
-            <ScrollableCardsContainer
-              cardData={cardData}
-              scrollRef={scrollRef}
-            />
-          </div>
-        </RevealOnScroll>
-      
 
       <RevealOnScroll>
         <div className="flex flex-col items-center my-8 lg:my-15 px-4">
+          <h1 className="flex flex-col sm:flex-row items-center text-2xl sm:text-3xl lg:text-4xl mb-4 text-center">
+            <img
+              src="communication.png"
+              className="h-8 sm:h-10 w-auto mb-2 sm:mb-0 sm:mr-2 transition-transform duration-300 hover:-rotate-12"
+              alt="comm"
+              loading="lazy"
+            />
+            <span className="bg-gradient-to-r from-blue-500 to-blue-800 bg-clip-text text-transparent">
+              Unified Communication(CRM):
+            </span>
+          </h1>
+
+          <div className="text-left max-w-xl mb-6 text-sm sm:text-base px-4">
+            Browser-integrated SIM+API-based multichannel communication like
+            Calls, WhatsApp, SMS, Email, Virtual Meetings, and Visit Tracking
+            with clients&apos; timelines.
+            <br />
+            <div className="space-y-2 text-left max-w-xl mb-6 text-sm sm:text-base px-4 my-2">
+              <div className="flex items-center gap-2">
+                <Mails />
+                <span>
+                  <link className="hover:text-blue-500" />
+                  CRM and Campaigns - Email, WhatsApp, SMS, Call and Social.
+                </span>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <SendHorizontal />
+                <span>
+                  <link className="hover:text-blue-500" />
+                  Unified communication with timeline.
+                </span>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <FileUser />
+                <span>
+                  <link className="hover:text-blue-500" />
+                  Teamwork reports
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Sticky Button */}
+          <div className="top-16 sm:top-20 lg:top-24 z-30 flex justify-center mb-4">
+            <button className="flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full text-white text-sm sm:text-base font-semibold bg-gradient-to-r from-blue-500 to-blue-800 shadow-md hover:opacity-90 transition group hover:scale-105">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-3 sm:h-4 w-3 sm:w-4 transition-transform duration-200 group-hover:-rotate-20"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
+              </svg>
+              <span className="hidden sm:inline">
+                Client Timeline Dashboard
+              </span>
+              <span className="sm:hidden">Timeline</span>
+            </button>
+          </div>
+
+          {/* Scrollable Cards Container */}
+          <ScrollableCardsContainer cardData={cardData} scrollRef={scrollRef} />
+        </div>
+      </RevealOnScroll>
+
+      <RevealOnScroll>
+        <div className="flex flex-col items-center my-8 lg:my-15 px-4 my-5">
           <h1 className="flex flex-col sm:flex-row items-center text-2xl sm:text-3xl lg:text-4xl mb-4 text-center">
             <img
               src="tool2.png"
@@ -252,59 +262,53 @@ export default function Home() {
               loading="lazy"
             />
             <span className="bg-gradient-to-r from-blue-500 to-blue-800 bg-clip-text text-transparent">
-              Smart Tools to Automate Processes
+              Smart Tools
             </span>
           </h1>
+          <p className="text-lg text-gray-600 mb-8">(AI-powered)</p>
+
           <div className="flex flex-col-reverse lg:flex-row items-start lg:items-center w-full max-w-6xl gap-8 my-10">
             <div className="w-full lg:w-1/2">
-              <h2 className="text-xl font-semibold mb-3 flex items-center">
-                <img
-                  src="folder.png"
-                  alt="Data Icon"
-                  className="h-6 w-6 mr-2"
-                  loading="lazy"
-                />
-                Data and Lead Generation:
-              </h2>
-              <ul className="list-disc list-inside space-y-1 text-sm sm:text-base marker:text-blue-600">
+              <div className="flex flex-col items-start space-y-3">
                 {[
-                  "Business Data - Local and Global",
-                  "Email campaigns",
-                  "Email verification",
-                  "Email warming",
-                  "Email CRM",
-                  "WhatsApp campaigns",
-                  "Business Data - Local and Global",
-                  "WhatsApp CRM",
-                  "SMS campaigns",
-                  "SMS CRM",
-                  "HR management",
-                  "Job posting",
-                  "Work-seekers data",
-                  "Teamwork reports",
-                  "Sales and Counselling",
-                  "Training and development",
-                  "Study organiser with progress meter",
-                  "Unified communication with timeline",
-                ].map((item, index) => (
-                  <li key={index}>
-                    <a
-                      href="#"
-                      className="text-black hover:underline hover:text-blue-600 transition-colors"
+                  {
+                    text: "Career and Education Counselling",
+                    icon: GraduationCap,
+                  },
+                  { text: "Marketing and Sales", icon: TrendingUp },
+                  { text: "Hiring and Recruitment", icon: Users },
+                  { text: "Teaching and Training", icon: BookOpen },
+                  { text: "Study and progress meter", icon: BarChart3 },
+                ].map((item, index) => {
+                  const IconComponent = item.icon;
+                  return (
+                    <button
+                      key={index}
+                      className="flex gap-3 bg-gradient-to-r from-[#284E9E] to-[#6C17D3] text-white px-6 py-3 rounded-xl hover:shadow-lg transition-all duration-300 hover:scale-105 text-sm sm:text-base font-medium w-max max-w-full"
                     >
-                      {item}
-                    </a>
-                  </li>
-                ))}
-              </ul>
+                      <IconComponent size={20} />
+                      {item.text}
+                    </button>
+                  );
+                })}
+              </div>
+
+              <div className="flex flex-col sm:flex-row gap-4 mt-8">
+                <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg transition-colors font-medium">
+                  Request a Demo
+                </button>
+                <button className="border border-blue-600 text-blue-600 hover:bg-blue-50 px-6 py-3 rounded-lg transition-colors font-medium">
+                  Start Free Trial
+                </button>
+              </div>
             </div>
 
             <div className="w-full lg:w-1/2 flex justify-center">
               <Image
-                src="/lead-generation-new.png" // Path relative to the 'public' directory
+                src="/lead-generation-new.png"
                 alt="Illustration"
-                width={500} // Adjust as needed
-                height={300} // Adjust as needed
+                width={500}
+                height={300}
                 style={{ animation: "float 3s ease-in-out infinite" }}
                 className="w-full max-w-md"
                 loading="lazy"
@@ -312,157 +316,96 @@ export default function Home() {
             </div>
           </div>
         </div>
+
+        <style jsx>{`
+          @keyframes float {
+            0%,
+            100% {
+              transform: translateY(0px);
+            }
+            50% {
+              transform: translateY(-10px);
+            }
+          }
+        `}</style>
       </RevealOnScroll>
 
-      {/* Service Exchange Section */}
       <RevealOnScroll>
-        <div className="w-screen min-h-[600px] md:min-h-[700px] lg:min-h-[800px] flex items-center justify-center px-4 sm:px-6 md:px-8 lg:px-16 xl:px-20 py-16 md:py-20 lg:py-24 bg-[linear-gradient(to_right,_#2976B5,_#001CAA)] text-white shadow-lg shadow-grey-300">
-          <div className="w-full max-w-7xl mx-auto flex flex-col gap-12 md:gap-16">
-            {/* Heading: Icon + Text */}
-            <div className="flex items-center gap-3 justify-center">
-              <img
-                src="customer-service.png"
-                alt="icon"
-                className="h-10 w-10 transition-transform duration-300 hover:-rotate-12"
-                loading="lazy"
-              />
-              <h2 className="text-3xl md:text-5xl ">
-                <span className="text-orange-500">Service</span> Exchange
-              </h2>
-            </div>
+  <div className="w-screen bg-gradient-to-r from-[#284E9E] to-[#6C17D3] text-white px-6 py-16 md:py-20">
+    <div className="max-w-6xl mx-auto flex flex-col gap-12">
+      
+      {/* Heading */}
+      <div className="flex flex-col items-center text-center gap-3">
+        <img src="customer-service.png" alt="icon" className="h-10 w-10" />
+        <h2 className="text-3xl md:text-5xl font-bold">
+          <span className="text-orange-500">Service</span> Exchange
+        </h2>
+      </div>
 
-            {/* Service Buttons */}
-            <div className="flex flex-col sm:flex-row justify-center gap-8 md:gap-10">
-              <div
-                className=" rounded-xl 
-                shadow-lg 
-                p-5 md:p-6 
-                flex items-center gap-3 
-                w-full sm:w-auto 
-                sm:min-w-[300px] md:min-w-[350px] 
-                bg-gradient-to-l from-orange-500/70 to-orange-400/60
-                backdrop-blur-md                
-                hover:from-white/30 hover:to-orange-400/40
-                hover:scale-105 
-                hover:shadow-xl
-                hover:-translate-y-1
-                active:scale-100
-                active:translate-y-0
-                transition-all 
-                duration-300 
-                ease-out
-                mx-3
-                text-white
-                font-medium"
+      {/* Two-Column Layout */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 items-start lg:gap-12">
+        
+        {/* Left Column - Service Required */}
+        <div className="max-w-md w-full mx-auto text-lg text-center lg:text-left lg:mx-0">
+          <div className="mb-6">
+            <span className="bg-orange-500 px-8 py-3 rounded-md font-semibold inline-block text-xl">
+              Service Required
+            </span>
+            <p className="mt-2 text-base opacity-80">
+              Outsource and get work done
+            </p>
+          </div>
+          <div className="flex flex-col gap-3">
+            {[
+              "Computer, I.T. and Apps",
+              "Career, Education and Training",
+              "Finance and Insurance",
+              "Health and Wellness",
+              "HR and Recruitment",
+              "Legal and Protection",
+              "Properties and Housing",
+              "Relationships & Matrimony",
+              "Sales, Support and Repair",
+              "Travel & Logistics",
+              "Sports and Recreation",
+              "Manufacturing and Production",
+            ].map((item, index) => (
+              <a
+                key={index}
+                href="#"
+                className="block text-white/90 hover:text-orange-400 transition-transform transform hover:scale-105 hover:font-bold text-lg"
               >
-                <img
-                  src="helpdesk-rmvd-bg.gif"
-                  alt="Service Required"
-                  className="h-8 w-8"
-                  loading="lazy"
-                />
-                <div>
-                  <a
-                    href="#"
-                    className="text-white text-lg font-semibold hover:underline"
-                  >
-                    Service Required
-                  </a>
-                  <p className="text-sm text-white">
-                    Outsource and get work done
-                  </p>
-                </div>
-              </div>
-
-              <div
-                className="  rounded-xl 
-                shadow-lg 
-                p-5 md:p-6 
-                flex items-center gap-3 
-                w-full sm:w-auto 
-                sm:min-w-[300px] md:min-w-[350px] 
-                bg-gradient-to-l from-orange-500/70 to-orange-400/60
-                backdrop-blur-md
-                border border-orange-400/20
-                hover:from-white/30 hover:to-orange-400/40
-                hover:scale-105 
-                hover:shadow-xl
-                hover:-translate-y-1
-                active:scale-100
-                active:translate-y-0
-                transition-all 
-                duration-300 
-                ease-out
-                mx-3
-                text-white
-                font-medium"
-              >
-                <img
-                  src="helpdesk2-rmvd-bg.gif"
-                  alt="Service Offered"
-                  className="h-8 w-8"
-                  loading="lazy"
-                />
-                <div>
-                  <a
-                    href="#"
-                    className="text-white text-lg font-semibold hover:underline"
-                  >
-                    Service Offered
-                  </a>
-                  <p className="text-sm text-white">
-                    Complete work to earn instantly
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Bottom Section: Image & Links */}
-            <div className="flex flex-col lg:flex-row items-center lg:items-start gap-12 md:gap-16 lg:gap-20">
-              {/* Left: Illustration */}
-              <div className="w-full lg:w-1/2 flex justify-center lg:justify-start">
-                <Image
-                  src="/heroimage2.png"
-                  alt="Illustration"
-                  width={500} // Adjust as needed
-                  height={300} // Adjust as needed
-                  style={{ animation: "float 3s ease-in-out infinite" }}
-                  className="w-full max-w-md md:max-w-lg lg:max-w-xl mx-30"
-                  loading="lazy"
-                />
-              </div>
-
-              {/* Right: Links List */}
-              <div className="w-full lg:w-1/2 lg:my-10 md:my-10 mx-30">
-                <ul className="list-disc list-inside space-y-1 text-xl  ">
-                  {[
-                    "Computer, I.T. and Apps",
-                    "Career, Education and Training",
-                    "Health and Wellness",
-                    "HR and Recruitment",
-                    "Legal and Protection",
-                    "Properties and Housing",
-                    "Relationships & Matrimony",
-                    "Sales, Support and Repair",
-                    "Travel & Logistics",
-                    "Sports and Recreation",
-                    "Manufacturing and Production",
-                  ].map((item, index) => (
-                    <li key={index}>
-                      <a href="#" className="hover:text-orange-500 transition">
-                        {item}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
+                {item}
+              </a>
+            ))}
           </div>
         </div>
-      </RevealOnScroll>
+
+        {/* Right Column - Service Offered */}
+        <div className="flex flex-col items-center text-center lg:items-end lg:text-right lg:pl-8 ">
+          <div className="mb-6 my-5">
+            <span className="bg-orange-500 px-8 py-3 rounded-md font-semibold inline-block text-xl">
+              Service Offered
+            </span>
+            <p className="mt-2 text-base opacity-80">
+              Complete tasks to earn instantly
+            </p>
+          </div>
+          <img
+            src="/serviceExchange.png"
+            alt="Service Exchange Illustration"
+            className="rounded-lg shadow-lg w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-2xl animate-float"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</RevealOnScroll>
+
+
       <RevealOnScroll>
         <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
-          <div className="bg-[linear-gradient(to_right,_#2976B5,_#001CAA)] rounded-2xl sm:rounded-3xl px-6 sm:px-8 lg:px-12 py-10 sm:py-12 lg:py-16 text-center text-white shadow-2xl">
+          <div className="bg-[linear-gradient(to_right,_#284E9E,_#6C17D3)]  rounded-2xl sm:rounded-3xl px-6 sm:px-8 lg:px-12 py-10 sm:py-12 lg:py-16 text-center text-white shadow-2xl">
             {/* Heading */}
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl mb-4 sm:mb-6 leading-tight">
               Ready to <span className="text-orange-400">boost</span> your

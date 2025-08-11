@@ -100,7 +100,7 @@ const Banner = () => {
 
       <section
         ref={bannerRef}
-        className={`w-screen h-max md:h-max lg:h-max flex items-center justify-center px-4 sm:px-6 md:px-8 lg:px-12 py-12 md:py-16 lg:py-20 bg-[linear-gradient(to_right,_#2976B5,_#001CAA)] text-white shadow-lg shadow-grey-300 slide-in-right ${
+        className={`w-screen h-max md:h-max lg:h-max flex items-center justify-center px-4 sm:px-6 md:px-8 lg:px-12 py-12 md:py-16 lg:py-20 bg-[linear-gradient(to_right,_#284E9E,_#6C17D3)] text-white shadow-lg shadow-grey-300 slide-in-right ${
           isVisible ? "active" : ""
         }`}
       >
