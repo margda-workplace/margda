@@ -18,9 +18,7 @@ export default function Footer() {
           {/* Column 1 - Company Info */}
           <div className="space-y-4 lg:mx-[-30px]">
             <img src="logo.webp" alt="Margda Logo" className="h-auto w-max mx-[-40px]" />
-            <p className="text-sm text-gray-600">
-              Automate Manage Automate Income
-            </p>
+            
             <div className="text-sm text-gray-600 space-y-2">
               <div className="flex gap-2">
                 <MapPin className="w-4 h-4 text-blue-600 flex-shrink-0" />
