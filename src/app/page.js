@@ -331,77 +331,78 @@ export default function Home() {
       </RevealOnScroll>
 
       <RevealOnScroll>
-  <div className="w-screen bg-gradient-to-r from-[#284E9E] to-[#6C17D3] text-white px-6 py-16 md:py-20">
-    <div className="max-w-6xl mx-auto flex flex-col gap-12">
-      
-      {/* Heading */}
-      <div className="flex flex-col items-center text-center gap-3">
-        <img src="customer-service.png" alt="icon" className="h-10 w-10" />
-        <h2 className="text-3xl md:text-5xl font-bold">
-          <span className="text-orange-500">Service</span> Exchange
-        </h2>
-      </div>
+        <div className="w-screen bg-gradient-to-r from-[#284E9E] to-[#6C17D3] text-white px-6 py-16 md:py-20">
+          <div className="max-w-6xl mx-auto flex flex-col gap-12">
+            {/* Heading */}
+            <div className="flex flex-col items-center text-center gap-3">
+              <img
+                src="customer-service.png"
+                alt="icon"
+                className="h-10 w-10"
+              />
+              <h2 className="text-3xl md:text-5xl font-bold">
+                <span className="text-orange-500">Service</span> Exchange
+              </h2>
+            </div>
 
-      {/* Two-Column Layout */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 items-start lg:gap-12">
-        
-        {/* Left Column - Service Required */}
-        <div className="max-w-md w-full mx-auto text-lg text-center lg:text-left lg:mx-0">
-          <div className="mb-6">
-            <span className="bg-orange-500 px-8 py-3 rounded-md font-semibold inline-block text-xl">
-              Service Required
-            </span>
-            <p className="mt-2 text-base opacity-80">
-              Outsource and get work done
-            </p>
-          </div>
-          <div className="flex flex-col gap-3">
-            {[
-              "Computer, I.T. and Apps",
-              "Career, Education and Training",
-              "Finance and Insurance",
-              "Health and Wellness",
-              "HR and Recruitment",
-              "Legal and Protection",
-              "Properties and Housing",
-              "Relationships & Matrimony",
-              "Sales, Support and Repair",
-              "Travel & Logistics",
-              "Sports and Recreation",
-              "Manufacturing and Production",
-            ].map((item, index) => (
-              <a
-                key={index}
-                href="#"
-                className="block text-white/90 hover:text-orange-400 transition-transform transform hover:scale-105 hover:font-bold text-lg"
-              >
-                {item}
-              </a>
-            ))}
+            {/* Two-Column Layout */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 items-start lg:gap-12">
+              {/* Left Column - Service Required */}
+              <div className="max-w-md w-full mx-auto text-lg text-center lg:text-left lg:mx-0">
+                <div className="mb-6">
+                  <span className="bg-orange-500 px-8 py-3 rounded-md font-semibold inline-block text-xl">
+                    Service Required
+                  </span>
+                  <p className="mt-2 text-base opacity-80">
+                    Outsource and get work done
+                  </p>
+                </div>
+                <div className="flex flex-col gap-3">
+                  {[
+                    "Computer, I.T. and Apps",
+                    "Career, Education and Training",
+                    "Finance and Insurance",
+                    "Health and Wellness",
+                    "HR and Recruitment",
+                    "Legal and Protection",
+                    "Properties and Housing",
+                    "Relationships & Matrimony",
+                    "Sales, Support and Repair",
+                    "Travel & Logistics",
+                    "Sports and Recreation",
+                    "Manufacturing and Production",
+                  ].map((item, index) => (
+                    <a
+                      key={index}
+                      href="#"
+                      className="block text-white/90 hover:text-orange-400 transition-transform transform hover:scale-105 hover:font-bold text-lg"
+                    >
+                      {item}
+                    </a>
+                  ))}
+                </div>
+              </div>
+
+              {/* Right Column - Service Offered */}
+              <div className="flex flex-col items-center text-center lg:items-end lg:text-right lg:pl-8 ">
+                <div className="mb-6 my-5">
+                  <span className="bg-orange-500 px-8 py-3 rounded-md font-semibold inline-block text-xl">
+                    Service Offered
+                  </span>
+                  <p className="mt-2 text-base opacity-80">
+                    Complete tasks to earn instantly
+                  </p>
+                </div>
+                <img
+                  src="/serviceExchange.png"
+                  alt="Service Exchange Illustration"
+                  className="rounded-lg shadow-lg w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-2xl animate-float"
+                />
+              </div>
+            </div>
           </div>
         </div>
-
-        {/* Right Column - Service Offered */}
-        <div className="flex flex-col items-center text-center lg:items-end lg:text-right lg:pl-8 ">
-          <div className="mb-6 my-5">
-            <span className="bg-orange-500 px-8 py-3 rounded-md font-semibold inline-block text-xl">
-              Service Offered
-            </span>
-            <p className="mt-2 text-base opacity-80">
-              Complete tasks to earn instantly
-            </p>
-          </div>
-          <img
-            src="/serviceExchange.png"
-            alt="Service Exchange Illustration"
-            className="rounded-lg shadow-lg w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-2xl animate-float"
-          />
-        </div>
-      </div>
-    </div>
-  </div>
-</RevealOnScroll>
-
+      </RevealOnScroll>
 
       <RevealOnScroll>
         <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
@@ -449,6 +450,48 @@ export default function Home() {
           </div>
         </section>
       </RevealOnScroll>
+
+      <RevealOnScroll>
+        <section className="w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="bg-white rounded-3xl shadow-sm border border-orange-200 p-6 sm:p-10 backdrop-blur-lg">
+            {/* Heading */}
+            <div className="text-center mb-8">
+              <h3 className="text-2xl sm:text-3xl font-bold text-blue-500">
+                Stay Updated
+              </h3>
+              <p className="text-blue-400 mt-2 text-sm sm:text-base">
+                Subscribe for the latest updates and offers.
+              </p>
+            </div>
+
+            {/* Form */}
+            <form className="flex flex-col sm:flex-row flex-wrap gap-4 justify-center">
+              <input
+                type="text"
+                placeholder="Your Name"
+                className="flex-1 min-w-[220px] px-5 py-3 rounded-full bg-white/15 placeholder-blue/70 text-black border border-orange-300  focus:ring-orange-400 transition"
+              />
+              <input
+                type="text"
+                placeholder="WhatsApp"
+                className="flex-1 min-w-[220px] px-5 py-3 rounded-full bg-white/15 placeholder-blue/70 text-black border border-orange-300  focus:ring-orange-400 transition"
+              />
+              <input
+                type="email"
+                placeholder="Email"
+                className="flex-1 min-w-[220px] px-5 py-3 rounded-full bg-white/15 placeholder-blue/70 text-black border border-orange-300  focus:ring-orange-400 transition"
+              />
+              <button
+                type="submit"
+                className="w-full sm:w-auto px-8 py-3 rounded-full bg-gradient-to-r from-orange-500 to-orange-400 hover:from-orange-600 hover:to-orange-500 text-white font-semibold transition-all duration-200 hover:scale-105 shadow-lg"
+              >
+                Subscribe
+              </button>
+            </form>
+          </div>
+        </section>
+      </RevealOnScroll>
+
       <RevealOnScroll>
         <Footer />
       </RevealOnScroll>
