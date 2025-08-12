@@ -21,12 +21,12 @@ import {
 export default function Home() {
   const scrollRef = useRef(null);
 
-  const navItems = [
-    { label: "CRM", icon: "crm-rmvd-bg.gif" },
-    { label: "Smart Tools", icon: "service-tools-rmvd-bg.gif" },
-    { label: "Service Exchange", icon: "briefcase-rmvd-bg.gif" },
-    { label: "Mart Seva", icon: "shopping-cart-rmvd-bg.gif" },
-    { label: "Login", icon: "login-rmvd-bg.gif" },
+   const navItems = [
+    { label: "CRM", icon: "crm-rmvd-bg.gif",href: "/smart-tools" },
+    { label: "Smart Tools", icon: "service-tools-rmvd-bg.gif",href: "/smart-tools" },
+    { label: "Service Exchange", icon: "briefcase-rmvd-bg.gif",href: "/smart-tools" },
+    { label: "Mart Seva", icon: "shopping-cart-rmvd-bg.gif",href: "/smart-tools" },
+    { label: "Login", icon: "login-rmvd-bg.gif",href: "/login" },
   ];
 
   // Animation controls for scroll-on-reveal
