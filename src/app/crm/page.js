@@ -7,6 +7,7 @@ import AddData from "../components/addData";
 import RemoveData from "../components/removeData";
 import CrmNavbar from "../components/crmNavbar";
 import VerifyEmails from "../components/verifyEmails";
+import CompleteProfile from "../components/completeProfile";
 
 const Page = () => {
   const [activeComponent, setActiveComponent] = useState(null); // Track which component to show
@@ -37,12 +38,13 @@ const Page = () => {
         return <VerifyEmails sidebarCollapsed={sidebarCollapsed}/>
       default:
         return (
-          <div className="p-6">
-            <div className="bg-white rounded-lg shadow-sm p-8 text-center">
-              <h2 className="text-2xl font-semibold text-gray-700 mb-4">Welcome to CRM</h2>
-              <p className="text-gray-500">Select an option from the sidebar to get started.</p>
-            </div>
-          </div>
+          // <div className="p-6">
+          //   <div className="bg-white rounded-lg shadow-sm p-8 text-center">
+          //     <h2 className="text-2xl font-semibold text-gray-700 mb-4">Welcome to CRM</h2>
+          //     <p className="text-gray-500">Select an option from the sidebar to get started.</p>
+          //   </div>
+          // </div>
+          <CompleteProfile/>
         );
     }
   };
