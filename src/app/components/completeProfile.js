@@ -121,9 +121,9 @@ const CompleteProfile = () => {
       className="space-y-6"
     >
       {/* Profile Picture Upload */}
-      <div className="flex flex-col items-center space-y-4">
+      <div className="flex flex-col items-center space-y-4 sm:px-5">
         <div className="relative">
-          <div className="w-24 h-24 bg-gray-200 rounded-full flex items-center justify-center border-4 border-blue-500 overflow-hidden">
+          <div className="w-24 h-24 bg-gray-200 rounded-full flex items-center justify-center border-4 border-blue-500 overflow-hidden ">
             {profileData.profilePicture ? (
               <img 
                 src={profileData.profilePicture} 
