@@ -85,30 +85,6 @@ const SignIn = ({
       <div className="flex justify-center lg:justify-end order-2 lg:order-2">
         <div className="w-full max-w-md bg-white rounded-2xl shadow-xl border border-gray-200 p-8">
           
-          {/* Tab Navigation */}
-          <div className="flex mb-6">
-            <button
-              onClick={() => setActiveTab('login')}
-              className={`flex-1 py-2 px-4 text-center font-semibold rounded-l-lg transition-colors ${
-                activeTab === 'login'
-                  ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white'
-                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-              }`}
-            >
-              Login
-            </button>
-            <button
-              onClick={() => setActiveTab('register')}
-              className={`flex-1 py-2 px-4 text-center font-semibold rounded-r-lg transition-colors ${
-                activeTab === 'register'
-                  ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white'
-                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-              }`}
-            >
-              Register
-            </button>
-          </div>
-
           <AnimatePresence mode="wait">
             {activeTab === 'login' ? (
               <motion.div
@@ -121,19 +97,11 @@ const SignIn = ({
                 {/* Login Header */}
                 <div className="text-center mb-8">
                   <div className="flex items-center justify-center gap-2 mb-4">
-                    <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-                      <svg
-                        className="w-5 h-5 text-white"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                    </div>
+                    <img
+                      src="margda-v.png"
+                      alt="Margda Logo"
+                      className="w-8 h-8 object-contain"
+                    />
                     <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">
                       Login
                     </h1>
@@ -141,7 +109,7 @@ const SignIn = ({
                 </div>
 
                 {/* Login Form */}
-                <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="space-y-6">
                   {/* WhatsApp Number Field */}
                   <div className="space-y-2">
                     <div className="relative">
@@ -224,30 +192,23 @@ const SignIn = ({
 
                   {/* Submit Button */}
                   <button
-                    type="submit"
+                    type="button"
+                    onClick={handleSubmit}
                     className="w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 hover:scale-[1.02] transform shadow-lg"
                   >
                     Login
                   </button>
 
                   {/* Footer Links */}
-                  <div className="flex flex-col sm:flex-row justify-center items-center gap-4 pt-4 border-t border-gray-200">
+                  <div className="flex justify-center items-center pt-4 border-t border-gray-200">
                     <a
                       href="#"
                       className="text-blue-600 hover:text-blue-800 text-sm transition-colors hover:underline"
                     >
                       Forgot Password?
                     </a>
-                    <span className="text-gray-400 text-sm hidden sm:inline">||</span>
-                    <button
-                      type="button"
-                      onClick={() => setActiveTab('register')}
-                      className="text-blue-600 hover:text-blue-800 text-sm transition-colors hover:underline bg-none border-none cursor-pointer"
-                    >
-                      Register
-                    </button>
                   </div>
-                </form>
+                </div>
               </motion.div>
             ) : (
               <motion.div
@@ -260,19 +221,11 @@ const SignIn = ({
                 {/* Register Header */}
                 <div className="text-center mb-8">
                   <div className="flex items-center justify-center gap-2 mb-4">
-                    <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-                      <svg
-                        className="w-5 h-5 text-white"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                    </div>
+                    <img
+                      src="margda-v.png"
+                      alt="Margda Logo"
+                      className="w-8 h-8 object-contain"
+                    />
                     <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">
                       Register
                     </h1>
@@ -326,21 +279,34 @@ const SignIn = ({
                     <MessageCircle className="h-5 w-5" />
                     Click to WhatsApp
                   </button>
-
-                  {/* Back to Login */}
-                  <div className="text-center pt-4 border-t border-gray-200">
-                    <button
-                      type="button"
-                      onClick={() => setActiveTab('login')}
-                      className="text-blue-600 hover:text-blue-800 text-sm transition-colors hover:underline bg-none border-none cursor-pointer"
-                    >
-                      Already have an account? Login
-                    </button>
-                  </div>
                 </div>
               </motion.div>
             )}
           </AnimatePresence>
+
+          {/* Tab Navigation - Moved to Bottom */}
+          <div className="flex mt-6 pt-6 border-t border-gray-200">
+            <button
+              onClick={() => setActiveTab('login')}
+              className={`flex-1 py-2 px-4 text-center font-semibold rounded-l-lg transition-colors ${
+                activeTab === 'login'
+                  ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white'
+                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+              }`}
+            >
+              Login
+            </button>
+            <button
+              onClick={() => setActiveTab('register')}
+              className={`flex-1 py-2 px-4 text-center font-semibold rounded-r-lg transition-colors ${
+                activeTab === 'register'
+                  ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white'
+                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+              }`}
+            >
+              Register
+            </button>
+          </div>
         </div>
       </div>
     </>
