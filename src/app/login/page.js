@@ -4,7 +4,7 @@ import Image from "next/image";
 import SignIn from "../components/signIn";
 import Navbar from "../components/navbar";
 
-const page = () => {
+const Page = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loginData, setLoginData] = useState({
     loginId: "",
@@ -84,4 +84,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
