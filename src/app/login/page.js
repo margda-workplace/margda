@@ -14,9 +14,21 @@ export default function LoginPage() {
 
   const navItems = [
     { label: "CRM", icon: "crm-rmvd-bg.gif", href: "/smart-tools" },
-    { label: "Smart Tools", icon: "service-tools-rmvd-bg.gif", href: "/smart-tools" },
-    { label: "Service Exchange", icon: "briefcase-rmvd-bg.gif", href: "/smart-tools" },
-    { label: "Mart Seva", icon: "shopping-cart-rmvd-bg.gif", href: "/smart-tools" },
+    {
+      label: "Smart Tools",
+      icon: "service-tools-rmvd-bg.gif",
+      href: "/smart-tools",
+    },
+    {
+      label: "Service Exchange",
+      icon: "briefcase-rmvd-bg.gif",
+      href: "/smart-tools",
+    },
+    {
+      label: "Mart Seva",
+      icon: "shopping-cart-rmvd-bg.gif",
+      href: "/smart-tools",
+    },
     { label: "Login", icon: "login-rmvd-bg.gif", href: "/login" },
   ];
 
@@ -36,9 +48,10 @@ export default function LoginPage() {
   return (
     <>
       <Navbar navItems={navItems} />
-      <div className="min-h-screen bg-purple-200 flex items-center justify-center px-4 py-8 sm:py-12">
+      <div className="min-h-screen bg-purple-200 flex items-center justify-center px-4 py-8 sm:py-12 pt-24">
         <div className="w-full max-w-6xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+            {/* Image Section */}
             <div className="flex justify-center lg:justify-start order-1 lg:order-1">
               <div className="relative">
                 <Image
@@ -52,6 +65,8 @@ export default function LoginPage() {
                 />
               </div>
             </div>
+
+            {/* Form Section */}
             <SignIn
               handleSubmit={handleSubmit}
               loginData={loginData}
@@ -63,6 +78,7 @@ export default function LoginPage() {
             />
           </div>
         </div>
+
         <style jsx>{`
           @keyframes float {
             0%,
