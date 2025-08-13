@@ -24,7 +24,15 @@ import {
 } from "lucide-react";
 import ManageLists from "./manageLists";
 
-const Sidebar = ({ onAddListClick, onAddDataClick, onRemoveDataClick, onVerifyEmailsClick , onManageListsClick,onSidebarStateChange }) => {
+const Sidebar = ({
+  onAddListClick,
+  onAddDataClick,
+  onRemoveDataClick,
+  onVerifyEmailsClick,
+  onManageListsClick,
+  onDataExtractorClick,
+  onSidebarStateChange,
+}) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [openMenus, setOpenMenus] = useState(new Set());
   const [isMobile, setIsMobile] = useState(false);
@@ -66,12 +74,14 @@ const Sidebar = ({ onAddListClick, onAddDataClick, onRemoveDataClick, onVerifyEm
 
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
   const toggleMenu = (menu) => {
-    setOpenMenus(prev => {
+    setOpenMenus((prev) => {
       const newSet = new Set(prev);
       if (newSet.has(menu)) {
         // Close this menu and all its children
-        const menusToClose = Array.from(newSet).filter(m => m.startsWith(menu));
-        menusToClose.forEach(m => newSet.delete(m));
+        const menusToClose = Array.from(newSet).filter((m) =>
+          m.startsWith(menu)
+        );
+        menusToClose.forEach((m) => newSet.delete(m));
       } else {
         // Open this menu
         newSet.add(menu);
@@ -109,22 +119,20 @@ const Sidebar = ({ onAddListClick, onAddDataClick, onRemoveDataClick, onVerifyEm
       icon: Briefcase,
       children: [
         {
-          title: "CRM List",
+          title: "Contact List",
           children: [
             { title: "➕ Add List", action: onAddListClick },
+            { title: "➕ Data Extractor", action: onDataExtractorClick },
             { title: "➕ Add Data", action: onAddDataClick },
             { title: "➖ Remove Data", action: onRemoveDataClick },
             { title: "📧 Verify Emails", action: onVerifyEmailsClick },
             { title: "📋 Manage Lists", action: onManageListsClick },
           ],
         },
-        { title: "CRM Template" },
-        { title: "Email CRM" },
-        { title: "WhatsApp CRM" },
-        { title: "SMS CRM" },
-        { title: "Calls CRM" },
-        { title: "Social CRM" },
+        { title: "Message Template" },
+        { title: "Settings" },
         { title: "Unified CRM" },
+        { title: "Reports" },
       ],
     },
     {
@@ -160,7 +168,7 @@ const Sidebar = ({ onAddListClick, onAddDataClick, onRemoveDataClick, onVerifyEm
   const handleMenuClick = (e, key, hasChildren, action) => {
     e.preventDefault();
     e.stopPropagation();
-    
+
     if (hasChildren) {
       toggleMenu(key);
     } else if (action) {
@@ -174,20 +182,24 @@ const Sidebar = ({ onAddListClick, onAddDataClick, onRemoveDataClick, onVerifyEm
       const hasChildren = item.children && item.children.length > 0;
       const Icon = item.icon;
       const isOpen = openMenus.has(key);
-      
+
       return (
         <li key={key} className="w-full">
           <button
             type="button"
             onClick={(e) => handleMenuClick(e, key, hasChildren, item.action)}
             className={`flex items-center w-full p-2 text-gray-900 rounded-lg hover:bg-gray-100 transition-colors duration-200 group relative ${
-              level > 0 ? 'text-sm' : ''
+              level > 0 ? "text-sm" : ""
             }`}
           >
             {Icon && <Icon className="w-5 h-5 text-blue-500" />}
             {isSidebarOpen && (
               <>
-                <span className={`flex-1 text-left ${Icon ? 'ml-3' : level > 0 ? 'ml-4' : ''}`}>
+                <span
+                  className={`flex-1 text-left ${
+                    Icon ? "ml-3" : level > 0 ? "ml-4" : ""
+                  }`}
+                >
                   {item.title}
                 </span>
                 {hasChildren && (
@@ -211,7 +223,9 @@ const Sidebar = ({ onAddListClick, onAddDataClick, onRemoveDataClick, onVerifyEm
               animate={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
-              className={`mt-1 space-y-1 overflow-hidden ${level === 0 ? 'pl-6' : 'pl-8'}`}
+              className={`mt-1 space-y-1 overflow-hidden ${
+                level === 0 ? "pl-6" : "pl-8"
+              }`}
             >
               {renderMenu(item.children, `${key}-`, level + 1)}
             </motion.ul>
@@ -395,7 +409,9 @@ const Sidebar = ({ onAddListClick, onAddDataClick, onRemoveDataClick, onVerifyEm
 
               {/* Main Menu */}
               <div className="bg-white p-4 rounded-lg shadow">
-                <ul className="space-y-1 text-sm">{renderMenu(menuItems, "", 0)}</ul>
+                <ul className="space-y-1 text-sm">
+                  {renderMenu(menuItems, "", 0)}
+                </ul>
               </div>
             </div>
           </motion.aside>

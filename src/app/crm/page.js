@@ -8,6 +8,7 @@ import CrmNavbar from "../components/crmNavbar";
 import VerifyEmails from "../components/verifyEmails";
 import CompleteProfile from "../components/completeProfile";
 import ManageLists from "../components/manageLists";
+import DataExtractor from "../components/dataExtractor";
 
 const Page = () => {
   const [activeComponent, setActiveComponent] = useState(null); // Track which component to show
@@ -38,6 +39,8 @@ const Page = () => {
         return <VerifyEmails sidebarCollapsed={sidebarCollapsed} />;
       case "manageLists":
         return <ManageLists sidebarCollapsed={sidebarCollapsed} />;
+        case "dataExtractor":
+        return <DataExtractor sidebarCollapsed={sidebarCollapsed} />
       default:
         return (
           // <div className="p-6">
@@ -63,6 +66,7 @@ const Page = () => {
         onRemoveDataClick={() => handleComponentChange("removeData")}
         onVerifyEmailsClick={() => handleComponentChange("verifyEmail")}
         onManageListsClick = {()=>handleComponentChange("manageLists")}
+        onDataExtractorClick={()=>handleComponentChange("dataExtractor")}
         onSidebarStateChange={handleSidebarStateChange}
       />
 
