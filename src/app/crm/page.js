@@ -9,6 +9,7 @@ import VerifyEmails from "../components/verifyEmails";
 import CompleteProfile from "../components/completeProfile";
 import ManageLists from "../components/manageLists";
 import DataExtractor from "../components/dataExtractor";
+import EmailTemplate from "../components/emailTemplate";
 
 const Page = () => {
   const [activeComponent, setActiveComponent] = useState(null); // Track which component to show
@@ -40,7 +41,9 @@ const Page = () => {
       case "manageLists":
         return <ManageLists sidebarCollapsed={sidebarCollapsed} />;
         case "dataExtractor":
-        return <DataExtractor sidebarCollapsed={sidebarCollapsed} />
+        return <DataExtractor sidebarCollapsed={sidebarCollapsed} />;
+        case "emailTemplate":
+        return <EmailTemplate sidebarCollapsed={sidebarCollapsed}/>
       default:
         return (
           // <div className="p-6">
@@ -67,6 +70,7 @@ const Page = () => {
         onVerifyEmailsClick={() => handleComponentChange("verifyEmail")}
         onManageListsClick = {()=>handleComponentChange("manageLists")}
         onDataExtractorClick={()=>handleComponentChange("dataExtractor")}
+        onEmailTemplateClick={()=>handleComponentChange("emailTemplate")}
         onSidebarStateChange={handleSidebarStateChange}
       />
 

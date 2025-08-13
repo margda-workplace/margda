@@ -31,6 +31,7 @@ const Sidebar = ({
   onVerifyEmailsClick,
   onManageListsClick,
   onDataExtractorClick,
+  onEmailTemplateClick,
   onSidebarStateChange,
 }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -129,7 +130,13 @@ const Sidebar = ({
             { title: "📋 Manage Lists", action: onManageListsClick },
           ],
         },
-        { title: "Message Template" },
+        { title: "Message Template",
+          icon: "",
+          children:[
+            {title: "📧 Email Template", action: onEmailTemplateClick},
+            {title: "📋 A/B Test", action:""}
+          ]
+         },
         { title: "Settings" },
         { title: "Unified CRM" },
         { title: "Reports" },
