@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from "react";
-import Navbar from "../components/navbar";
 import Sidebar from "../components/sidebar";
 import AddList from "../components/addList";
 import AddData from "../components/addData";
@@ -8,6 +7,7 @@ import RemoveData from "../components/removeData";
 import CrmNavbar from "../components/crmNavbar";
 import VerifyEmails from "../components/verifyEmails";
 import CompleteProfile from "../components/completeProfile";
+import ManageLists from "../components/manageLists";
 
 const Page = () => {
   const [activeComponent, setActiveComponent] = useState(null); // Track which component to show
@@ -28,14 +28,16 @@ const Page = () => {
   // Render the active component
   const renderActiveComponent = () => {
     switch (activeComponent) {
-      case 'addList':
+      case "addList":
         return <AddList sidebarCollapsed={sidebarCollapsed} />;
-      case 'addData':
+      case "addData":
         return <AddData sidebarCollapsed={sidebarCollapsed} />;
-      case 'removeData':
+      case "removeData":
         return <RemoveData sidebarCollapsed={sidebarCollapsed} />;
-        case 'verifyEmail':
-        return <VerifyEmails sidebarCollapsed={sidebarCollapsed}/>
+      case "verifyEmail":
+        return <VerifyEmails sidebarCollapsed={sidebarCollapsed} />;
+      case "manageLists":
+        return <ManageLists sidebarCollapsed={sidebarCollapsed} />;
       default:
         return (
           // <div className="p-6">
@@ -44,7 +46,7 @@ const Page = () => {
           //     <p className="text-gray-500">Select an option from the sidebar to get started.</p>
           //   </div>
           // </div>
-          <CompleteProfile/>
+          <CompleteProfile />
         );
     }
   };
@@ -56,10 +58,11 @@ const Page = () => {
 
       {/* Sidebar */}
       <Sidebar
-        onAddListClick={() => handleComponentChange('addList')}
-        onAddDataClick={() => handleComponentChange('addData')}
-        onRemoveDataClick={() => handleComponentChange('removeData')}
-        onVerifyEmailsClick = {()=> handleComponentChange('verifyEmail')}
+        onAddListClick={() => handleComponentChange("addList")}
+        onAddDataClick={() => handleComponentChange("addData")}
+        onRemoveDataClick={() => handleComponentChange("removeData")}
+        onVerifyEmailsClick={() => handleComponentChange("verifyEmail")}
+        onManageListsClick = {()=>handleComponentChange("manageLists")}
         onSidebarStateChange={handleSidebarStateChange}
       />
 

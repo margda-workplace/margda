@@ -22,8 +22,9 @@ import {
   Menu,
   X,
 } from "lucide-react";
+import ManageLists from "./manageLists";
 
-const Sidebar = ({ onAddListClick, onAddDataClick, onRemoveDataClick, onVerifyEmailsClick ,onSidebarStateChange }) => {
+const Sidebar = ({ onAddListClick, onAddDataClick, onRemoveDataClick, onVerifyEmailsClick , onManageListsClick,onSidebarStateChange }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [openMenus, setOpenMenus] = useState(new Set());
   const [isMobile, setIsMobile] = useState(false);
@@ -114,7 +115,7 @@ const Sidebar = ({ onAddListClick, onAddDataClick, onRemoveDataClick, onVerifyEm
             { title: "➕ Add Data", action: onAddDataClick },
             { title: "➖ Remove Data", action: onRemoveDataClick },
             { title: "📧 Verify Emails", action: onVerifyEmailsClick },
-            { title: "📋 Manage Lists" },
+            { title: "📋 Manage Lists", action: onManageListsClick },
           ],
         },
         { title: "CRM Template" },
