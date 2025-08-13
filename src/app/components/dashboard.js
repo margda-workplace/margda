@@ -46,7 +46,9 @@ import {
 } from "lucide-react";
 import CompleteProfile from "./completeProfile";
 
-const Dashboard = () => {
+// The main page component must start with an uppercase letter.
+// We'll rename Dashboard to Page and make it the default export.
+const Page = () => {
   const [mounted, setMounted] = useState(false);
   const [currentRole, setCurrentRole] = useState("Super Admin"); // Super Admin, Team Admin, User
   const [activeSection, setActiveSection] = useState("dashboard");
@@ -748,23 +750,11 @@ const Dashboard = () => {
                           <td className="p-4">{item.profession}</td>
                           <td className="p-4">{item.qualification}</td>
                           <td className="p-4">{item.institute}</td>
-                          <td className="p-4">
-                            <div className="flex flex-wrap gap-1">
-                              {item.skills.map((skill, idx) => (
-                                <span key={idx} className="bg-gray-100 text-gray-800 px-2 py-1 rounded text-xs">
-                                  {skill}
-                                </span>
-                              ))}
-                            </div>
-                          </td>
+                          <td className="p-4">{item.skills.join(', ')}</td>
                           <td className="p-4">{item.cvBio}</td>
                           <td className="p-4">{item.profile}</td>
                           <td className="p-4">
-                            <span className={`px-2 py-1 rounded-full text-xs ${
-                              item.skillsTest === "Completed" 
-                                ? "bg-green-100 text-green-800" 
-                                : "bg-yellow-100 text-yellow-800"
-                            }`}>
+                            <span className={`px-2 py-1 rounded-full text-xs font-medium ${item.skillsTest === 'Completed' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
                               {item.skillsTest}
                             </span>
                           </td>
@@ -772,66 +762,42 @@ const Dashboard = () => {
                           <td className="p-4">{item.interview}</td>
                           <td className="p-4">{item.documents}</td>
                           <td className="p-4">{item.loi}</td>
+                          <td className="p-4">{item.followUpDate}</td>
                           <td className="p-4">
-                            <div className="flex items-center gap-1 text-xs">
-                              <Calendar size={12} />
-                              {item.followUpDate}
-                            </div>
+                            <span className={`font-medium ${item.lateDays > 0 ? 'text-red-500' : 'text-green-500'}`}>
+                              {item.lateDays}
+                            </span>
                           </td>
                           <td className="p-4">
-                            <div className={`flex items-center gap-1 text-xs ${
-                              item.lateDays > 0 ? "text-red-600" : "text-green-600"
-                            }`}>
-                              <Clock size={12} />
-                              ({item.lateDays})
-                            </div>
+                            <span className={`px-2 py-1 rounded-full text-xs font-medium ${item.timeline === 'On track' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                              {item.timeline}
+                            </span>
                           </td>
-                          <td className="p-4">{item.timeline}</td>
                           <td className="p-4">{item.remarks}</td>
                           <td className="p-4">
-                            <div className="flex items-center gap-2">
-                              <button 
-                                className="p-1 hover:bg-gray-100 rounded"
-                                title="Change"
-                              >
-                                <Edit3 size={14} className="text-blue-600" />
-                              </button>
-                              <button 
-                                className="p-1 hover:bg-gray-100 rounded"
-                                title="Share"
-                              >
-                                <Share2 size={14} className="text-green-600" />
-                              </button>
-                              <ActionDropdown item={item} />
-                            </div>
+                            <ActionDropdown item={item} />
                           </td>
                         </tr>
                       ))}
                     </tbody>
                   </table>
-                </div>
-
-                {/* Pagination */}
-                <div className="bg-white p-4 rounded-xl shadow">
-                  <div className="flex items-center justify-between">
-                    <div className="text-sm text-gray-700">
-                      Showing {startIndex + 1} to {Math.min(startIndex + itemsPerPage, filteredData.length)} of {filteredData.length} records
-                    </div>
-                    <div className="flex items-center gap-2">
+                  {/* Pagination */}
+                  <div className="flex items-center justify-between p-4 border-t border-gray-200">
+                    <span className="text-sm text-gray-600">
+                      Showing {startIndex + 1} to {Math.min(startIndex + itemsPerPage, filteredData.length)} of {filteredData.length} entries
+                    </span>
+                    <div className="flex gap-2">
                       <button
-                        onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
+                        onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                         disabled={currentPage === 1}
-                        className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md disabled:opacity-50 hover:bg-gray-300 transition-colors"
+                        className="px-4 py-2 border rounded-md text-sm font-medium hover:bg-gray-100 disabled:opacity-50"
                       >
                         Previous
                       </button>
-                      <span className="px-3 py-2 bg-blue-100 text-blue-700 rounded-md">
-                        {currentPage}
-                      </span>
                       <button
-                        onClick={() => setCurrentPage(currentPage + 1)}
-                        disabled={currentPage >= Math.ceil(filteredData.length / itemsPerPage)}
-                        className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md disabled:opacity-50 hover:bg-gray-300 transition-colors"
+                        onClick={() => setCurrentPage(prev => prev + 1)}
+                        disabled={startIndex + itemsPerPage >= filteredData.length}
+                        className="px-4 py-2 border rounded-md text-sm font-medium hover:bg-gray-100 disabled:opacity-50"
                       >
                         Next
                       </button>
@@ -847,4 +813,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default Page;
