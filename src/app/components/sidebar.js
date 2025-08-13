@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
 import {
   MessageSquare,
   Database,
@@ -32,6 +33,7 @@ const Sidebar = ({
   onManageListsClick,
   onDataExtractorClick,
   onEmailTemplateClick,
+  onLogoClick,
   onSidebarStateChange,
 }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -130,13 +132,14 @@ const Sidebar = ({
             { title: "📋 Manage Lists", action: onManageListsClick },
           ],
         },
-        { title: "Message Template",
+        {
+          title: "Message Template",
           icon: "",
-          children:[
-            {title: "📧 Email Template", action: onEmailTemplateClick},
-            {title: "📋 A/B Test", action:""}
-          ]
-         },
+          children: [
+            { title: "📧 Email Template", action: onEmailTemplateClick },
+            { title: "📋 A/B Test", action: "" },
+          ],
+        },
         { title: "Settings" },
         { title: "Unified CRM" },
         { title: "Reports" },
@@ -287,11 +290,16 @@ const Sidebar = ({
               <div className="flex items-center justify-between px-3 py-4 border-b border-gray-200">
                 <div className="flex items-center gap-2">
                   {isSidebarOpen ? (
-                    <img
-                      src="/logo.webp"
-                      alt="Margda Logo"
-                      className="h-8 w-auto"
-                    />
+                    <button
+                      onClick={onLogoClick}
+                      className="focus:outline-none"
+                    >
+                      <img
+                        src="/logo.webp"
+                        alt="Margda Logo"
+                        className="h-8 w-auto cursor-pointer"
+                      />
+                    </button>
                   ) : (
                     ""
                   )}

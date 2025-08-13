@@ -17,7 +17,7 @@ import {
   Menu
 } from 'lucide-react';
 
-const CrmNavbar = ({ sidebarCollapsed, onToggleSidebar }) => {
+const CrmNavbar = ({ sidebarCollapsed, onToggleSidebar, onProfileClick }) => {
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
   const [isNavDropdownOpen, setIsNavDropdownOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -69,7 +69,7 @@ const CrmNavbar = ({ sidebarCollapsed, onToggleSidebar }) => {
         
         <div className="flex-grow flex items-center justify-start min-w-0">
           {/* Desktop Navigation - Hidden on mobile, adjusted for tablet */}
-          <div className="hidden md:flex items-center space-x-1 lg:space-x-2"> {/* space-x-1 for md, space-x-2 for lg */}
+          <div className="hidden md:flex items-center space-x-1 lg:space-x-2">
             {navItems.map((item) => (
               <NavButton
                 key={item.label}
@@ -94,7 +94,7 @@ const CrmNavbar = ({ sidebarCollapsed, onToggleSidebar }) => {
                 <Menu className="w-5 h-5" />
               </button>
 
-              {/* Mobile Navigation Dropdown (higher z so it appears above sidebar when needed) */}
+              {/* Mobile Navigation Dropdown */}
               <div
                 id="mobile-nav-dropdown"
                 className={`absolute right-0 top-full mt-2 w-56 bg-white rounded-lg shadow-xl border border-gray-200 py-2 z-70 transition-all duration-200 transform origin-top ${
@@ -171,7 +171,7 @@ const CrmNavbar = ({ sidebarCollapsed, onToggleSidebar }) => {
                   <DropdownItem icon={Share2} iconColor="text-pink-500" label="Data Share" />
                   <DropdownItem icon={Shield} iconColor="text-orange-500" label="Authorisation" />
                   <DropdownItem icon={Crown} iconColor="text-yellow-500" label="Knowledge Royalty" />
-                  <DropdownItem icon={User} iconColor="text-purple-500" label="Profile" />
+                  <DropdownItem icon={User} iconColor="text-purple-500" label="Profile" onClick={onProfileClick} />
                   <DropdownItem icon={Award} iconColor="text-amber-500" label="Credential" />
                   <DropdownItem icon={Mail} iconColor="text-blue-400" label="Email App Password" />
                   <DropdownItem icon={Grid3X3} iconColor="text-gray-600" label="WhatsApp Scan" />
@@ -193,7 +193,7 @@ const NavButton = ({ icon: Icon, label, isActive = false }) => {
     return (
       <button className="flex items-center space-x-2 bg-orange-500 text-white px-3 py-2 rounded-lg shadow-sm border border-orange-500">
         <Icon className="w-4 h-4" />
-        <span className="font-medium text-sm hidden lg:block">{label}</span> {/* The key change is here */}
+        <span className="font-medium text-sm hidden lg:block">{label}</span>
       </button>
     );
   }
@@ -208,8 +208,11 @@ const NavButton = ({ icon: Icon, label, isActive = false }) => {
   );
 };
 
-const DropdownItem = ({ icon: Icon, iconColor, label }) => (
-  <div className="flex items-center space-x-3 px-4 py-2 hover:bg-gray-50 cursor-pointer transition-colors duration-200">
+const DropdownItem = ({ icon: Icon, iconColor, label, onClick }) => (
+  <div
+    className="flex items-center space-x-3 px-4 py-2 hover:bg-gray-50 cursor-pointer transition-colors duration-200"
+    onClick={onClick}
+  >
     <Icon className={`w-4 h-4 ${iconColor}`} />
     <span className="text-gray-700 text-sm font-medium">{label}</span>
   </div>

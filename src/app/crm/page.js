@@ -10,6 +10,7 @@ import CompleteProfile from "../components/completeProfile";
 import ManageLists from "../components/manageLists";
 import DataExtractor from "../components/dataExtractor";
 import EmailTemplate from "../components/emailTemplate";
+import Dashboard from "../components/dashboard";
 
 const Page = () => {
   const [activeComponent, setActiveComponent] = useState(null); // Track which component to show
@@ -40,10 +41,14 @@ const Page = () => {
         return <VerifyEmails sidebarCollapsed={sidebarCollapsed} />;
       case "manageLists":
         return <ManageLists sidebarCollapsed={sidebarCollapsed} />;
-        case "dataExtractor":
+      case "dataExtractor":
         return <DataExtractor sidebarCollapsed={sidebarCollapsed} />;
-        case "emailTemplate":
-        return <EmailTemplate sidebarCollapsed={sidebarCollapsed}/>
+      case "emailTemplate":
+        return <EmailTemplate sidebarCollapsed={sidebarCollapsed} />;
+      case "updateProfile":
+        return <CompleteProfile sidebarCollapsed={sidebarCollapsed} />;
+      case "dashboard":
+        return <Dashboard sidebarCollapsed={sidebarCollapsed} />;
       default:
         return (
           // <div className="p-6">
@@ -52,7 +57,7 @@ const Page = () => {
           //     <p className="text-gray-500">Select an option from the sidebar to get started.</p>
           //   </div>
           // </div>
-          <CompleteProfile />
+          <Dashboard sidebarCollapsed={sidebarCollapsed} />
         );
     }
   };
@@ -60,7 +65,10 @@ const Page = () => {
   return (
     <div className="min-h-screen bg-gray-100">
       {/* Fixed Navbar */}
-      <CrmNavbar sidebarCollapsed={sidebarCollapsed} />
+      <CrmNavbar
+        onProfileClick={() => handleComponentChange("updateProfile")}
+        sidebarCollapsed={sidebarCollapsed}
+      />
 
       {/* Sidebar */}
       <Sidebar
@@ -68,9 +76,10 @@ const Page = () => {
         onAddDataClick={() => handleComponentChange("addData")}
         onRemoveDataClick={() => handleComponentChange("removeData")}
         onVerifyEmailsClick={() => handleComponentChange("verifyEmail")}
-        onManageListsClick = {()=>handleComponentChange("manageLists")}
-        onDataExtractorClick={()=>handleComponentChange("dataExtractor")}
-        onEmailTemplateClick={()=>handleComponentChange("emailTemplate")}
+        onManageListsClick={() => handleComponentChange("manageLists")}
+        onDataExtractorClick={() => handleComponentChange("dataExtractor")}
+        onEmailTemplateClick={() => handleComponentChange("emailTemplate")}
+        onLogoClick={() => handleComponentChange("dashboard")}
         onSidebarStateChange={handleSidebarStateChange}
       />
 
