@@ -1489,7 +1489,7 @@ const Dashboard = () => {
 
       {/* Footer */}
       <footer className="w-full text-center p-4 bg-gray-100 text-purple-600 font-semibold text-sm">
-        © 2025 Digital Softech. All Rights Reserved.
+        © 2025 Margda Workplace. All Rights Reserved.
       </footer>
     </div>
   );
