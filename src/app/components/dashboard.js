@@ -1,195 +1,74 @@
 "use client";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { 
-  Pencil, 
-  Trash2, 
-  Plus, 
-  Search, 
-  Filter, 
-  MoreVertical,
-  Users,
-  Settings,
-  User,
-  Shield,
-  Database,
-  Camera,
-  Save,
-  Eye,
-  FileText,
-  Calendar,
-  MapPin,
-  Phone,
+import {
   Mail,
-  Star,
-  Clock,
-  Award,
-  Briefcase,
-  UserCog,
-  Table,
+  Phone,
   MessageCircle,
-  BookOpen,
-  PenTool,
-  Trophy,
-  Target,
-  BarChart3,
-  Share2,
-  Edit3,
-  Receipt,
-  Key,
-  CreditCard,
+  UserPlus,
+  SquareCheckBig,
+  Search,
+  ChevronLeft,
+  ChevronRight,
   Upload,
-  FileCheck,
-  MessageSquare,
-  Video,
-  Download
 } from "lucide-react";
-import CompleteProfile from "./completeProfile";
 
-// The main page component must start with an uppercase letter.
-// We'll rename Dashboard to Page and make it the default export.
-const Page = () => {
+const Dashboard = () => {
   const [mounted, setMounted] = useState(false);
-  const [currentRole, setCurrentRole] = useState("Super Admin"); // Super Admin, Team Admin, User
-  const [activeSection, setActiveSection] = useState("dashboard");
-  const [selectedFilter, setSelectedFilter] = useState("All");
+  const [show, setShow] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [search, setSearch] = useState("");
 
-  // Sample data with all required fields
-  const [userData, setUserData] = useState([
+  const [tableData, setTableData] = useState([
     {
-      id: 1,
-      source: "Website",
-      score: 85,
-      name: "John Doe",
-      whatsapp: "+919876543210",
-      mobile: "+919876543210",
-      email: "john@example.com",
-      dataType: "Lead",
-      task: "Follow-up",
-      user: "Admin",
-      country: "India",
-      state: "Maharashtra",
-      district: "Mumbai",
-      pincode: "400001",
-      place: "Bandra",
-      dob: "1990-05-15",
-      profession: "Software Engineer",
-      qualification: "B.Tech",
-      institute: "IIT Mumbai",
-      skills: ["React", "Node.js", "Python"],
-      cvBio: "Experienced developer",
-      profile: "Full Stack Developer",
-      skillsTest: "Completed",
-      communication: "Excellent",
-      interview: "Scheduled",
-      documents: "Uploaded",
-      loi: "Pending",
-      followUpDate: "2025-01-20",
-      lateDays: 0,
-      timeline: "On track",
-      remarks: "Promising candidate",
-      functionalArea: "IT",
-      position: "Senior",
-      industry: "Technology",
-      education: ["B.Tech"],
-      experienceType: "Experienced",
-      experienceYears: 5,
-      status: "Active",
-      isPaid: true
+      selected: false,
+      name: "Debarghya",
+      email: "sesde**********.com",
+      mobile: "9190***********",
+      location: {
+        country: "N/A",
+        state: "N/A",
+        district: "N/A",
+        pincode: "N/A",
+        address: "N/A",
+      },
+      status: {
+        workSeeker: "Work Seeker",
+        workSeekerStatus: "Work Seeker",
+        u: "U",
+      },
     },
-    {
-      id: 2,
-      source: "Referral",
-      score: 92,
-      name: "Jane Smith",
-      whatsapp: "+919876543211",
-      mobile: "+919876543211",
-      email: "jane@example.com",
-      dataType: "Prospect",
-      task: "Interview",
-      user: "Manager",
-      country: "India",
-      state: "Karnataka",
-      district: "Bangalore",
-      pincode: "560001",
-      place: "Koramangala",
-      dob: "1992-08-22",
-      profession: "Data Scientist",
-      qualification: "M.Tech",
-      institute: "IISC Bangalore",
-      skills: ["Machine Learning", "Python", "SQL"],
-      cvBio: "ML expert with 3+ years experience",
-      profile: "Senior Data Scientist",
-      skillsTest: "Pending",
-      communication: "Good",
-      interview: "Completed",
-      documents: "Pending",
-      loi: "Sent",
-      followUpDate: "2025-01-18",
-      lateDays: 2,
-      timeline: "Delayed",
-      remarks: "Strong technical skills",
-      functionalArea: "Analytics",
-      position: "Senior",
-      industry: "Technology",
-      education: ["M.Tech"],
-      experienceType: "Experienced",
-      experienceYears: 3,
-      status: "Pending",
-      isPaid: false
-    }
+    
   ]);
 
-  const [profileData, setProfileData] = useState({
-    name: "",
-    gender: "",
-    mobile: "",
-    email: "",
-    dob: "",
-    country: "India",
-    state: "",
-    district: "",
-    pincode: "",
-    place: "",
-    languages: [],
-    referID: ""
-  });
-
-  // Filter states
-  const [filters, setFilters] = useState({
-    task: "Lead",
-    status: "",
-    date: "",
-    skills: [],
-    functionalArea: "",
-    position: "",
-    industry: "",
-    education: [],
-    institute: [],
-    experience: [],
-    experienceYearsFrom: "",
-    experienceYearsTo: ""
-  });
-
-  const itemsPerPage = 10;
+  const itemsPerPage = show;
+  const totalPages = Math.ceil(tableData.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
-  const filteredData = userData.filter(item => {
-    const matchesFilter = selectedFilter === "All" || 
-      (selectedFilter === "Self" && item.user === "Self") ||
-      (selectedFilter === "Team" && item.user === "Team") ||
-      (selectedFilter === "Other" && item.user === "Other");
-    
-    const matchesSearch = searchTerm === "" || 
-      item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.email.toLowerCase().includes(searchTerm.toLowerCase());
-    
-    return matchesFilter && matchesSearch;
-  });
-  const currentData = filteredData.slice(startIndex, startIndex + itemsPerPage);
+  const currentData = tableData.slice(startIndex, startIndex + itemsPerPage);
 
-  useEffect(() => setMounted(true), []);
+  const handlePrevious = () => {
+    setCurrentPage((prev) => Math.max(1, prev - 1));
+  };
+
+  const handleNext = () => {
+    setCurrentPage((prev) => Math.min(totalPages, prev + 1));
+  };
+
+  const handleCheckboxChange = (index) => {
+    setTableData((prevData) => {
+      const newData = [...prevData];
+      const globalIndex = startIndex + index;
+      newData[globalIndex] = {
+        ...newData[globalIndex],
+        selected: !newData[globalIndex].selected,
+      };
+      return newData;
+    });
+  };
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const variants = {
     hidden: { opacity: 0, y: 20 },
@@ -200,617 +79,262 @@ const Page = () => {
     },
   };
 
-  const rolePermissions = {
-    "Super Admin": ["dashboard", "userManagement", "teamManagement", "masterTables", "profile", "permissions"],
-    "Team Admin": ["dashboard", "teamManagement", "masterTables", "profile"],
-    "User": ["dashboard", "profile", "myData"]
-  };
-
-  const getCurrentPermissions = () => rolePermissions[currentRole] || [];
-
-  const handleProfileSave = () => {
-    console.log("Profile saved:", profileData);
-    // Save information in the table
-  };
-
-  const ActionDropdown = ({ item }) => {
-    const [showDropdown, setShowDropdown] = useState(false);
-    
-    return (
-      <div className="relative sm:px-5">
-        <button 
-          onClick={() => setShowDropdown(!showDropdown)}
-          className="p-2 hover:bg-gray-100 rounded-full transition-colors"
-        >
-          <MoreVertical size={16} />
-        </button>
-        
-        {showDropdown && (
-          <div className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg border z-10 max-h-80 overflow-y-auto">
-            <div className="py-1">
-              <button className="w-full px-4 py-2 text-left hover:bg-gray-100 text-sm flex items-center gap-2">
-                <UserCog size={14} />
-                Make User
-              </button>
-              <button className="w-full px-4 py-2 text-left hover:bg-gray-100 text-sm flex items-center gap-2">
-                <Key size={14} />
-                Passcode
-              </button>
-              <button className="w-full px-4 py-2 text-left hover:bg-gray-100 text-sm flex items-center gap-2">
-                <Receipt size={14} />
-                Invoice
-              </button>
-              {item.isPaid && (
-                <button className="w-full px-4 py-2 text-left hover:bg-gray-100 text-sm flex items-center gap-2">
-                  <CreditCard size={14} />
-                  Receipt
-                </button>
-              )}
-              <hr className="my-1" />
-              <button className="w-full px-4 py-2 text-left hover:bg-gray-100 text-sm flex items-center gap-2">
-                <PenTool size={14} />
-                Skills Test
-              </button>
-              <button className="w-full px-4 py-2 text-left hover:bg-gray-100 text-sm flex items-center gap-2">
-                <MessageCircle size={14} />
-                Communication Evaluation
-              </button>
-              <button className="w-full px-4 py-2 text-left hover:bg-gray-100 text-sm flex items-center gap-2">
-                <Users size={14} />
-                HR Interaction
-              </button>
-              <button className="w-full px-4 py-2 text-left hover:bg-gray-100 text-sm flex items-center gap-2">
-                <MessageSquare size={14} />
-                Interview Questions
-              </button>
-              <button className="w-full px-4 py-2 text-left hover:bg-gray-100 text-sm flex items-center gap-2">
-                <Upload size={14} />
-                Document Upload
-              </button>
-              <hr className="my-1" />
-              <button className="w-full px-4 py-2 text-left hover:bg-gray-100 text-sm flex items-center gap-2">
-                <Trophy size={14} />
-                Student Contest
-              </button>
-              <button className="w-full px-4 py-2 text-left hover:bg-gray-100 text-sm flex items-center gap-2">
-                <Target size={14} />
-                Aptitude Assessment
-              </button>
-              <button className="w-full px-4 py-2 text-left hover:bg-gray-100 text-sm flex items-center gap-2">
-                <Award size={14} />
-                Attitude Assessment
-              </button>
-              <button className="w-full px-4 py-2 text-left hover:bg-gray-100 text-sm flex items-center gap-2">
-                <BarChart3 size={14} />
-                Ability Analyser
-              </button>
-              <button className="w-full px-4 py-2 text-left hover:bg-gray-100 text-sm flex items-center gap-2">
-                <Briefcase size={14} />
-                Career Dashboard
-              </button>
-            </div>
-          </div>
-        )}
-      </div>
-    );
-  };
-
-
-
-  const LeftHandFilters = () => (
-    <div className="space-y-4">
-      <div className="bg-white p-4 rounded-xl shadow">
-        <h4 className="font-medium text-gray-800 mb-3">Data Filters</h4>
-        <div className="space-y-3">
-          <select
-            value={selectedFilter}
-            onChange={(e) => setSelectedFilter(e.target.value)}
-            className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-          >
-            <option value="All">All</option>
-            <option value="Self">Self</option>
-            <option value="Team">Team</option>
-            <option value="Other">Other</option>
-          </select>
-
-          <select
-            value={filters.task}
-            onChange={(e) => setFilters({...filters, task: e.target.value})}
-            className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-          >
-            <option value="Lead">Lead</option>
-            <option value="Follow-up">Follow-up</option>
-            <option value="Interview">Interview</option>
-          </select>
-
-          <select
-            value={filters.status}
-            onChange={(e) => setFilters({...filters, status: e.target.value})}
-            className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-          >
-            <option value="">Status</option>
-            <option value="Active">Active</option>
-            <option value="Pending">Pending</option>
-            <option value="Completed">Completed</option>
-          </select>
-
-          <input
-            type="date"
-            value={filters.date}
-            onChange={(e) => setFilters({...filters, date: e.target.value})}
-            className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-          />
-        </div>
-      </div>
-
-      <div className="bg-white p-4 rounded-xl shadow">
-        <h4 className="font-medium text-gray-800 mb-3">Location</h4>
-        <div className="space-y-3">
-          <select className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
-            <option value="">Country</option>
-            <option value="India">India</option>
-            <option value="USA">USA</option>
-          </select>
-          <select className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
-            <option value="">State</option>
-            <option value="Maharashtra">Maharashtra</option>
-            <option value="Karnataka">Karnataka</option>
-          </select>
-          <select className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
-            <option value="">District</option>
-            <option value="Mumbai">Mumbai</option>
-            <option value="Bangalore">Bangalore</option>
-          </select>
-          <input
-            type="text"
-            placeholder="Pin Code"
-            className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-          />
-        </div>
-      </div>
-
-      <div className="bg-white p-4 rounded-xl shadow">
-        <h4 className="font-medium text-gray-800 mb-3">Professional Filters</h4>
-        <div className="space-y-3">
-          <select className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
-            <option value="">Skills (multi selection)</option>
-            <option value="React">React</option>
-            <option value="Python">Python</option>
-            <option value="Java">Java</option>
-          </select>
-
-          <select className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
-            <option value="">Functional Area</option>
-            <option value="IT">IT</option>
-            <option value="Finance">Finance</option>
-            <option value="Marketing">Marketing</option>
-          </select>
-
-          <select className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
-            <option value="">Position</option>
-            <option value="Junior">Junior</option>
-            <option value="Senior">Senior</option>
-            <option value="Lead">Lead</option>
-          </select>
-
-          <select className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
-            <option value="">Industry</option>
-            <option value="Technology">Technology</option>
-            <option value="Healthcare">Healthcare</option>
-            <option value="Finance">Finance</option>
-          </select>
-
-          <select className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
-            <option value="">Education (multi selection)</option>
-            <option value="Bachelor">Bachelor&apos;s</option>
-            <option value="Master">Master&apos;s</option>
-            <option value="PhD">PhD</option>
-          </select>
-
-          <select className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
-            <option value="">Institute (multi selection)</option>
-            <option value="IIT">IIT</option>
-            <option value="IISC">IISC</option>
-            <option value="University">University</option>
-          </select>
-
-          <select className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
-            <option value="">Experience (multi selection)</option>
-            <option value="Fresher">Fresher</option>
-            <option value="Experienced">Experienced</option>
-            <option value="Expert">Expert</option>
-          </select>
-
-          <div className="flex items-center gap-2">
-            <input
-              type="number"
-              placeholder="From"
-              value={filters.experienceYearsFrom}
-              onChange={(e) => setFilters({...filters, experienceYearsFrom: e.target.value})}
-              className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-            />
-            <span className="text-gray-500 text-sm">to</span>
-            <input
-              type="number"
-              placeholder="To"
-              value={filters.experienceYearsTo}
-              onChange={(e) => setFilters({...filters, experienceYearsTo: e.target.value})}
-              className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-
   return (
-    <div className="w-full min-h-screen bg-gray-100">
-      <motion.div
-        initial="hidden"
-        animate={mounted ? "visible" : "hidden"}
-        variants={variants}
-        className="space-y-6 p-6"
-      >
-        {/* Role & Section Selection */}
-        <div className="bg-white p-6 rounded-xl shadow">
-          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-            <div className="flex flex-col sm:flex-row sm:items-center gap-4">
-              <div className="flex items-center gap-2">
-                <Shield size={20} className="text-blue-500" />
-                <span className="font-medium text-gray-700">Current Role:</span>
-                <select
-                  value={currentRole}
-                  onChange={(e) => setCurrentRole(e.target.value)}
-                  className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-                >
-                  <option value="Super Admin">Super Admin</option>
-                  <option value="Team Admin">Team Admin</option>
-                  <option value="User">User</option>
-                </select>
-              </div>
-              
-              <div className="flex items-center gap-2">
-                <span className="font-medium text-gray-700">Quick Access:</span>
-                <div className="flex flex-wrap gap-2">
-                  {getCurrentPermissions().includes("dashboard") && (
-                    <button
-                      onClick={() => setActiveSection("dashboard")}
-                      className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                        activeSection === "dashboard" 
-                          ? "bg-blue-500 text-white shadow-md" 
-                          : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                      }`}
-                    >
-                      <Database size={16} />
-                      Dashboard
-                    </button>
-                  )}
-                  
-                  {getCurrentPermissions().includes("profile") && (
-                    <button
-                      onClick={() => setActiveSection("profile")}
-                      className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                        activeSection === "profile" 
-                          ? "bg-blue-500 text-white shadow-md" 
-                          : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                      }`}
-                    >
-                      <User size={16} />
-                      My Profile
-                    </button>
-                  )}
-
-                  {getCurrentPermissions().includes("userManagement") && (
-                    <button
-                      onClick={() => setActiveSection("users")}
-                      className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                        activeSection === "users" 
-                          ? "bg-blue-500 text-white shadow-md" 
-                          : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                      }`}
-                    >
-                      <UserCog size={16} />
-                      User Management
-                    </button>
-                  )}
-
-                  {getCurrentPermissions().includes("masterTables") && (
-                    <button
-                      onClick={() => setActiveSection("master")}
-                      className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                        activeSection === "master" 
-                          ? "bg-blue-500 text-white shadow-md" 
-                          : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                      }`}
-                    >
-                      <Table size={16} />
-                      Master Tables
-                    </button>
-                  )}
-                </div>
-              </div>
+    <div className="flex flex-col min-h-screen bg-gray-100 font-sans text-gray-800">
+      <div className="flex-grow px-4 sm:px-6 py-10">
+        <motion.div
+          initial="hidden"
+          animate={mounted ? "visible" : "hidden"}
+          variants={variants}
+          className="max-w-full mx-auto space-y-8"
+        >
+          {/* Top Header with Action Buttons */}
+          <div className="bg-white rounded-xl shadow-md p-4 sm:p-6 space-y-4">
+            {/* First row of buttons */}
+            <div className="flex flex-wrap items-center gap-2 sm:gap-4">
+              <button className="bg-gradient-to-l from-blue-500/70 to-blue-400/60 text-gray-800 rounded-lg px-4 sm:px-5 py-2 text-sm font-medium shadow-sm hover:scale-105 transition-transform flex items-center gap-1 w-full sm:w-auto justify-center">
+                <Search size={16} /> Search Data
+              </button>
+              <button className="bg-gradient-to-l from-blue-500/70 to-blue-400/60 text-gray-800 rounded-lg px-4 sm:px-5 py-2 text-sm font-medium shadow-sm hover:scale-105 transition-transform flex items-center gap-1 w-full sm:w-auto justify-center">
+                <UserPlus size={16} /> Add Data
+              </button>
+              <button className="bg-gradient-to-l from-blue-500/70 to-blue-400/60 text-gray-800 rounded-lg px-4 sm:px-5 py-2 text-sm font-medium shadow-sm hover:scale-105 transition-transform flex items-center gap-1 w-full sm:w-auto justify-center">
+                <SquareCheckBig size={16} /> Verify Data
+              </button>
+              <button className="bg-gradient-to-l from-gray-700/70 to-gray-600/60 text-white rounded-lg px-4 sm:px-5 py-2 text-sm font-medium shadow-sm hover:scale-105 transition-transform flex items-center gap-1 w-full sm:w-auto justify-center">
+                <Upload size={16} /> Upload CSV
+              </button>
+              <button className="bg-gradient-to-l from-green-500/70 to-green-400/60 text-gray-800 rounded-lg px-4 sm:px-5 py-2 text-sm font-medium shadow-sm hover:scale-105 transition-transform w-full sm:w-auto">
+                Shortlist
+              </button>
+              <button className="bg-gradient-to-l from-orange-500/70 to-orange-400/60 text-gray-800 rounded-lg px-4 sm:px-5 py-2 text-sm font-medium shadow-sm hover:scale-105 transition-transform w-full sm:w-auto">
+                Task
+              </button>
+              <button className="bg-gradient-to-l from-blue-500/70 to-blue-400/60 text-gray-800 rounded-lg px-4 sm:px-5 py-2 text-sm font-medium shadow-sm hover:scale-105 transition-transform w-full sm:w-auto">
+                Sample CSV
+              </button>
+            </div>
+            {/* Second row of buttons */}
+            <div className="flex flex-wrap items-center gap-2 sm:gap-4">
+              <button className="flex items-center gap-1 bg-white border border-gray-300 text-gray-800 rounded-lg px-4 sm:px-5 py-2 text-sm font-medium shadow-sm hover:bg-gray-100 transition-colors w-full sm:w-auto justify-center">
+                <Mail size={16} className="text-gray-500" /> Email
+              </button>
+              <button className="flex items-center gap-1 bg-green-500 text-white rounded-lg px-4 sm:px-5 py-2 text-sm font-medium shadow-sm hover:bg-green-600 transition-colors w-full sm:w-auto justify-center">
+                <MessageCircle size={16} /> WhatsApp
+              </button>
+              <button className="flex items-center gap-1 bg-blue-500 text-white rounded-lg px-4 sm:px-5 py-2 text-sm font-medium shadow-sm hover:bg-blue-600 transition-colors w-full sm:w-auto justify-center">
+                <Phone size={16} /> Call
+              </button>
+              <button className="flex items-center gap-1 bg-red-500 text-white rounded-lg px-4 sm:px-5 py-2 text-sm font-medium shadow-sm hover:bg-red-600 transition-colors w-full sm:w-auto justify-center">
+                <Phone size={16} /> SMS
+              </button>
+              <button className="flex items-center gap-1 bg-white border border-gray-300 text-gray-800 rounded-lg px-4 sm:px-5 py-2 text-sm font-medium shadow-sm hover:bg-gray-100 transition-colors w-full sm:w-auto justify-center">
+                <UserPlus size={16} className="text-gray-500" /> Add to User
+              </button>
+              <button className="flex items-center gap-1 bg-black text-white rounded-lg px-4 sm:px-5 py-2 text-sm font-medium shadow-sm hover:bg-gray-800 transition-colors w-full sm:w-auto justify-center">
+                <SquareCheckBig size={16} /> Verify Email
+              </button>
             </div>
           </div>
-        </div>
+          
+          {/* Filters */}
+          <div className="bg-white rounded-xl shadow-md p-4 sm:p-6 flex flex-wrap items-center gap-2 sm:gap-4">
+            <select className="border border-gray-300 rounded-lg p-3 text-sm w-full sm:w-auto focus:outline-none focus:ring-2 focus:ring-blue-400">
+              <option>Data Type</option>
+            </select>
+            <select className="border border-gray-300 rounded-lg p-3 text-sm w-full sm:w-auto focus:outline-none focus:ring-2 focus:ring-blue-400">
+              <option>Country</option>
+            </select>
+            <select className="border border-gray-300 rounded-lg p-3 text-sm w-full sm:w-auto focus:outline-none focus:ring-2 focus:ring-blue-400">
+              <option>State</option>
+            </select>
+            <select className="border border-gray-300 rounded-lg p-3 text-sm w-full sm:w-auto focus:outline-none focus:ring-2 focus:ring-blue-400">
+              <option>District</option>
+            </select>
+            <select className="border border-gray-300 rounded-lg p-3 text-sm w-full sm:w-auto focus:outline-none focus:ring-2 focus:ring-blue-400">
+              <option>Pin Code</option>
+            </select>
+            <select className="border border-gray-300 rounded-lg p-3 text-sm w-full sm:w-auto focus:outline-none focus:ring-2 focus:ring-blue-400">
+              <option>All Data</option>
+            </select>
+          </div>
 
-        {/* Content Area */}
-        <AnimatePresence mode="wait">
-          {activeSection === "profile" ? (
-            <CompleteProfile />
-          ) : activeSection === "users" ? (
-            <motion.div
-              key="users"
-              initial="hidden"
-              animate="visible"
-              variants={variants}
-              className="bg-white p-6 rounded-xl shadow"
-            >
-              <div className="flex items-center gap-3 mb-6">
-                <UserCog size={24} className="text-blue-500" />
-                <h2 className="text-xl font-semibold text-gray-800">User Management</h2>
-              </div>
-              <div className="space-y-4">
-                <div className="p-4 bg-blue-50 rounded-lg">
-                  <h3 className="font-medium text-blue-800 mb-2">Permission Structure:</h3>
-                  <div className="space-y-2 text-sm text-gray-700">
-                    <p><strong>Super Admin:</strong> Will give feature access permissions to Team Admin and Users</p>
-                    <p><strong>Team Admin:</strong> Will give feature access permissions (given by Super Admin) to Users</p>
-                    <p><strong>User:</strong> Unique Data → Duplicates allowed → Added/Uploaded by the Users</p>
-                  </div>
-                </div>
-                <div className="text-center py-12 text-gray-500">
-                  <Users size={48} className="mx-auto mb-4 text-gray-300" />
-                  <p>User management features will be implemented here.</p>
-                </div>
-              </div>
-            </motion.div>
-          ) : activeSection === "master" ? (
-            <motion.div
-              key="master"
-              initial="hidden"
-              animate="visible"
-              variants={variants}
-              className="bg-white p-6 rounded-xl shadow"
-            >
-              <div className="flex items-center gap-3 mb-6">
-                <Table size={24} className="text-blue-500" />
-                <h2 className="text-xl font-semibold text-gray-800">Master Tables</h2>
-              </div>
-              <div className="space-y-4">
-                <div className="p-4 bg-green-50 rounded-lg">
-                  <h3 className="font-medium text-green-800 mb-2">Master Tables Management:</h3>
-                  <p className="text-sm text-gray-700">Users can add master table records. Admin will moderate it.</p>
-                </div>
-                <div className="text-center py-12 text-gray-500">
-                  <Database size={48} className="mx-auto mb-4 text-gray-300" />
-                  <p>Master tables management interface.</p>
-                </div>
-              </div>
-            </motion.div>
-          ) : (
-            <motion.div
-              key="dashboard"
-              initial="hidden"
-              animate="visible"
-              variants={variants}
-              className="grid grid-cols-12 gap-6"
-            >
-              {/* Left Hand Side Filters */}
-              <div className="col-span-12 lg:col-span-3">
-                <LeftHandFilters />
-              </div>
+          {/* Table Controls */}
+          <div className="bg-white rounded-xl shadow-md p-4 sm:p-6 flex flex-wrap items-center justify-between gap-4">
+            <div className="flex items-center gap-2 text-sm text-gray-700">
+              Show
+              <input
+                type="number"
+                value={show}
+                onChange={(e) => setShow(Number(e.target.value))}
+                className="w-16 border border-gray-300 rounded-md p-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+              />
+              Records
+            </div>
+            <div className="relative w-full sm:w-auto">
+              <input
+                type="text"
+                placeholder="Search"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className="w-full sm:w-64 border border-gray-300 rounded-md p-2 pl-10 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+              />
+              <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+            </div>
+          </div>
 
-              {/* Center Content */}
-              <div className="col-span-12 lg:col-span-9 space-y-6">
-                {/* Action Buttons */}
-                <div className="bg-white p-6 rounded-xl shadow">
-                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                    <div className="flex flex-wrap gap-4">
-                      <button className="bg-gradient-to-r from-green-500 to-green-400 text-white rounded-full px-6 py-2 text-sm font-medium shadow hover:scale-105 transition-transform flex items-center gap-2">
-                        <Plus size={16} />
-                        Add Data
-                      </button>
-                      <button className="bg-gradient-to-r from-blue-500 to-blue-400 text-white rounded-full px-6 py-2 text-sm font-medium shadow hover:scale-105 transition-transform">
-                        Campaign
-                      </button>
-                      <button className="bg-gradient-to-r from-purple-500 to-purple-400 text-white rounded-full px-6 py-2 text-sm font-medium shadow hover:scale-105 transition-transform">
-                        &lt;10 Records&gt; Shortlist
-                      </button>
+          {/* Main Data Table */}
+          <div className="bg-white rounded-xl shadow-md overflow-x-auto">
+            <motion.table
+              key={currentPage}
+              className="min-w-full text-sm text-left border rounded-xl overflow-hidden"
+            >
+              <thead className="bg-gray-100 text-gray-700 font-semibold uppercase text-xs">
+                <tr>
+                  <th className="p-4 border-b">
+                    <input type="checkbox" className="accent-blue-600 mr-2" /> Selected (0)
+                  </th>
+                  <th className="p-4 border-b">
+                    <div className="flex items-center gap-1">
+                      <UserPlus size={16} /> Action
                     </div>
-
-                    <div className="relative">
-                      <Search size={18} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                  </th>
+                  <th className="p-4 border-b">
+                    <div className="flex items-center gap-1">
+                      <Mail size={16} /> Data
+                    </div>
+                  </th>
+                  <th className="p-4 border-b">
+                    <div className="flex items-center gap-1">
+                      <MessageCircle size={16} /> Location
+                    </div>
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-100">
+                {currentData.map((row, i) => (
+                  <tr key={i} className="align-top">
+                    <td className="p-4">
                       <input
-                        type="text"
-                        placeholder="Search..."
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                        className="pl-10 pr-4 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                        type="checkbox"
+                        checked={row.selected}
+                        onChange={() => handleCheckboxChange(i)}
+                        className="accent-blue-600"
                       />
-                    </div>
-                  </div>
-                </div>
-
-                {/* Tab Navigation */}
-                <div className="bg-white p-6 rounded-xl shadow">
-                  <div className="flex flex-wrap gap-4 border-b border-gray-200 pb-4">
-                    <button className="px-4 py-2 text-sm font-medium text-blue-600 border-b-2 border-blue-600">
-                      Action Data
-                    </button>
-                    <button className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-blue-600">
-                      Location Details
-                    </button>
-                    <button className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-blue-600">
-                      Status
-                    </button>
-                    <button className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-blue-600">
-                      Logs
-                    </button>
-                  </div>
-                </div>
-
-                {/* Data Table */}
-                <div className="bg-white rounded-xl shadow overflow-x-auto">
-                  <div className="p-6 border-b border-gray-200">
-                    <div className="flex items-center justify-between">
-                      <h3 className="text-lg font-semibold text-gray-800">Data Records</h3>
-                      <div className="text-sm text-gray-600">
-                        * All default and option
+                    </td>
+                    <td className="p-4">
+                      <div className="flex items-center gap-2">
+                        <div className="bg-green-100 text-green-600 p-2 rounded-full">
+                          <SquareCheckBig size={18} />
+                        </div>
+                        <div className="bg-green-100 text-green-600 p-2 rounded-full">
+                          <SquareCheckBig size={18} />
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                  <table className="min-w-full text-sm">
-                    <thead className="bg-gray-50 text-gray-700 font-semibold">
-                      <tr>
-                        <th className="p-4 text-left">
-                          <input type="checkbox" className="rounded" />
-                        </th>
-                        <th className="p-4 text-left">Source</th>
-                        <th className="p-4 text-left">Score</th>
-                        <th className="p-4 text-left">Name</th>
-                        <th className="p-4 text-left">WhatsApp</th>
-                        <th className="p-4 text-left">Mobile</th>
-                        <th className="p-4 text-left">Email</th>
-                        <th className="p-4 text-left">Data Type *</th>
-                        <th className="p-4 text-left">Task *</th>
-                        <th className="p-4 text-left">User</th>
-                        <th className="p-4 text-left">Country</th>
-                        <th className="p-4 text-left">State</th>
-                        <th className="p-4 text-left">District</th>
-                        <th className="p-4 text-left">Pin Code</th>
-                        <th className="p-4 text-left">Place</th>
-                        <th className="p-4 text-left">DOB</th>
-                        <th className="p-4 text-left">Profession</th>
-                        <th className="p-4 text-left">Qualification</th>
-                        <th className="p-4 text-left">Institute</th>
-                        <th className="p-4 text-left">Skills</th>
-                        <th className="p-4 text-left">CV/Bio</th>
-                        <th className="p-4 text-left">Profile</th>
-                        <th className="p-4 text-left">Skills Test</th>
-                        <th className="p-4 text-left">Communication</th>
-                        <th className="p-4 text-left">Interview</th>
-                        <th className="p-4 text-left">Documents</th>
-                        <th className="p-4 text-left">LOI</th>
-                        <th className="p-4 text-left">Follow Up</th>
-                        <th className="p-4 text-left">Late Days</th>
-                        <th className="p-4 text-left">Timeline</th>
-                        <th className="p-4 text-left">Remarks</th>
-                        <th className="p-4 text-left">Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-gray-100">
-                      {currentData.map((item, index) => (
-                        <tr key={item.id} className="hover:bg-gray-50">
-                          <td className="p-4">
-                            <input type="checkbox" className="rounded" />
-                          </td>
-                          <td className="p-4">
-                            <div className="flex items-center gap-2">
-                              <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                              {item.source}
-                            </div>
-                          </td>
-                          <td className="p-4">
-                            <div className="flex items-center gap-1">
-                              <Star size={16} className="text-yellow-500 fill-current" />
-                              {item.score}
-                            </div>
-                          </td>
-                          <td className="p-4 font-medium">{item.name}</td>
-                          <td className="p-4">
-                            <div className="flex items-center gap-2">
-                              <Phone size={16} className="text-green-600" />
-                              {item.whatsapp}
-                            </div>
-                          </td>
-                          <td className="p-4">{item.mobile}</td>
-                          <td className="p-4">
-                            <div className="flex items-center gap-2">
-                              <Mail size={16} className="text-blue-600" />
-                              {item.email}
-                            </div>
-                          </td>
-                          <td className="p-4">
-                            <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs">
-                              {item.dataType}
-                            </span>
-                          </td>
-                          <td className="p-4">
-                            <span className="bg-purple-100 text-purple-800 px-2 py-1 rounded-full text-xs">
-                              {item.task}
-                            </span>
-                          </td>
-                          <td className="p-4">{item.user}</td>
-                          <td className="p-4">{item.country}</td>
-                          <td className="p-4">{item.state}</td>
-                          <td className="p-4">{item.district}</td>
-                          <td className="p-4">{item.pincode}</td>
-                          <td className="p-4">{item.place}</td>
-                          <td className="p-4">{item.dob}</td>
-                          <td className="p-4">{item.profession}</td>
-                          <td className="p-4">{item.qualification}</td>
-                          <td className="p-4">{item.institute}</td>
-                          <td className="p-4">{item.skills.join(', ')}</td>
-                          <td className="p-4">{item.cvBio}</td>
-                          <td className="p-4">{item.profile}</td>
-                          <td className="p-4">
-                            <span className={`px-2 py-1 rounded-full text-xs font-medium ${item.skillsTest === 'Completed' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
-                              {item.skillsTest}
-                            </span>
-                          </td>
-                          <td className="p-4">{item.communication}</td>
-                          <td className="p-4">{item.interview}</td>
-                          <td className="p-4">{item.documents}</td>
-                          <td className="p-4">{item.loi}</td>
-                          <td className="p-4">{item.followUpDate}</td>
-                          <td className="p-4">
-                            <span className={`font-medium ${item.lateDays > 0 ? 'text-red-500' : 'text-green-500'}`}>
-                              {item.lateDays}
-                            </span>
-                          </td>
-                          <td className="p-4">
-                            <span className={`px-2 py-1 rounded-full text-xs font-medium ${item.timeline === 'On track' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
-                              {item.timeline}
-                            </span>
-                          </td>
-                          <td className="p-4">{item.remarks}</td>
-                          <td className="p-4">
-                            <ActionDropdown item={item} />
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                  {/* Pagination */}
-                  <div className="flex items-center justify-between p-4 border-t border-gray-200">
-                    <span className="text-sm text-gray-600">
-                      Showing {startIndex + 1} to {Math.min(startIndex + itemsPerPage, filteredData.length)} of {filteredData.length} entries
-                    </span>
-                    <div className="flex gap-2">
-                      <button
-                        onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-                        disabled={currentPage === 1}
-                        className="px-4 py-2 border rounded-md text-sm font-medium hover:bg-gray-100 disabled:opacity-50"
-                      >
-                        Previous
-                      </button>
-                      <button
-                        onClick={() => setCurrentPage(prev => prev + 1)}
-                        disabled={startIndex + itemsPerPage >= filteredData.length}
-                        className="px-4 py-2 border rounded-md text-sm font-medium hover:bg-gray-100 disabled:opacity-50"
-                      >
-                        Next
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </motion.div>
+                    </td>
+                    <td className="p-4 text-gray-800">
+                      <div className="space-y-2">
+                        <div className="flex items-center gap-2">
+                          <Mail size={16} className="text-blue-500" />
+                          <span className="font-bold">{row.name}</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Mail size={16} className="text-pink-500" />
+                          <span>{row.email}</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Phone size={16} className="text-pink-500" />
+                          <span>{row.mobile}</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <MessageCircle size={16} className="text-green-500" />
+                          <span>N/A</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Mail size={16} className="text-pink-500" />
+                          <span>N/A</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <SquareCheckBig
+                            size={16}
+                            className="text-gray-500"
+                          />
+                          <span className="font-medium text-gray-600">
+                            {row.status.workSeeker}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <UserPlus size={16} className="text-gray-500" />
+                          <span>{row.status.u}</span>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="p-4">
+                      <div className="space-y-2">
+                        <div className="flex items-center gap-2">
+                          <span className="text-green-500">📍</span>
+                          <span>Country: {row.location.country}</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-green-500">📍</span>
+                          <span>State: {row.location.state}</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-green-500">📍</span>
+                          <span>District: {row.location.district}</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-green-500">📍</span>
+                          <span>Pincode: {row.location.pincode}</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-green-500">📍</span>
+                          <span>Address: {row.location.address}</span>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </motion.table>
+          </div>
+
+          {/* Pagination */}
+          <div className="flex flex-col sm:flex-row items-center justify-between text-sm text-gray-700 mt-6 gap-4">
+            <div>
+              Showing {tableData.length === 0 ? 0 : startIndex + 1} to{" "}
+              {Math.min(startIndex + itemsPerPage, tableData.length)} of{" "}
+              {tableData.length} Records
+            </div>
+            <div className="flex items-center gap-2">
+              <button
+                className="bg-white text-gray-800 rounded-lg px-5 py-2 text-sm font-medium shadow-sm hover:bg-gray-200 transition-colors disabled:opacity-50 flex items-center gap-1"
+                onClick={handlePrevious}
+                disabled={currentPage === 1}
+              >
+                <ChevronLeft size={16} /> Previous
+              </button>
+              <span className="bg-purple-600 text-white rounded-lg px-4 py-2 font-medium shadow-sm">
+                {currentPage}
+              </span>
+              <button
+                className="bg-white text-gray-800 rounded-lg px-5 py-2 text-sm font-medium shadow-sm hover:bg-gray-200 transition-colors disabled:opacity-50 flex items-center gap-1"
+                onClick={handleNext}
+                disabled={currentPage === totalPages}
+              >
+                Next <ChevronRight size={16} />
+              </button>
+            </div>
+          </div>
+        </motion.div>
+      </div>
+
+      {/* Footer */}
+      <footer className="w-full text-center p-4 bg-gray-100 text-purple-600 font-semibold text-sm">
+        © 2025 Digital Softech. All Rights Reserved.
+      </footer>
     </div>
   );
 };
 
-export default Page;
+export default Dashboard;
