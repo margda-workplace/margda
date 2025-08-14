@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Mail,
@@ -11,35 +11,381 @@ import {
   ChevronLeft,
   ChevronRight,
   Upload,
+  User,
+  Info,
+  Calendar,
+  MapPin,
+  List,
+  GraduationCap,
+  Briefcase,
+  Paperclip,
+  ScrollText,
+  MessageSquare,
+  Clock,
+  ThumbsUp,
+  Award,
+  CircleDot,
+  Check,
+  Eye,
+  Pencil,
+  FileText,
+  Clock1,
+  UserRound,
+  Users,
+  Settings,
+  MoreVertical,
+  CircleArrowUp,
+  FileBadge,
+  FileDigit,
+  Star,
+  BookA,
+  BookText,
+  FileAudio,
+  ClipboardList,
+  Database,
+  Share,
+  Crown,
+  ShieldCheck,
+  AlertCircle,
+  X,
+  Globe,
+  Tag,
 } from "lucide-react";
+import MyProfileSection from "./myProfile";
 
 const Dashboard = () => {
   const [mounted, setMounted] = useState(false);
   const [show, setShow] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
   const [search, setSearch] = useState("");
+  const [userManagementTab, setUserManagementTab] = useState("hierarchy");
+  const [showPermissionModal, setShowPermissionModal] = useState(false);
+  const [selectedUserForPermission, setSelectedUserForPermission] =
+    useState(null);
+
+  const [currentStep, setCurrentStep] = useState(1);
+  const [selectedCountry, setSelectedCountry] = useState({
+    flag: "in",
+    code: "+91",
+    name: "India",
+  });
+  const [showCountryDropdown, setShowCountryDropdown] = useState(false);
+
+  const countries = [
+    { flag: "in", code: "+91", name: "India" },
+    { flag: "us", code: "+1", name: "United States" },
+    { flag: "gb", code: "+44", name: "United Kingdom" },
+    { flag: "ca", code: "+1", name: "Canada" },
+    { flag: "au", code: "+61", name: "Australia" },
+    { flag: "de", code: "+49", name: "Germany" },
+    { flag: "fr", code: "+33", name: "France" },
+    { flag: "jp", code: "+81", name: "Japan" },
+    { flag: "cn", code: "+86", name: "China" },
+    { flag: "br", code: "+55", name: "Brazil" },
+    { flag: "sg", code: "+65", name: "Singapore" },
+    { flag: "ae", code: "+971", name: "UAE" },
+    { flag: "sa", code: "+966", name: "Saudi Arabia" },
+    { flag: "za", code: "+27", name: "South Africa" },
+    { flag: "ru", code: "+7", name: "Russia" },
+  ];
+
+  useEffect(() => setMounted(true), []);
+
+  const handleInputChange = (field, value) => {
+    setProfileData((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
 
   const [tableData, setTableData] = useState([
     {
       selected: false,
-      name: "Debarghya",
-      email: "sesde**********.com",
-      mobile: "9190***********",
+      action: {
+        view: true,
+        edit: true,
+        source: "N/A",
+        score: "N/A",
+        cTask: true,
+        cLead: true,
+        sData: true,
+        sLog: true,
+      },
+      data: {
+        name: "Debarghya",
+        whatsApp: "9190***********",
+        mobile: "9190***********",
+        email: "sesde**********.com",
+        dataType: "Work Seeker",
+        task: "N/A",
+        user: "U",
+      },
       location: {
         country: "N/A",
         state: "N/A",
         district: "N/A",
-        pincode: "N/A",
-        address: "N/A",
+        pinCode: "N/A",
+        place: "N/A",
+      },
+      details: {
+        dob: "N/A",
+        profession: "N/A",
+        institute: "N/A",
+        skills: "N/A",
+        cvBio: "N/A",
       },
       status: {
-        workSeeker: "Work Seeker",
-        workSeekerStatus: "Work Seeker",
-        u: "U",
+        profile: "N/A",
+        skillsTest: "N/A",
+        qualification: "N/A",
+        communication: "N/A",
+        interview: "N/A",
+        documents: "N/A",
+        loi: "N/A",
+      },
+      logs: {
+        followUpDate: "N/A",
+        lateDays: 0,
+        timeline: "N/A",
+        remarks: "N/A",
       },
     },
-    
+    {
+      selected: false,
+      action: {
+        view: true,
+        edit: true,
+        source: "LinkedIn",
+        score: "85%",
+        cTask: true,
+        cLead: true,
+        sData: true,
+        sLog: true,
+      },
+      data: {
+        name: "Ananya Sharma",
+        whatsApp: "9187***********",
+        mobile: "9187***********",
+        email: "ananya**********.com",
+        dataType: "Job Seeker",
+        task: "Interview Scheduled",
+        user: "A",
+      },
+      location: {
+        country: "India",
+        state: "Delhi",
+        district: "New Delhi",
+        pinCode: "110001",
+        place: "Connaught Place",
+      },
+      details: {
+        dob: "1995-03-14",
+        profession: "Software Engineer",
+        institute: "IIT Delhi",
+        skills: "JavaScript, React, Node.js",
+        cvBio: "Experienced full-stack developer.",
+      },
+      status: {
+        profile: "Complete",
+        skillsTest: "Passed",
+        qualification: "B.Tech",
+        communication: "Excellent",
+        interview: "Pending",
+        documents: "Verified",
+        loi: "Pending",
+      },
+      logs: {
+        followUpDate: "2025-08-20",
+        lateDays: 0,
+        timeline: "Active",
+        remarks: "Very strong candidate",
+      },
+    },
+    {
+      selected: false,
+      action: {
+        view: true,
+        edit: true,
+        source: "Referral",
+        score: "78%",
+        cTask: true,
+        cLead: true,
+        sData: true,
+        sLog: true,
+      },
+      data: {
+        name: "Rohit Verma",
+        whatsApp: "9170***********",
+        mobile: "9170***********",
+        email: "rohit**********.com",
+        dataType: "Internship Seeker",
+        task: "Task Assigned",
+        user: "R",
+      },
+      location: {
+        country: "India",
+        state: "Maharashtra",
+        district: "Mumbai",
+        pinCode: "400001",
+        place: "Churchgate",
+      },
+      details: {
+        dob: "2000-11-22",
+        profession: "Student",
+        institute: "Mumbai University",
+        skills: "Python, Data Analysis",
+        cvBio: "Looking for internship in Data Science.",
+      },
+      status: {
+        profile: "Incomplete",
+        skillsTest: "Pending",
+        qualification: "B.Sc IT",
+        communication: "Good",
+        interview: "N/A",
+        documents: "Pending",
+        loi: "N/A",
+      },
+      logs: {
+        followUpDate: "2025-08-18",
+        lateDays: 2,
+        timeline: "Pending",
+        remarks: "Waiting for assignment submission",
+      },
+    },
+    {
+      selected: false,
+      action: {
+        view: true,
+        edit: true,
+        source: "Website",
+        score: "92%",
+        cTask: true,
+        cLead: true,
+        sData: true,
+        sLog: true,
+      },
+      data: {
+        name: "Meera Iyer",
+        whatsApp: "9168***********",
+        mobile: "9168***********",
+        email: "meera**********.com",
+        dataType: "Work Seeker",
+        task: "Offer Sent",
+        user: "M",
+      },
+      location: {
+        country: "India",
+        state: "Karnataka",
+        district: "Bengaluru",
+        pinCode: "560001",
+        place: "MG Road",
+      },
+      details: {
+        dob: "1992-07-09",
+        profession: "UX Designer",
+        institute: "NID Ahmedabad",
+        skills: "UI/UX, Figma, Prototyping",
+        cvBio: "Creative designer with 5 years of experience.",
+      },
+      status: {
+        profile: "Complete",
+        skillsTest: "Passed",
+        qualification: "M.Des",
+        communication: "Excellent",
+        interview: "Cleared",
+        documents: "Verified",
+        loi: "Sent",
+      },
+      logs: {
+        followUpDate: "2025-08-15",
+        lateDays: 0,
+        timeline: "Hired",
+        remarks: "Joining next month",
+      },
+    },
   ]);
+
+  const [userHierarchyData] = useState([
+    {
+      id: 1,
+      name: "John Smith",
+      email: "john@company.com",
+      role: "Super Admin",
+      status: "Active",
+      permissions: ["all"],
+      canManage: ["Team Admin", "User"],
+      dataCount: 0,
+      lastLogin: "2025-01-14 10:30 AM",
+    },
+    {
+      id: 2,
+      name: "Sarah Johnson",
+      email: "sarah@company.com",
+      role: "Team Admin",
+      status: "Active",
+      permissions: ["user_management", "data_view", "reports"],
+      canManage: ["User"],
+      dataCount: 0,
+      lastLogin: "2025-01-14 09:15 AM",
+    },
+    {
+      id: 3,
+      name: "Mike Wilson",
+      email: "mike@company.com",
+      role: "User",
+      status: "Active",
+      permissions: ["data_entry", "data_view"],
+      canManage: [],
+      dataCount: 247,
+      lastLogin: "2025-01-14 08:45 AM",
+    },
+  ]);
+
+  const [masterTablesData] = useState([
+    {
+      id: 1,
+      tableName: "Skills Database",
+      addedBy: "Mike Wilson",
+      records: 125,
+      status: "Pending",
+      dateAdded: "2025-01-14",
+      duplicatesAllowed: true,
+    },
+    {
+      id: 2,
+      tableName: "Industry Categories",
+      addedBy: "Sarah Johnson",
+      records: 87,
+      status: "Approved",
+      dateAdded: "2025-01-13",
+      duplicatesAllowed: true,
+    },
+    {
+      id: 3,
+      tableName: "Job Titles",
+      addedBy: "Mike Wilson",
+      records: 203,
+      status: "Approved",
+      dateAdded: "2025-01-12",
+      duplicatesAllowed: true,
+    },
+  ]);
+
+  const profile = {
+    profilePicture: null,
+    name: "N/A",
+    gender: "N/A",
+    mobile: "N/A",
+    email: "N/A",
+    dob: "N/A",
+    country: "N/A",
+    state: "N/A",
+    district: "N/A",
+    pinCode: "N/A",
+    place: "N/A",
+    languages: "N/A",
+    referId: "N/A",
+  };
 
   const itemsPerPage = show;
   const totalPages = Math.ceil(tableData.length / itemsPerPage);
@@ -66,9 +412,79 @@ const Dashboard = () => {
     });
   };
 
+  const [openMenu, setOpenMenu] = useState(null);
+  const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0 });
+  const menuRef = useRef(null);
+  const buttonRefs = useRef([]);
+
+  const calculateMenuPosition = (buttonRect) => {
+    const spaceBelow = window.innerHeight - buttonRect.bottom;
+    const spaceAbove = buttonRect.top;
+    const menuHeight = menuRef.current?.offsetHeight || 300; // Estimated height
+    const menuWidth = menuRef.current?.offsetWidth || 192; // min-width is 12rem
+
+    let top = buttonRect.bottom;
+    let left = buttonRect.left;
+
+    // Adjust position if it goes off-screen
+    if (spaceBelow < menuHeight && spaceAbove > menuHeight) {
+      top = buttonRect.top - menuHeight;
+    }
+
+    if (left + menuWidth > window.innerWidth) {
+      left = window.innerWidth - menuWidth - 16; // 16px for padding
+    }
+
+    setMenuPosition({ top, left });
+  };
+
+  const handleMenuToggle = (row, index) => {
+    if (openMenu && openMenu.row.data.name === row.data.name) {
+      setOpenMenu(null);
+    } else {
+      const buttonRect = buttonRefs.current[index]?.getBoundingClientRect();
+      if (buttonRect) {
+        calculateMenuPosition(buttonRect);
+        setOpenMenu({ row, index });
+      }
+    }
+  };
+
+  // Re-calculate menu position on scroll or resize
+  useEffect(() => {
+    if (openMenu) {
+      const handleScrollOrResize = () => {
+        const buttonRect =
+          buttonRefs.current[openMenu.index]?.getBoundingClientRect();
+        if (buttonRect) {
+          calculateMenuPosition(buttonRect);
+        }
+      };
+      window.addEventListener("scroll", handleScrollOrResize, true);
+      window.addEventListener("resize", handleScrollOrResize);
+      return () => {
+        window.removeEventListener("scroll", handleScrollOrResize, true);
+        window.removeEventListener("resize", handleScrollOrResize);
+      };
+    }
+  }, [openMenu]);
+
   useEffect(() => {
     setMounted(true);
-  }, []);
+    const closeMenus = (event) => {
+      if (
+        openMenu &&
+        menuRef.current &&
+        !menuRef.current.contains(event.target)
+      ) {
+        setOpenMenu(null);
+      }
+    };
+    document.addEventListener("mousedown", closeMenus);
+    return () => {
+      document.removeEventListener("mousedown", closeMenus);
+    };
+  }, [openMenu]);
 
   const variants = {
     hidden: { opacity: 0, y: 20 },
@@ -88,246 +504,988 @@ const Dashboard = () => {
           variants={variants}
           className="max-w-full mx-auto space-y-8"
         >
-          {/* Top Header with Action Buttons */}
-          <div className="bg-white rounded-xl shadow-md p-4 sm:p-6 space-y-4">
-            {/* First row of buttons */}
-            <div className="flex flex-wrap items-center gap-2 sm:gap-4">
-              <button className="bg-gradient-to-l from-blue-500/70 to-blue-400/60 text-gray-800 rounded-lg px-4 sm:px-5 py-2 text-sm font-medium shadow-sm hover:scale-105 transition-transform flex items-center gap-1 w-full sm:w-auto justify-center">
-                <Search size={16} /> Search Data
-              </button>
-              <button className="bg-gradient-to-l from-blue-500/70 to-blue-400/60 text-gray-800 rounded-lg px-4 sm:px-5 py-2 text-sm font-medium shadow-sm hover:scale-105 transition-transform flex items-center gap-1 w-full sm:w-auto justify-center">
-                <UserPlus size={16} /> Add Data
-              </button>
-              <button className="bg-gradient-to-l from-blue-500/70 to-blue-400/60 text-gray-800 rounded-lg px-4 sm:px-5 py-2 text-sm font-medium shadow-sm hover:scale-105 transition-transform flex items-center gap-1 w-full sm:w-auto justify-center">
-                <SquareCheckBig size={16} /> Verify Data
-              </button>
-              <button className="bg-gradient-to-l from-gray-700/70 to-gray-600/60 text-white rounded-lg px-4 sm:px-5 py-2 text-sm font-medium shadow-sm hover:scale-105 transition-transform flex items-center gap-1 w-full sm:w-auto justify-center">
-                <Upload size={16} /> Upload CSV
-              </button>
-              <button className="bg-gradient-to-l from-green-500/70 to-green-400/60 text-gray-800 rounded-lg px-4 sm:px-5 py-2 text-sm font-medium shadow-sm hover:scale-105 transition-transform w-full sm:w-auto">
-                Shortlist
-              </button>
-              <button className="bg-gradient-to-l from-orange-500/70 to-orange-400/60 text-gray-800 rounded-lg px-4 sm:px-5 py-2 text-sm font-medium shadow-sm hover:scale-105 transition-transform w-full sm:w-auto">
-                Task
-              </button>
-              <button className="bg-gradient-to-l from-blue-500/70 to-blue-400/60 text-gray-800 rounded-lg px-4 sm:px-5 py-2 text-sm font-medium shadow-sm hover:scale-105 transition-transform w-full sm:w-auto">
-                Sample CSV
-              </button>
-            </div>
-            {/* Second row of buttons */}
-            <div className="flex flex-wrap items-center gap-2 sm:gap-4">
-              <button className="flex items-center gap-1 bg-white border border-gray-300 text-gray-800 rounded-lg px-4 sm:px-5 py-2 text-sm font-medium shadow-sm hover:bg-gray-100 transition-colors w-full sm:w-auto justify-center">
-                <Mail size={16} className="text-gray-500" /> Email
-              </button>
-              <button className="flex items-center gap-1 bg-green-500 text-white rounded-lg px-4 sm:px-5 py-2 text-sm font-medium shadow-sm hover:bg-green-600 transition-colors w-full sm:w-auto justify-center">
-                <MessageCircle size={16} /> WhatsApp
-              </button>
-              <button className="flex items-center gap-1 bg-blue-500 text-white rounded-lg px-4 sm:px-5 py-2 text-sm font-medium shadow-sm hover:bg-blue-600 transition-colors w-full sm:w-auto justify-center">
-                <Phone size={16} /> Call
-              </button>
-              <button className="flex items-center gap-1 bg-red-500 text-white rounded-lg px-4 sm:px-5 py-2 text-sm font-medium shadow-sm hover:bg-red-600 transition-colors w-full sm:w-auto justify-center">
-                <Phone size={16} /> SMS
-              </button>
-              <button className="flex items-center gap-1 bg-white border border-gray-300 text-gray-800 rounded-lg px-4 sm:px-5 py-2 text-sm font-medium shadow-sm hover:bg-gray-100 transition-colors w-full sm:w-auto justify-center">
-                <UserPlus size={16} className="text-gray-500" /> Add to User
-              </button>
-              <button className="flex items-center gap-1 bg-black text-white rounded-lg px-4 sm:px-5 py-2 text-sm font-medium shadow-sm hover:bg-gray-800 transition-colors w-full sm:w-auto justify-center">
-                <SquareCheckBig size={16} /> Verify Email
-              </button>
-            </div>
-          </div>
-          
-          {/* Filters */}
-          <div className="bg-white rounded-xl shadow-md p-4 sm:p-6 flex flex-wrap items-center gap-2 sm:gap-4">
-            <select className="border border-gray-300 rounded-lg p-3 text-sm w-full sm:w-auto focus:outline-none focus:ring-2 focus:ring-blue-400">
-              <option>Data Type</option>
-            </select>
-            <select className="border border-gray-300 rounded-lg p-3 text-sm w-full sm:w-auto focus:outline-none focus:ring-2 focus:ring-blue-400">
-              <option>Country</option>
-            </select>
-            <select className="border border-gray-300 rounded-lg p-3 text-sm w-full sm:w-auto focus:outline-none focus:ring-2 focus:ring-blue-400">
-              <option>State</option>
-            </select>
-            <select className="border border-gray-300 rounded-lg p-3 text-sm w-full sm:w-auto focus:outline-none focus:ring-2 focus:ring-blue-400">
-              <option>District</option>
-            </select>
-            <select className="border border-gray-300 rounded-lg p-3 text-sm w-full sm:w-auto focus:outline-none focus:ring-2 focus:ring-blue-400">
-              <option>Pin Code</option>
-            </select>
-            <select className="border border-gray-300 rounded-lg p-3 text-sm w-full sm:w-auto focus:outline-none focus:ring-2 focus:ring-blue-400">
-              <option>All Data</option>
-            </select>
+          {/* ProfileSection */}
+          <div className="bg-white rounded-xl shadow-md p-4 sm:p-5 space-y-4">
+            <MyProfileSection profile={profile} />
           </div>
 
-          {/* Table Controls */}
-          <div className="bg-white rounded-xl shadow-md p-4 sm:p-6 flex flex-wrap items-center justify-between gap-4">
-            <div className="flex items-center gap-2 text-sm text-gray-700">
-              Show
-              <input
-                type="number"
-                value={show}
-                onChange={(e) => setShow(Number(e.target.value))}
-                className="w-16 border border-gray-300 rounded-md p-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-              />
-              Records
+          <div className="bg-white rounded-xl shadow-md p-4 sm:p-6 space-y-6">
+            <div className="flex items-center justify-between">
+              <h2 className="text-xl font-bold flex items-center gap-2">
+                <Users size={24} className="text-purple-500" />
+                User Management
+              </h2>
             </div>
-            <div className="relative w-full sm:w-auto">
-              <input
-                type="text"
-                placeholder="Search"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                className="w-full sm:w-64 border border-gray-300 rounded-md p-2 pl-10 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-              />
-              <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-            </div>
-          </div>
 
-          {/* Main Data Table */}
-          <div className="bg-white rounded-xl shadow-md overflow-x-auto">
-            <motion.table
-              key={currentPage}
-              className="min-w-full text-sm text-left border rounded-xl overflow-hidden"
-            >
-              <thead className="bg-gray-100 text-gray-700 font-semibold uppercase text-xs">
-                <tr>
-                  <th className="p-4 border-b">
-                    <input type="checkbox" className="accent-blue-600 mr-2" /> Selected (0)
-                  </th>
-                  <th className="p-4 border-b">
-                    <div className="flex items-center gap-1">
-                      <UserPlus size={16} /> Action
-                    </div>
-                  </th>
-                  <th className="p-4 border-b">
-                    <div className="flex items-center gap-1">
-                      <Mail size={16} /> Data
-                    </div>
-                  </th>
-                  <th className="p-4 border-b">
-                    <div className="flex items-center gap-1">
-                      <MessageCircle size={16} /> Location
-                    </div>
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-100">
-                {currentData.map((row, i) => (
-                  <tr key={i} className="align-top">
-                    <td className="p-4">
-                      <input
-                        type="checkbox"
-                        checked={row.selected}
-                        onChange={() => handleCheckboxChange(i)}
-                        className="accent-blue-600"
-                      />
-                    </td>
-                    <td className="p-4">
-                      <div className="flex items-center gap-2">
-                        <div className="bg-green-100 text-green-600 p-2 rounded-full">
-                          <SquareCheckBig size={18} />
-                        </div>
-                        <div className="bg-green-100 text-green-600 p-2 rounded-full">
-                          <SquareCheckBig size={18} />
-                        </div>
-                      </div>
-                    </td>
-                    <td className="p-4 text-gray-800">
-                      <div className="space-y-2">
-                        <div className="flex items-center gap-2">
-                          <Mail size={16} className="text-blue-500" />
-                          <span className="font-bold">{row.name}</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <Mail size={16} className="text-pink-500" />
-                          <span>{row.email}</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <Phone size={16} className="text-pink-500" />
-                          <span>{row.mobile}</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <MessageCircle size={16} className="text-green-500" />
-                          <span>N/A</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <Mail size={16} className="text-pink-500" />
-                          <span>N/A</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <SquareCheckBig
-                            size={16}
-                            className="text-gray-500"
-                          />
-                          <span className="font-medium text-gray-600">
-                            {row.status.workSeeker}
-                          </span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <UserPlus size={16} className="text-gray-500" />
-                          <span>{row.status.u}</span>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="p-4">
-                      <div className="space-y-2">
-                        <div className="flex items-center gap-2">
-                          <span className="text-green-500">📍</span>
-                          <span>Country: {row.location.country}</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <span className="text-green-500">📍</span>
-                          <span>State: {row.location.state}</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <span className="text-green-500">📍</span>
-                          <span>District: {row.location.district}</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <span className="text-green-500">📍</span>
-                          <span>Pincode: {row.location.pincode}</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <span className="text-green-500">📍</span>
-                          <span>Address: {row.location.address}</span>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
+            <div className="border-b border-gray-200">
+              <nav className="flex space-x-8">
+                {[
+                  { key: "hierarchy", label: "Role Hierarchy", icon: Crown },
+                  { key: "masters", label: "Master Tables", icon: Database },
+                ].map((tab) => (
+                  <button
+                    key={tab.key}
+                    onClick={() => setUserManagementTab(tab.key)}
+                    className={`py-2 px-1 border-b-2 font-medium text-sm flex items-center gap-2 ${
+                      userManagementTab === tab.key
+                        ? "border-purple-500 text-purple-600"
+                        : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                    }`}
+                  >
+                    <tab.icon size={16} />
+                    {tab.label}
+                  </button>
                 ))}
-              </tbody>
-            </motion.table>
+              </nav>
+            </div>
+
+            {userManagementTab === "hierarchy" && (
+              <div className="space-y-6">
+                {/* Hierarchy Info */}
+                <div className="bg-purple-50 border border-purple-200 rounded-lg p-4">
+                  <h4 className="font-semibold text-purple-800 mb-3 flex items-center gap-2">
+                    <Crown size={16} />
+                    Access Control Hierarchy
+                  </h4>
+                  <div className="space-y-3 text-sm">
+                    <div className="flex items-start gap-3">
+                      <Crown size={16} className="text-purple-600 mt-0.5" />
+                      <div>
+                        <div className="font-semibold text-purple-700">
+                          Super Admin
+                        </div>
+                        <div className="text-purple-600">
+                          Gives feature access permissions to Team Admin and
+                          Users
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <ShieldCheck size={16} className="text-blue-600 mt-0.5" />
+                      <div>
+                        <div className="font-semibold text-blue-700">
+                          Team Admin
+                        </div>
+                        <div className="text-blue-600">
+                          Gives feature access permissions (given by Super
+                          Admin) to Users
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <User size={16} className="text-green-600 mt-0.5" />
+                      <div>
+                        <div className="font-semibold text-green-700">User</div>
+                        <div className="text-green-600">
+                          Unique Data → Duplicates allowed → Added/Uploaded by
+                          the Users
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="overflow-x-auto">
+                  <table className="min-w-full text-sm border rounded-lg overflow-hidden">
+                    <thead className="bg-gray-100 text-gray-700 font-semibold">
+                      <tr>
+                        <th className="p-4 text-left">User Details</th>
+                        <th className="p-4 text-left">Role & Access</th>
+                        <th className="p-4 text-left">Data Contribution</th>
+                        <th className="p-4 text-left">Last Activity</th>
+                        <th className="p-4 text-center">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-gray-100">
+                      {userHierarchyData.map((user, index) => (
+                        <tr key={user.id} className="hover:bg-gray-50">
+                          <td className="p-4">
+                            <div className="flex items-center gap-3">
+                              <div className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center">
+                                {user.role === "Super Admin" && (
+                                  <Crown
+                                    size={16}
+                                    className="text-purple-500"
+                                  />
+                                )}
+                                {user.role === "Team Admin" && (
+                                  <ShieldCheck
+                                    size={16}
+                                    className="text-blue-500"
+                                  />
+                                )}
+                                {user.role === "User" && (
+                                  <User size={16} className="text-green-500" />
+                                )}
+                              </div>
+                              <div>
+                                <div className="font-medium">{user.name}</div>
+                                <div className="text-gray-500 text-xs">
+                                  {user.email}
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                          <td className="p-4">
+                            <div className="space-y-2">
+                              <span
+                                className={`px-2 py-1 rounded-full text-xs font-medium ${
+                                  user.role === "Super Admin"
+                                    ? "bg-purple-100 text-purple-800"
+                                    : user.role === "Team Admin"
+                                    ? "bg-blue-100 text-blue-800"
+                                    : "bg-green-100 text-green-800"
+                                }`}
+                              >
+                                {user.role}
+                              </span>
+                              {user.canManage.length > 0 && (
+                                <div className="text-xs text-gray-600">
+                                  Can manage: {user.canManage.join(", ")}
+                                </div>
+                              )}
+                            </div>
+                          </td>
+                          <td className="p-4">
+                            <div className="flex items-center gap-2">
+                              <Database size={16} className="text-gray-500" />
+                              <span className="font-medium">
+                                {user.dataCount}
+                              </span>
+                              <span className="text-gray-500 text-xs">
+                                records
+                              </span>
+                            </div>
+                            {user.role === "User" && (
+                              <div className="text-xs text-green-600 mt-1">
+                                ✓ Duplicates allowed
+                              </div>
+                            )}
+                          </td>
+                          <td className="p-4">
+                            <div className="flex items-center gap-1 text-gray-600">
+                              <Clock size={14} />
+                              <span className="text-xs">{user.lastLogin}</span>
+                            </div>
+                            <span
+                              className={`inline-block px-2 py-1 rounded-full text-xs font-medium mt-1 ${
+                                user.status === "Active"
+                                  ? "bg-green-100 text-green-800"
+                                  : "bg-red-100 text-red-800"
+                              }`}
+                            >
+                              {user.status}
+                            </span>
+                          </td>
+                          <td className="p-4 text-center">
+                            <div className="flex items-center justify-center gap-2">
+                              <button
+                                onClick={() => {
+                                  setSelectedUserForPermission(user);
+                                  setShowPermissionModal(true);
+                                }}
+                                className="bg-purple-100 text-purple-600 p-2 rounded-full hover:bg-purple-200 transition-colors"
+                                title="Manage Permissions"
+                              >
+                                <Settings size={16} />
+                              </button>
+                              <button className="bg-blue-100 text-blue-600 p-2 rounded-full hover:bg-blue-200 transition-colors">
+                                <Eye size={16} />
+                              </button>
+                              <button className="bg-green-100 text-green-600 p-2 rounded-full hover:bg-green-200 transition-colors">
+                                <Pencil size={16} />
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
+
+            {userManagementTab === "masters" && (
+              <div className="space-y-4">
+                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                  <h4 className="font-semibold text-blue-800 mb-2 flex items-center gap-2">
+                    <Database size={16} />
+                    Master Tables Management
+                  </h4>
+                  <p className="text-sm text-blue-700">
+                    Users can add master table records. Admin will moderate
+                    submissions. Duplicates are allowed for all user entries.
+                  </p>
+                </div>
+
+                {/* Master Tables */}
+                <div className="overflow-x-auto">
+                  <table className="min-w-full text-sm border rounded-lg overflow-hidden">
+                    <thead className="bg-gray-100 text-gray-700 font-semibold">
+                      <tr>
+                        <th className="p-4 text-left">Table Details</th>
+                        <th className="p-4 text-left">Contributor</th>
+                        <th className="p-4 text-left">Records</th>
+                        <th className="p-4 text-left">Status</th>
+                        <th className="p-4 text-left">Date Added</th>
+                        <th className="p-4 text-center">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-gray-100">
+                      {masterTablesData.map((table, index) => (
+                        <tr key={table.id} className="hover:bg-gray-50">
+                          <td className="p-4">
+                            <div className="flex items-center gap-2">
+                              <Database size={16} className="text-blue-500" />
+                              <div>
+                                <div className="font-medium">
+                                  {table.tableName}
+                                </div>
+                                <div className="text-xs text-green-600 mt-1">
+                                  ✓ Duplicates allowed
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                          <td className="p-4">
+                            <div className="flex items-center gap-2">
+                              <User size={14} className="text-gray-500" />
+                              <span>{table.addedBy}</span>
+                            </div>
+                          </td>
+                          <td className="p-4">
+                            <span className="font-medium">{table.records}</span>
+                            <span className="text-gray-500 text-xs ml-1">
+                              entries
+                            </span>
+                          </td>
+                          <td className="p-4">
+                            <span
+                              className={`px-2 py-1 rounded-full text-xs font-medium ${
+                                table.status === "Approved"
+                                  ? "bg-green-100 text-green-800"
+                                  : table.status === "Pending"
+                                  ? "bg-yellow-100 text-yellow-800"
+                                  : "bg-red-100 text-red-800"
+                              }`}
+                            >
+                              {table.status}
+                            </span>
+                            {table.status === "Pending" && (
+                              <div className="text-xs text-orange-600 mt-1 flex items-center gap-1">
+                                <AlertCircle size={12} />
+                                Needs moderation
+                              </div>
+                            )}
+                          </td>
+                          <td className="p-4 text-gray-600">
+                            <div className="flex items-center gap-1">
+                              <Calendar size={14} />
+                              {table.dateAdded}
+                            </div>
+                          </td>
+                          <td className="p-4 text-center">
+                            <div className="flex items-center justify-center gap-2">
+                              <button className="bg-green-100 text-green-600 p-2 rounded-full hover:bg-green-200 transition-colors">
+                                <Eye size={16} />
+                              </button>
+                              {table.status === "Pending" && (
+                                <button className="bg-yellow-100 text-yellow-600 p-2 rounded-full hover:bg-yellow-200 transition-colors">
+                                  <Check size={16} />
+                                </button>
+                              )}
+                              <button className="bg-blue-100 text-blue-600 p-2 rounded-full hover:bg-blue-200 transition-colors">
+                                <Pencil size={16} />
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
           </div>
 
-          {/* Pagination */}
-          <div className="flex flex-col sm:flex-row items-center justify-between text-sm text-gray-700 mt-6 gap-4">
-            <div>
-              Showing {tableData.length === 0 ? 0 : startIndex + 1} to{" "}
-              {Math.min(startIndex + itemsPerPage, tableData.length)} of{" "}
-              {tableData.length} Records
+          {/* Dashboard Actions and Filters */}
+          <div className="flex flex-col lg:flex-row gap-8">
+            {/* Left Hand Side (LHS) - Filters */}
+            <div className="bg-white rounded-xl shadow-md p-4 sm:p-6 w-full lg:w-1/4 space-y-4">
+              <h3 className="text-lg font-bold">Filter</h3>
+              <select className="border border-gray-300 rounded-lg p-3 text-sm w-full focus:outline-none focus:ring-2 focus:ring-blue-400">
+                <option>{"Data -> All, Self, Team, Other"}</option>
+              </select>
+              <select className="border border-gray-300 rounded-lg p-3 text-sm w-full focus:outline-none focus:ring-2 focus:ring-blue-400">
+                <option>{"Task -> "}</option>
+              </select>
+              <select className="border border-gray-300 rounded-lg p-3 text-sm w-full focus:outline-none focus:ring-2 focus:ring-blue-400">
+                <option>{"Lead -> "}</option>
+              </select>
+              <select className="border border-gray-300 rounded-lg p-3 text-sm w-full focus:outline-none focus:ring-2 focus:ring-blue-400">
+                <option>{"Status -> All"}</option>
+              </select>
+              <div className="flex items-center gap-2 border border-gray-300 rounded-lg p-2 text-sm focus-within:ring-2 focus-within:ring-blue-400">
+                <span className="text-gray-500">From:</span>
+                <input
+                  type="date"
+                  className="w-full bg-transparent outline-none"
+                />
+              </div>
+              <div className="flex items-center gap-2 border border-gray-300 rounded-lg p-2 text-sm focus-within:ring-2 focus-within:ring-blue-400">
+                <span className="text-gray-500">To:</span>
+                <input
+                  type="date"
+                  className="w-full bg-transparent outline-none"
+                />
+              </div>
+              <select className="border border-gray-300 rounded-lg p-3 text-sm w-full focus:outline-none focus:ring-2 focus:ring-blue-400">
+                <option>Country</option>
+              </select>
+              <select className="border border-gray-300 rounded-lg p-3 text-sm w-full focus:outline-none focus:ring-2 focus:ring-blue-400">
+                <option>State</option>
+              </select>
+              <select className="border border-gray-300 rounded-lg p-3 text-sm w-full focus:outline-none focus:ring-2 focus:ring-blue-400">
+                <option>District</option>
+              </select>
+              <select className="border border-gray-300 rounded-lg p-3 text-sm w-full focus:outline-none focus:ring-2 focus:ring-blue-400">
+                <option>Pin code</option>
+              </select>
+              <hr />
+              <h4 className="font-semibold text-sm">Data Based</h4>
+              <select className="border border-gray-300 rounded-lg p-3 text-sm w-full focus:outline-none focus:ring-2 focus:ring-blue-400">
+                <option>Skills (multi selection)</option>
+              </select>
+              <select className="border border-gray-300 rounded-lg p-3 text-sm w-full focus:outline-none focus:ring-2 focus:ring-blue-400">
+                <option>Functional Area</option>
+              </select>
+              <select className="border border-gray-300 rounded-lg p-3 text-sm w-full focus:outline-none focus:ring-2 focus:ring-blue-400">
+                <option>Position</option>
+              </select>
+              <select className="border border-gray-300 rounded-lg p-3 text-sm w-full focus:outline-none focus:ring-2 focus:ring-blue-400">
+                <option>Industry</option>
+              </select>
+              <select className="border border-gray-300 rounded-lg p-3 text-sm w-full focus:outline-none focus:ring-2 focus:ring-blue-400">
+                <option>Education (multi selection)</option>
+              </select>
+              <select className="border border-gray-300 rounded-lg p-3 text-sm w-full focus:outline-none focus:ring-2 focus:ring-blue-400">
+                <option>Institute (multi selection)</option>
+              </select>
+              <select className="border border-gray-300 rounded-lg p-3 text-sm w-full focus:outline-none focus:ring-2 focus:ring-blue-400">
+                <option>Experience (multi selection)</option>
+              </select>
+              <div className="flex items-center gap-2 border border-gray-300 rounded-lg p-2 text-sm focus-within:ring-2 focus-within:ring-blue-400">
+                <span className="text-gray-500">Exp. Years:</span>
+                <input
+                  type="number"
+                  placeholder="From"
+                  className="w-1/2 bg-transparent outline-none"
+                />
+                <input
+                  type="number"
+                  placeholder="To"
+                  className="w-1/2 bg-transparent outline-none"
+                />
+              </div>
             </div>
-            <div className="flex items-center gap-2">
-              <button
-                className="bg-white text-gray-800 rounded-lg px-5 py-2 text-sm font-medium shadow-sm hover:bg-gray-200 transition-colors disabled:opacity-50 flex items-center gap-1"
-                onClick={handlePrevious}
-                disabled={currentPage === 1}
-              >
-                <ChevronLeft size={16} /> Previous
-              </button>
-              <span className="bg-purple-600 text-white rounded-lg px-4 py-2 font-medium shadow-sm">
-                {currentPage}
-              </span>
-              <button
-                className="bg-white text-gray-800 rounded-lg px-5 py-2 text-sm font-medium shadow-sm hover:bg-gray-200 transition-colors disabled:opacity-50 flex items-center gap-1"
-                onClick={handleNext}
-                disabled={currentPage === totalPages}
-              >
-                Next <ChevronRight size={16} />
-              </button>
+
+            {/* Center Section - Main Dashboard Content */}
+            <div className="w-full lg:w-3/4 space-y-8 relative">
+              {/* Top Header with Action Buttons */}
+              <div className="bg-white rounded-xl shadow-md p-4 sm:p-6 space-y-4">
+                <div className="flex flex-wrap items-center gap-2 sm:gap-4">
+                  <button className="bg-blue-500 text-white rounded-lg px-4 py-2 text-sm font-medium shadow-sm hover:bg-blue-600 transition-colors flex items-center gap-1 w-full sm:w-auto justify-center">
+                    <UserPlus size={16} /> Add Data
+                  </button>
+                  <button className="bg-green-500 text-white rounded-lg px-4 py-2 text-sm font-medium shadow-sm hover:bg-green-600 transition-colors flex items-center gap-1 w-full sm:w-auto justify-center">
+                    <Mail size={16} /> Campaign
+                  </button>
+                  <button className="bg-blue-500 text-white rounded-lg px-4 py-2 text-sm font-medium shadow-sm hover:bg-blue-600 transition-colors flex items-center gap-1 w-full sm:w-auto justify-center">
+                    <Phone size={16} /> Call
+                  </button>
+                  <button className="bg-green-500 text-white rounded-lg px-4 py-2 text-sm font-medium shadow-sm hover:bg-green-600 transition-colors flex items-center gap-1 w-full sm:w-auto justify-center">
+                    <MessageCircle size={16} /> WhatsApp
+                  </button>
+                  <button className="bg-white border border-gray-300 text-gray-800 rounded-lg px-4 sm:px-5 py-2 text-sm font-medium shadow-sm hover:bg-gray-100 transition-colors w-full sm:w-auto flex items-center gap-2 justify-center">
+                    <Mail size={16} className="text-gray-500" />
+                    Email
+                  </button>
+                  <button className="bg-red-500 text-white rounded-lg px-4 py-2 text-sm font-medium shadow-sm hover:bg-red-600 transition-colors flex items-center gap-1 w-full sm:w-auto justify-center">
+                    RCM
+                  </button>
+                  <button className="bg-purple-500 text-white rounded-lg px-4 py-2 text-sm font-medium shadow-sm hover:bg-purple-600 transition-colors flex items-center gap-1 w-full sm:w-auto justify-center">
+                    Meet
+                  </button>
+                  <button className="bg-orange-500 text-white rounded-lg px-4 py-2 text-sm font-medium shadow-sm hover:bg-orange-600 transition-colors flex items-center gap-1 w-full sm:w-auto justify-center">
+                    Visit
+                  </button>
+                  <button className="bg-gray-700 text-white rounded-lg px-4 py-2 text-sm font-medium shadow-sm hover:bg-gray-800 transition-colors flex items-center gap-1 w-full sm:w-auto justify-center">
+                    <FileText size={16} /> Work Report
+                  </button>
+                </div>
+              </div>
+
+              {/* Table Controls */}
+              <div className="bg-white rounded-xl shadow-md p-4 sm:p-6 flex flex-wrap items-center justify-between gap-4">
+                <div className="flex items-center gap-2 text-sm text-gray-700">
+                  <span>Shortlist</span>
+                  <div className="flex gap-2">
+                    <button className="bg-green-500 text-white rounded-lg px-4 py-2 text-sm font-medium shadow-sm hover:bg-green-600 transition-colors">
+                      Task
+                    </button>
+                    <button className="bg-orange-500 text-white rounded-lg px-4 py-2 text-sm font-medium shadow-sm hover:bg-orange-600 transition-colors">
+                      Status
+                    </button>
+                    <button className="bg-blue-500 text-white rounded-lg px-4 py-2 text-sm font-medium shadow-sm hover:bg-blue-600 transition-colors">
+                      Lead
+                    </button>
+                  </div>
+                  <span className="ml-4">Show</span>
+                  <input
+                    type="number"
+                    value={show}
+                    onChange={(e) => setShow(Number(e.target.value))}
+                    className="w-16 border border-gray-300 rounded-md p-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  />
+                  Records
+                </div>
+                <div className="relative w-full sm:w-auto">
+                  <input
+                    type="text"
+                    placeholder="Search"
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    className="w-full sm:w-64 border border-gray-300 rounded-md p-2 pl-10 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  />
+                  <Search
+                    size={16}
+                    className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+                  />
+                </div>
+              </div>
+
+              {/* Main Data Table */}
+              <div className="bg-white rounded-xl shadow-md overflow-x-auto">
+                <motion.table
+                  key={currentPage}
+                  className="min-w-full text-sm text-left border rounded-xl overflow-hidden"
+                >
+                  <thead className="bg-gray-100 text-gray-700 font-semibold uppercase text-xs">
+                    <tr>
+                      <th className="p-4 border-b">
+                        <input
+                          type="checkbox"
+                          className="accent-blue-600 mr-2"
+                        />
+                        Selected (0)
+                      </th>
+                      <th className="p-4 border-b text-center">
+                        <div className="flex items-center justify-center gap-1">
+                          <UserPlus size={16} /> Action
+                        </div>
+                      </th>
+                      <th className="p-4 border-b">
+                        <div className="flex items-center gap-1">
+                          <Mail size={16} /> Data
+                        </div>
+                      </th>
+                      <th className="p-4 border-b">
+                        <div className="flex items-center gap-1">
+                          <MapPin size={16} /> Location
+                        </div>
+                      </th>
+                      <th className="p-4 border-b">
+                        <div className="flex items-center gap-1">
+                          <Info size={16} /> Details
+                        </div>
+                      </th>
+                      <th className="p-4 border-b">
+                        <div className="flex items-center gap-1">
+                          <ScrollText size={16} /> Status
+                        </div>
+                      </th>
+                      <th className="p-4 border-b">
+                        <div className="flex items-center gap-1">
+                          <MessageSquare size={16} /> Logs
+                        </div>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-100">
+                    {currentData.map((row, i) => (
+                      <tr key={i} className="align-top">
+                        <td className="p-4">
+                          <input
+                            type="checkbox"
+                            checked={row.selected}
+                            onChange={() => handleCheckboxChange(i)}
+                            className="accent-blue-600"
+                          />
+                        </td>
+                        <td className="p-4 text-center">
+                          <div className="flex items-center justify-center gap-2">
+                            <button className="bg-green-100 text-green-600 p-2 rounded-full hover:bg-green-200 transition-colors">
+                              <Eye size={18} />
+                            </button>
+                            <button className="bg-blue-100 text-blue-600 p-2 rounded-full hover:bg-blue-200 transition-colors">
+                              <Pencil size={18} />
+                            </button>
+                            <div className="relative">
+                              <button
+                                ref={(el) => (buttonRefs.current[i] = el)}
+                                onClick={() => handleMenuToggle(row, i)}
+                                className="bg-gray-100 text-gray-600 p-2 rounded-full hover:bg-gray-200 transition-colors"
+                              >
+                                <MoreVertical size={18} />
+                              </button>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="p-4 text-gray-800">
+                          <div className="space-y-2">
+                            <div className="flex items-center gap-2">
+                              <User size={16} className="text-gray-500" />
+                              <span className="font-bold">{row.data.name}</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <MessageCircle
+                                size={16}
+                                className="text-green-500"
+                              />
+                              <span>{row.data.whatsApp}</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <Phone size={16} className="text-pink-500" />
+                              <span>{row.data.mobile}</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <Mail size={16} className="text-blue-500" />
+                              <span>{row.data.email}</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <List size={16} className="text-gray-500" />
+                              <span>Type: {row.data.dataType}</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <User size={16} className="text-gray-500" />
+                              <span>Task: {row.data.task}</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <User size={16} className="text-gray-500" />
+                              <span>User: {row.data.user}</span>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="p-4">
+                          <div className="space-y-2">
+                            <div className="flex items-center gap-2">
+                              <MapPin size={16} className="text-green-500" />
+                              <span>Country: {row.location.country}</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <MapPin size={16} className="text-green-500" />
+                              <span>State: {row.location.state}</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <MapPin size={16} className="text-green-500" />
+                              <span>District: {row.location.district}</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <MapPin size={16} className="text-green-500" />
+                              <span>Pincode: {row.location.pinCode}</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <MapPin size={16} className="text-green-500" />
+                              <span>Place: {row.location.place}</span>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="p-4">
+                          <div className="space-y-2">
+                            <div className="flex items-center gap-2">
+                              <Calendar size={16} className="text-purple-500" />
+                              <span>DOB: {row.details.dob}</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <Briefcase
+                                size={16}
+                                className="text-orange-500"
+                              />
+                              <span>Profession: {row.details.profession}</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <GraduationCap
+                                size={16}
+                                className="text-blue-500"
+                              />
+                              <span>Institute: {row.details.institute}</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <Award size={16} className="text-yellow-500" />
+                              <span>Skills: {row.details.skills}</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <Paperclip size={16} className="text-gray-500" />
+                              <span>CV/Bio: {row.details.cvBio}</span>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="p-4">
+                          <div className="space-y-2">
+                            <div className="flex items-center gap-2">
+                              <User size={16} className="text-gray-500" />
+                              <span>Profile: {row.status.profile}</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <SquareCheckBig
+                                size={16}
+                                className="text-green-500"
+                              />
+                              <span>Skills Test: {row.status.skillsTest}</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <GraduationCap
+                                size={16}
+                                className="text-blue-500"
+                              />
+                              <span>
+                                Qualification: {row.status.qualification}
+                              </span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <MessageSquare
+                                size={16}
+                                className="text-purple-500"
+                              />
+                              <span>
+                                Communication: {row.status.communication}
+                              </span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <ThumbsUp size={16} className="text-orange-500" />
+                              <span>Interview: {row.status.interview}</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <Paperclip size={16} className="text-gray-500" />
+                              <span>Documents: {row.status.documents}</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <ScrollText size={16} className="text-red-500" />
+                              <span>LOI: {row.status.loi}</span>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="p-4">
+                          <div className="space-y-2">
+                            <div className="flex items-center gap-2">
+                              <Calendar size={16} className="text-gray-500" />
+                              <span>Follow up: {row.logs.followUpDate}</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <Clock size={16} className="text-red-500" />
+                              <span>Late: {row.logs.lateDays} days</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <List size={16} className="text-gray-500" />
+                              <span>Timeline: {row.logs.timeline}</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <MessageSquare
+                                size={16}
+                                className="text-gray-500"
+                              />
+                              <span>Remarks: {row.logs.remarks}</span>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </motion.table>
+              </div>
+
+              {/* Menu rendered outside the table to prevent clipping */}
+              {openMenu && (
+                <div
+                  ref={menuRef}
+                  className="fixed w-max min-w-[12rem] bg-white border border-gray-200 rounded-md shadow-lg z-50"
+                  style={{
+                    top: menuPosition.top,
+                    left: menuPosition.left,
+                  }}
+                >
+                  <ul className="py-1">
+                    <li>
+                      <a
+                        href="#"
+                        className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      >
+                        <FileText size={16} /> Passcode
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="#"
+                        className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      >
+                        <FileBadge size={16} /> Invoice
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="#"
+                        className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      >
+                        <FileDigit size={16} /> Receipt (if paid)
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="#"
+                        className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      >
+                        <Star size={16} /> Skills test
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="#"
+                        className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      >
+                        <BookA size={16} /> Communication evaluation
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="#"
+                        className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      >
+                        <UserRound size={16} /> HR interaction
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="#"
+                        className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      >
+                        <BookText size={16} /> Interview questions
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="#"
+                        className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      >
+                        <CircleArrowUp size={16} /> Document upload
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="#"
+                        className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      >
+                        <Settings size={16} /> Aptitude Assessment
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="#"
+                        className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      >
+                        <Settings size={16} /> Attitude Assessment
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="#"
+                        className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      >
+                        <Settings size={16} /> Ability Analyser
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="#"
+                        className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      >
+                        <ClipboardList size={16} /> Career Dashboard
+                      </a>
+                    </li>
+                    <hr className="my-1" />
+                    <li>
+                      <a
+                        href="#"
+                        className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      >
+                        <Database size={16} /> Source
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="#"
+                        className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      >
+                        <Star size={16} /> Score
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="#"
+                        className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      >
+                        <Pencil size={16} /> C-Task
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="#"
+                        className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      >
+                        <Pencil size={16} /> C-Lead
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="#"
+                        className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      >
+                        <Share size={16} /> S-Task
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="#"
+                        className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      >
+                        <Share size={16} /> S-Log
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              )}
+
+              {/* Pagination */}
+              <div className="flex flex-col sm:flex-row items-center justify-between text-sm text-gray-700 mt-6 gap-4">
+                <div>
+                  Showing {tableData.length === 0 ? 0 : startIndex + 1} to{" "}
+                  {Math.min(startIndex + itemsPerPage, tableData.length)} of{" "}
+                  {tableData.length} Records
+                </div>
+                <div className="flex items-center gap-2">
+                  <button
+                    className="bg-white text-gray-800 rounded-lg px-5 py-2 text-sm font-medium shadow-sm hover:bg-gray-200 transition-colors disabled:opacity-50 flex items-center gap-1"
+                    onClick={handlePrevious}
+                    disabled={currentPage === 1}
+                  >
+                    <ChevronLeft size={16} /> Previous
+                  </button>
+                  <span className="bg-purple-600 text-white rounded-lg px-4 py-2 font-medium shadow-sm">
+                    {currentPage}
+                  </span>
+                  <button
+                    className="bg-white text-gray-800 rounded-lg px-5 py-2 text-sm font-medium shadow-sm hover:bg-gray-200 transition-colors disabled:opacity-50 flex items-center gap-1"
+                    onClick={handleNext}
+                    disabled={currentPage === totalPages}
+                  >
+                    Next <ChevronRight size={16} />
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </motion.div>
       </div>
+
+      {/* Permission Modal */}
+      {showPermissionModal && selectedUserForPermission && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 max-w-lg w-full mx-4">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-semibold">
+                Manage Permissions - {selectedUserForPermission.name}
+              </h3>
+              <button
+                onClick={() => setShowPermissionModal(false)}
+                className="text-gray-400 hover:text-gray-600"
+              >
+                <X size={20} />
+              </button>
+            </div>
+
+            <div className="space-y-4">
+              <div className="bg-gray-50 p-3 rounded-lg">
+                <div className="flex items-center gap-2 mb-2">
+                  {selectedUserForPermission.role === "Super Admin" && (
+                    <Crown size={16} className="text-purple-500" />
+                  )}
+                  {selectedUserForPermission.role === "Team Admin" && (
+                    <ShieldCheck size={16} className="text-blue-500" />
+                  )}
+                  {selectedUserForPermission.role === "User" && (
+                    <User size={16} className="text-green-500" />
+                  )}
+                  <span className="font-medium">
+                    {selectedUserForPermission.role}
+                  </span>
+                </div>
+                <p className="text-sm text-gray-600">
+                  {selectedUserForPermission.role === "Super Admin" &&
+                    "Can manage all users and assign any permissions"}
+                  {selectedUserForPermission.role === "Team Admin" &&
+                    "Can manage Users with permissions granted by Super Admin"}
+                  {selectedUserForPermission.role === "User" &&
+                    "Can add unique data with duplicates allowed"}
+                </p>
+              </div>
+
+              <div className="space-y-3">
+                <h4 className="font-medium">Current Permissions:</h4>
+                <div className="space-y-2">
+                  {[
+                    "Data Entry",
+                    "Data View",
+                    "User Management",
+                    "Reports",
+                    "Master Tables",
+                  ].map((permission) => (
+                    <label
+                      key={permission}
+                      className="flex items-center gap-2 text-sm"
+                    >
+                      <input
+                        type="checkbox"
+                        defaultChecked={selectedUserForPermission.permissions.includes(
+                          permission.toLowerCase().replace(" ", "_")
+                        )}
+                        className="accent-purple-600"
+                        disabled={
+                          selectedUserForPermission.role === "Super Admin"
+                        }
+                      />
+                      {permission}
+                    </label>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="flex justify-end gap-3 mt-6">
+              <button
+                onClick={() => setShowPermissionModal(false)}
+                className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => setShowPermissionModal(false)}
+                className="px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600"
+              >
+                Save Changes
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Footer */}
       <footer className="w-full text-center p-4 bg-gray-100 text-purple-600 font-semibold text-sm">
