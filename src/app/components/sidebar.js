@@ -1,7 +1,4 @@
-"use client";
 import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import Link from "next/link";
 import {
   MessageSquare,
   Database,
@@ -22,19 +19,19 @@ import {
   ChevronLeft,
   Menu,
   X,
+  Filter,
 } from "lucide-react";
-import ManageLists from "./manageLists";
 
 const Sidebar = ({
-  onAddListClick,
-  onAddDataClick,
-  onRemoveDataClick,
-  onVerifyEmailsClick,
-  onManageListsClick,
-  onDataExtractorClick,
-  onEmailTemplateClick,
-  onLogoClick,
-  onSidebarStateChange,
+  onAddListClick = () => {},
+  onAddDataClick = () => {},
+  onRemoveDataClick = () => {},
+  onVerifyEmailsClick = () => {},
+  onManageListsClick = () => {},
+  onDataExtractorClick = () => {},
+  onEmailTemplateClick = () => {},
+  onLogoClick = () => {},
+  onSidebarStateChange = () => {},
 }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [openMenus, setOpenMenus] = useState(new Set());
@@ -93,30 +90,98 @@ const Sidebar = ({
     });
   };
 
-  const sidebarVariants = {
-    hidden: { x: isMobile ? -320 : -80, opacity: isMobile ? 0 : 1 },
-    visible: {
-      x: 0,
-      opacity: 1,
-      transition: { type: "tween", duration: 0.3, ease: "easeInOut" },
-    },
-  };
-
-  const overlayVariants = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 0.5, transition: { duration: 0.3 } },
-  };
-
-  const dropdownVariants = {
-    hidden: { height: 0, opacity: 0 },
-    visible: {
-      height: "auto",
-      opacity: 1,
-      transition: { duration: 0.3, ease: "easeInOut" },
-    },
-  };
+  // Filter Component
+  const FilterSection = () => (
+    <div className="space-y-3 p-2 max-h-96 overflow-y-auto">
+      <select className="border border-gray-300 rounded-lg p-2 text-xs w-full focus:outline-none focus:ring-2 focus:ring-blue-400">
+        <option>Data → All, Self, Team, Other</option>
+      </select>
+      <select className="border border-gray-300 rounded-lg p-2 text-xs w-full focus:outline-none focus:ring-2 focus:ring-blue-400">
+        <option>Task →</option>
+      </select>
+      <select className="border border-gray-300 rounded-lg p-2 text-xs w-full focus:outline-none focus:ring-2 focus:ring-blue-400">
+        <option>Lead →</option>
+      </select>
+      <select className="border border-gray-300 rounded-lg p-2 text-xs w-full focus:outline-none focus:ring-2 focus:ring-blue-400">
+        <option>Status → All</option>
+      </select>
+      
+      <div className="flex items-center gap-2 border border-gray-300 rounded-lg p-2 text-xs focus-within:ring-2 focus-within:ring-blue-400">
+        <span className="text-gray-500 text-xs">From:</span>
+        <input
+          type="date"
+          className="w-full bg-transparent outline-none text-xs"
+        />
+      </div>
+      
+      <div className="flex items-center gap-2 border border-gray-300 rounded-lg p-2 text-xs focus-within:ring-2 focus-within:ring-blue-400">
+        <span className="text-gray-500 text-xs">To:</span>
+        <input
+          type="date"
+          className="w-full bg-transparent outline-none text-xs"
+        />
+      </div>
+      
+      <select className="border border-gray-300 rounded-lg p-2 text-xs w-full focus:outline-none focus:ring-2 focus:ring-blue-400">
+        <option>Country</option>
+      </select>
+      <select className="border border-gray-300 rounded-lg p-2 text-xs w-full focus:outline-none focus:ring-2 focus:ring-blue-400">
+        <option>State</option>
+      </select>
+      <select className="border border-gray-300 rounded-lg p-2 text-xs w-full focus:outline-none focus:ring-2 focus:ring-blue-400">
+        <option>District</option>
+      </select>
+      <select className="border border-gray-300 rounded-lg p-2 text-xs w-full focus:outline-none focus:ring-2 focus:ring-blue-400">
+        <option>Pin code</option>
+      </select>
+      
+      <hr className="my-2" />
+      <h4 className="font-semibold text-xs">Data Based</h4>
+      
+      <select className="border border-gray-300 rounded-lg p-2 text-xs w-full focus:outline-none focus:ring-2 focus:ring-blue-400">
+        <option>Skills (multi selection)</option>
+      </select>
+      <select className="border border-gray-300 rounded-lg p-2 text-xs w-full focus:outline-none focus:ring-2 focus:ring-blue-400">
+        <option>Functional Area</option>
+      </select>
+      <select className="border border-gray-300 rounded-lg p-2 text-xs w-full focus:outline-none focus:ring-2 focus:ring-blue-400">
+        <option>Position</option>
+      </select>
+      <select className="border border-gray-300 rounded-lg p-2 text-xs w-full focus:outline-none focus:ring-2 focus:ring-blue-400">
+        <option>Industry</option>
+      </select>
+      <select className="border border-gray-300 rounded-lg p-2 text-xs w-full focus:outline-none focus:ring-2 focus:ring-blue-400">
+        <option>Education (multi selection)</option>
+      </select>
+      <select className="border border-gray-300 rounded-lg p-2 text-xs w-full focus:outline-none focus:ring-2 focus:ring-blue-400">
+        <option>Institute (multi selection)</option>
+      </select>
+      <select className="border border-gray-300 rounded-lg p-2 text-xs w-full focus:outline-none focus:ring-2 focus:ring-blue-400">
+        <option>Experience (multi selection)</option>
+      </select>
+      
+      <div className="flex items-center gap-2 border border-gray-300 rounded-lg p-2 text-xs focus-within:ring-2 focus-within:ring-blue-400">
+        <span className="text-gray-500 text-xs">Exp. Years:</span>
+        <input
+          type="number"
+          placeholder="From"
+          className="w-1/2 bg-transparent outline-none text-xs"
+        />
+        <input
+          type="number"
+          placeholder="To"
+          className="w-1/2 bg-transparent outline-none text-xs"
+        />
+      </div>
+    </div>
+  );
 
   const menuItems = [
+    {
+      title: "Filter",
+      icon: Filter,
+      component: FilterSection,
+    },
     {
       title: "CRM",
       icon: Briefcase,
@@ -175,11 +240,11 @@ const Sidebar = ({
     },
   ];
 
-  const handleMenuClick = (e, key, hasChildren, action) => {
+  const handleMenuClick = (e, key, hasChildren, hasComponent, action) => {
     e.preventDefault();
     e.stopPropagation();
 
-    if (hasChildren) {
+    if (hasChildren || hasComponent) {
       toggleMenu(key);
     } else if (action) {
       action();
@@ -190,6 +255,7 @@ const Sidebar = ({
     items.map((item, index) => {
       const key = `${parentKey}${item.title}-${index}`;
       const hasChildren = item.children && item.children.length > 0;
+      const hasComponent = !!item.component;
       const Icon = item.icon;
       const isOpen = openMenus.has(key);
 
@@ -197,7 +263,7 @@ const Sidebar = ({
         <li key={key} className="w-full">
           <button
             type="button"
-            onClick={(e) => handleMenuClick(e, key, hasChildren, item.action)}
+            onClick={(e) => handleMenuClick(e, key, hasChildren, hasComponent, item.action)}
             className={`flex items-center w-full p-2 text-gray-900 rounded-lg hover:bg-gray-100 transition-colors duration-200 group relative ${
               level > 0 ? "text-sm" : ""
             }`}
@@ -212,7 +278,7 @@ const Sidebar = ({
                 >
                   {item.title}
                 </span>
-                {hasChildren && (
+                {(hasChildren || hasComponent) && (
                   <ChevronDown
                     className={`w-4 h-4 transition-transform duration-300 ${
                       isOpen ? "rotate-180" : ""
@@ -227,18 +293,33 @@ const Sidebar = ({
               </span>
             )}
           </button>
+          
+          {/* Render component if exists */}
+          {hasComponent && isSidebarOpen && isOpen && (
+            <div
+              className="mt-1 overflow-hidden transition-all duration-300 ease-in-out"
+              style={{
+                maxHeight: isOpen ? '400px' : '0px',
+                opacity: isOpen ? 1 : 0
+              }}
+            >
+              <item.component />
+            </div>
+          )}
+          
+          {/* Render children if exists */}
           {hasChildren && isSidebarOpen && isOpen && (
-            <motion.ul
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: "auto", opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.3, ease: "easeInOut" }}
-              className={`mt-1 space-y-1 overflow-hidden ${
+            <ul
+              className={`mt-1 space-y-1 overflow-hidden transition-all duration-300 ease-in-out ${
                 level === 0 ? "pl-6" : "pl-8"
               }`}
+              style={{
+                maxHeight: isOpen ? '400px' : '0px',
+                opacity: isOpen ? 1 : 0
+              }}
             >
               {renderMenu(item.children, `${key}-`, level + 1)}
-            </motion.ul>
+            </ul>
           )}
         </li>
       );
@@ -258,180 +339,172 @@ const Sidebar = ({
       )}
 
       {/* Mobile Overlay */}
-      <AnimatePresence>
-        {isMobile && isSidebarOpen && (
-          <motion.div
-            className="fixed inset-0 bg-black z-[45]"
-            variants={overlayVariants}
-            initial="hidden"
-            animate="visible"
-            exit="hidden"
-            onClick={() => setIsSidebarOpen(false)}
-          />
-        )}
-      </AnimatePresence>
+      {isMobile && isSidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 z-[45] transition-opacity duration-300"
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
 
       {/* Sidebar */}
-      <AnimatePresence>
-        {(isSidebarOpen || !isMobile) && (
-          <motion.aside
-            id="logo-sidebar"
-            className={`fixed top-0 left-0 z-[100] h-screen bg-white shadow-lg
-    ${isSidebarOpen ? "w-64" : isMobile ? "w-0" : "md:w-0 lg:w-20"} 
-    transition-all duration-300`}
-            aria-label="Sidebar"
-            variants={sidebarVariants}
-            initial="hidden"
-            animate="visible"
-            exit="hidden"
-          >
-            <div className="h-full overflow-y-auto space-y-4 pt-6">
-              {/* Logo + Toggle Button */}
-              <div className="flex items-center justify-between px-3 py-4 border-b border-gray-200">
-                <div className="flex items-center gap-2">
-                  {isSidebarOpen ? (
-                    <button
-                      onClick={onLogoClick}
-                      className="focus:outline-none"
-                    >
-                      <img
-                        src="/logo.webp"
-                        alt="Margda Logo"
-                        className="h-8 w-auto cursor-pointer"
-                      />
-                    </button>
-                  ) : (
-                    ""
-                  )}
-                </div>
-                {/* Close button for mobile */}
-                {isMobile && isSidebarOpen ? (
+      {(isSidebarOpen || !isMobile) && (
+        <aside
+          id="logo-sidebar"
+          className={`fixed top-0 left-0 z-[100] h-screen bg-white shadow-lg overflow-hidden transition-all duration-300 ${
+            isSidebarOpen ? "w-64" : isMobile ? "w-0" : "md:w-0 lg:w-20"
+          }`}
+          aria-label="Sidebar"
+          style={{
+            transform: isMobile && !isSidebarOpen ? 'translateX(-100%)' : 'translateX(0)',
+            opacity: isMobile && !isSidebarOpen ? 0 : 1
+          }}
+        >
+          <div className="h-full overflow-y-auto space-y-4 pt-6">
+            {/* Logo + Toggle Button */}
+            <div className="flex items-center justify-between px-3 py-4 border-b border-gray-200">
+              <div className="flex items-center gap-2">
+{isSidebarOpen ? (
                   <button
-                    id="mobile-close-btn"
-                    onClick={() => setIsSidebarOpen(false)}
-                    className="p-1 hover:bg-gray-100 rounded"
+                    onClick={onLogoClick}
+                    className="focus:outline-none"
                   >
-                    <X size={20} />
+                    <img
+                      src="/logo.webp"
+                      alt="Margda Logo"
+                      className="h-8 w-auto cursor-pointer"
+                    />
                   </button>
                 ) : (
-                  <button
-                    id="sidebar-toggle-btn"
-                    onClick={toggleSidebar}
-                    className="p-1 hover:bg-gray-100 rounded"
-                  >
-                    {isSidebarOpen ? (
-                      <ChevronLeft size={20} />
-                    ) : (
-                      <Menu size={20} />
-                    )}
-                  </button>
+                  ""
                 )}
               </div>
-
-              {/* Account Info */}
-              {isSidebarOpen && (
-                <div className="bg-white px-4 py-3 rounded-lg shadow space-y-2 text-sm">
-                  <div className="flex items-center">
-                    <MessageSquare className="w-4 h-4 mr-2 text-green-500" />
-                    Messages: 0
-                  </div>
-                  <div className="flex items-center">
-                    <Database className="w-4 h-4 mr-2 text-purple-500" />
-                    Data: ₹0
-                  </div>
-                  <div className="flex items-center">
-                    <Briefcase className="w-4 h-4 mr-2 text-yellow-500" />
-                    Business: ₹0
-                  </div>
-                  <div className="flex items-center">
-                    <Wallet className="w-4 h-4 mr-2 text-orange-500" />
-                    Wallet: ₹0.00
-                  </div>
-                  <div className="flex items-center">
-                    <CreditCard className="w-4 h-4 mr-2 text-pink-500" />
-                    Account: ₹0.00
-                  </div>
-                  <div className="flex items-center">
-                    <TrendingUp className="w-4 h-4 mr-2 text-blue-500" />
-                    Income: ₹0.00
-                  </div>
-                  <div className="flex items-center">
-                    <PlusCircle className="w-4 h-4 mr-2 text-indigo-500" />
-                    Recharge: ₹0.00
-                  </div>
-                  <div className="flex items-center">
-                    <Calendar className="w-4 h-4 mr-2 text-red-500" />
-                    Validity: 9/8/2025
-                  </div>
-                </div>
+              {/* Close button for mobile */}
+              {isMobile && isSidebarOpen ? (
+                <button
+                  id="mobile-close-btn"
+                  onClick={() => setIsSidebarOpen(false)}
+                  className="p-1 hover:bg-gray-100 rounded"
+                >
+                  <X size={20} />
+                </button>
+              ) : (
+                <button
+                  id="sidebar-toggle-btn"
+                  onClick={toggleSidebar}
+                  className="p-1 hover:bg-gray-100 rounded"
+                >
+                  {isSidebarOpen ? (
+                    <ChevronLeft size={20} />
+                  ) : (
+                    <Menu size={20} />
+                  )}
+                </button>
               )}
-
-              {/* Actions */}
-              <div className="bg-white p-4 rounded-lg shadow">
-                <ul className="space-y-1 text-sm">
-                  {[
-                    {
-                      icon: Share2,
-                      color: "text-blue-500",
-                      title: "Data Share",
-                    },
-                    {
-                      icon: Lock,
-                      color: "text-red-500",
-                      title: "Authorisation",
-                    },
-                    {
-                      icon: Crown,
-                      color: "text-yellow-500",
-                      title: "Knowledge Royalty",
-                    },
-                    {
-                      icon: Key,
-                      color: "text-purple-500",
-                      title: "Credential",
-                    },
-                    {
-                      icon: Mail,
-                      color: "text-green-500",
-                      title: "Email App Password",
-                    },
-                    {
-                      icon: QrCode,
-                      color: "text-indigo-500",
-                      title: "WhatsApp Scan",
-                    },
-                    {
-                      icon: Gift,
-                      color: "text-pink-500",
-                      title: "Refer Code DOELN",
-                    },
-                  ].map(({ icon: Icon, color, title }) => (
-                    <li
-                      key={title}
-                      className="flex items-center p-2 hover:bg-gray-100 rounded group relative"
-                    >
-                      <Icon className={`w-4 h-4 ${color}`} />
-                      {isSidebarOpen && <span className="ml-2">{title}</span>}
-                      {!isSidebarOpen && (
-                        <span className="absolute left-12 bg-black text-white text-xs rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity z-50">
-                          {title}
-                        </span>
-                      )}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Main Menu */}
-              <div className="bg-white p-4 rounded-lg shadow">
-                <ul className="space-y-1 text-sm">
-                  {renderMenu(menuItems, "", 0)}
-                </ul>
-              </div>
             </div>
-          </motion.aside>
-        )}
-      </AnimatePresence>
+
+            {/* Account Info */}
+            {isSidebarOpen && (
+              <div className="bg-white px-4 py-3 rounded-lg shadow space-y-2 text-sm">
+                <div className="flex items-center">
+                  <MessageSquare className="w-4 h-4 mr-2 text-green-500" />
+                  Messages: 0
+                </div>
+                <div className="flex items-center">
+                  <Database className="w-4 h-4 mr-2 text-purple-500" />
+                  Data: ₹0
+                </div>
+                <div className="flex items-center">
+                  <Briefcase className="w-4 h-4 mr-2 text-yellow-500" />
+                  Business: ₹0
+                </div>
+                <div className="flex items-center">
+                  <Wallet className="w-4 h-4 mr-2 text-orange-500" />
+                  Wallet: ₹0.00
+                </div>
+                <div className="flex items-center">
+                  <CreditCard className="w-4 h-4 mr-2 text-pink-500" />
+                  Account: ₹0.00
+                </div>
+                <div className="flex items-center">
+                  <TrendingUp className="w-4 h-4 mr-2 text-blue-500" />
+                  Income: ₹0.00
+                </div>
+                <div className="flex items-center">
+                  <PlusCircle className="w-4 h-4 mr-2 text-indigo-500" />
+                  Recharge: ₹0.00
+                </div>
+                <div className="flex items-center">
+                  <Calendar className="w-4 h-4 mr-2 text-red-500" />
+                  Validity: 9/8/2025
+                </div>
+              </div>
+            )}
+
+            {/* Actions */}
+            <div className="bg-white p-4 rounded-lg shadow">
+              <ul className="space-y-1 text-sm">
+                {[
+                  {
+                    icon: Share2,
+                    color: "text-blue-500",
+                    title: "Data Share",
+                  },
+                  {
+                    icon: Lock,
+                    color: "text-red-500",
+                    title: "Authorisation",
+                  },
+                  {
+                    icon: Crown,
+                    color: "text-yellow-500",
+                    title: "Knowledge Royalty",
+                  },
+                  {
+                    icon: Key,
+                    color: "text-purple-500",
+                    title: "Credential",
+                  },
+                  {
+                    icon: Mail,
+                    color: "text-green-500",
+                    title: "Email App Password",
+                  },
+                  {
+                    icon: QrCode,
+                    color: "text-indigo-500",
+                    title: "WhatsApp Scan",
+                  },
+                  {
+                    icon: Gift,
+                    color: "text-pink-500",
+                    title: "Refer Code DOELN",
+                  },
+                ].map(({ icon: Icon, color, title }) => (
+                  <li
+                    key={title}
+                    className="flex items-center p-2 hover:bg-gray-100 rounded group relative"
+                  >
+                    <Icon className={`w-4 h-4 ${color}`} />
+                    {isSidebarOpen && <span className="ml-2">{title}</span>}
+                    {!isSidebarOpen && (
+                      <span className="absolute left-12 bg-black text-white text-xs rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity z-50">
+                        {title}
+                      </span>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Main Menu */}
+            <div className="bg-white p-4 rounded-lg shadow">
+              <ul className="space-y-1 text-sm">
+                {renderMenu(menuItems, "", 0)}
+              </ul>
+            </div>
+          </div>
+        </aside>
+      )}
     </>
   );
 };

@@ -811,86 +811,10 @@ const Dashboard = () => {
           {/* Dashboard Actions and Filters */}
           <div className="flex flex-col lg:flex-row gap-8">
             {/* Left Hand Side (LHS) - Filters */}
-            <div className="bg-white rounded-xl shadow-md p-4 sm:p-6 w-full lg:w-1/4 space-y-4">
-              <h3 className="text-lg font-bold">Filter</h3>
-              <select className="border border-gray-300 rounded-lg p-3 text-sm w-full focus:outline-none focus:ring-2 focus:ring-blue-400">
-                <option>{"Data -> All, Self, Team, Other"}</option>
-              </select>
-              <select className="border border-gray-300 rounded-lg p-3 text-sm w-full focus:outline-none focus:ring-2 focus:ring-blue-400">
-                <option>{"Task -> "}</option>
-              </select>
-              <select className="border border-gray-300 rounded-lg p-3 text-sm w-full focus:outline-none focus:ring-2 focus:ring-blue-400">
-                <option>{"Lead -> "}</option>
-              </select>
-              <select className="border border-gray-300 rounded-lg p-3 text-sm w-full focus:outline-none focus:ring-2 focus:ring-blue-400">
-                <option>{"Status -> All"}</option>
-              </select>
-              <div className="flex items-center gap-2 border border-gray-300 rounded-lg p-2 text-sm focus-within:ring-2 focus-within:ring-blue-400">
-                <span className="text-gray-500">From:</span>
-                <input
-                  type="date"
-                  className="w-full bg-transparent outline-none"
-                />
-              </div>
-              <div className="flex items-center gap-2 border border-gray-300 rounded-lg p-2 text-sm focus-within:ring-2 focus-within:ring-blue-400">
-                <span className="text-gray-500">To:</span>
-                <input
-                  type="date"
-                  className="w-full bg-transparent outline-none"
-                />
-              </div>
-              <select className="border border-gray-300 rounded-lg p-3 text-sm w-full focus:outline-none focus:ring-2 focus:ring-blue-400">
-                <option>Country</option>
-              </select>
-              <select className="border border-gray-300 rounded-lg p-3 text-sm w-full focus:outline-none focus:ring-2 focus:ring-blue-400">
-                <option>State</option>
-              </select>
-              <select className="border border-gray-300 rounded-lg p-3 text-sm w-full focus:outline-none focus:ring-2 focus:ring-blue-400">
-                <option>District</option>
-              </select>
-              <select className="border border-gray-300 rounded-lg p-3 text-sm w-full focus:outline-none focus:ring-2 focus:ring-blue-400">
-                <option>Pin code</option>
-              </select>
-              <hr />
-              <h4 className="font-semibold text-sm">Data Based</h4>
-              <select className="border border-gray-300 rounded-lg p-3 text-sm w-full focus:outline-none focus:ring-2 focus:ring-blue-400">
-                <option>Skills (multi selection)</option>
-              </select>
-              <select className="border border-gray-300 rounded-lg p-3 text-sm w-full focus:outline-none focus:ring-2 focus:ring-blue-400">
-                <option>Functional Area</option>
-              </select>
-              <select className="border border-gray-300 rounded-lg p-3 text-sm w-full focus:outline-none focus:ring-2 focus:ring-blue-400">
-                <option>Position</option>
-              </select>
-              <select className="border border-gray-300 rounded-lg p-3 text-sm w-full focus:outline-none focus:ring-2 focus:ring-blue-400">
-                <option>Industry</option>
-              </select>
-              <select className="border border-gray-300 rounded-lg p-3 text-sm w-full focus:outline-none focus:ring-2 focus:ring-blue-400">
-                <option>Education (multi selection)</option>
-              </select>
-              <select className="border border-gray-300 rounded-lg p-3 text-sm w-full focus:outline-none focus:ring-2 focus:ring-blue-400">
-                <option>Institute (multi selection)</option>
-              </select>
-              <select className="border border-gray-300 rounded-lg p-3 text-sm w-full focus:outline-none focus:ring-2 focus:ring-blue-400">
-                <option>Experience (multi selection)</option>
-              </select>
-              <div className="flex items-center gap-2 border border-gray-300 rounded-lg p-2 text-sm focus-within:ring-2 focus-within:ring-blue-400">
-                <span className="text-gray-500">Exp. Years:</span>
-                <input
-                  type="number"
-                  placeholder="From"
-                  className="w-1/2 bg-transparent outline-none"
-                />
-                <input
-                  type="number"
-                  placeholder="To"
-                  className="w-1/2 bg-transparent outline-none"
-                />
-              </div>
-            </div>
+            
 
             {/* Center Section - Main Dashboard Content */}
-            <div className="w-full lg:w-3/4 space-y-8 relative">
+            <div className="w-full  space-y-8 relative">
               {/* Top Header with Action Buttons */}
               <div className="bg-white rounded-xl shadow-md p-4 sm:p-6 space-y-4">
                 <div className="flex flex-wrap items-center gap-2 sm:gap-4">
