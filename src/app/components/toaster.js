@@ -10,7 +10,7 @@ const Toaster = ({ message, type = "success", onClose }) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       onClose();
-    },500); // auto-dismiss after 3s
+    },1500); // auto-dismiss after 3s
     return () => clearTimeout(timer);
   }, [onClose]);
 

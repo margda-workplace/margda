@@ -32,17 +32,78 @@ const Page = () => {
   const renderActiveComponent = () => {
     switch (activeComponent) {
       case "addList":
-        return <AddList sidebarCollapsed={sidebarCollapsed} />;
+        return (
+          <AddList
+            sidebarCollapsed={sidebarCollapsed}
+            onAddListClick={() => handleComponentChange("addList")}
+            onAddDataClick={() => handleComponentChange("addData")}
+            onRemoveDataClick={() => handleComponentChange("removeData")}
+            onVerifyEmailsClick={() => handleComponentChange("verifyEmail")}
+            onManageListsClick={() => handleComponentChange("manageLists")}
+            onDataExtractorClick={() => handleComponentChange("dataExtractor")}
+          />
+        );
+
       case "addData":
-        return <AddData sidebarCollapsed={sidebarCollapsed} />;
+        return (
+          <AddData
+            sidebarCollapsed={sidebarCollapsed}
+            onAddListClick={() => handleComponentChange("addList")}
+            onAddDataClick={() => handleComponentChange("addData")}
+            onRemoveDataClick={() => handleComponentChange("removeData")}
+            onVerifyEmailsClick={() => handleComponentChange("verifyEmail")}
+            onManageListsClick={() => handleComponentChange("manageLists")}
+            onDataExtractorClick={() => handleComponentChange("dataExtractor")}
+          />
+        );
       case "removeData":
-        return <RemoveData sidebarCollapsed={sidebarCollapsed} />;
+        return (
+          <RemoveData
+            sidebarCollapsed={sidebarCollapsed}
+            onAddListClick={() => handleComponentChange("addList")}
+            onAddDataClick={() => handleComponentChange("addData")}
+            onRemoveDataClick={() => handleComponentChange("removeData")}
+            onVerifyEmailsClick={() => handleComponentChange("verifyEmail")}
+            onManageListsClick={() => handleComponentChange("manageLists")}
+            onDataExtractorClick={() => handleComponentChange("dataExtractor")}
+          />
+        );
       case "verifyEmail":
-        return <VerifyEmails sidebarCollapsed={sidebarCollapsed} />;
+        return (
+          <VerifyEmails
+            sidebarCollapsed={sidebarCollapsed}
+            onAddListClick={() => handleComponentChange("addList")}
+            onAddDataClick={() => handleComponentChange("addData")}
+            onRemoveDataClick={() => handleComponentChange("removeData")}
+            onVerifyEmailsClick={() => handleComponentChange("verifyEmail")}
+            onManageListsClick={() => handleComponentChange("manageLists")}
+            onDataExtractorClick={() => handleComponentChange("dataExtractor")}
+          />
+        );
       case "manageLists":
-        return <ManageLists sidebarCollapsed={sidebarCollapsed} />;
+        return (
+          <ManageLists
+            sidebarCollapsed={sidebarCollapsed}
+            onAddListClick={() => handleComponentChange("addList")}
+            onAddDataClick={() => handleComponentChange("addData")}
+            onRemoveDataClick={() => handleComponentChange("removeData")}
+            onVerifyEmailsClick={() => handleComponentChange("verifyEmail")}
+            onManageListsClick={() => handleComponentChange("manageLists")}
+            onDataExtractorClick={() => handleComponentChange("dataExtractor")}
+          />
+        );
       case "dataExtractor":
-        return <DataExtractor sidebarCollapsed={sidebarCollapsed} />;
+        return (
+          <DataExtractor
+            sidebarCollapsed={sidebarCollapsed}
+            onAddListClick={() => handleComponentChange("addList")}
+            onAddDataClick={() => handleComponentChange("addData")}
+            onRemoveDataClick={() => handleComponentChange("removeData")}
+            onVerifyEmailsClick={() => handleComponentChange("verifyEmail")}
+            onManageListsClick={() => handleComponentChange("manageLists")}
+            onDataExtractorClick={() => handleComponentChange("dataExtractor")}
+          />
+        );
       case "emailTemplate":
         return <EmailTemplate sidebarCollapsed={sidebarCollapsed} />;
       case "updateProfile":
@@ -57,7 +118,7 @@ const Page = () => {
           //     <p className="text-gray-500">Select an option from the sidebar to get started.</p>
           //   </div>
           // </div>
-          <Dashboard sidebarCollapsed={sidebarCollapsed} />
+          <Dashboard sidebarCollapsed={sidebarCollapsed} onAddListClick={() => handleComponentChange("addList")} />
         );
     }
   };

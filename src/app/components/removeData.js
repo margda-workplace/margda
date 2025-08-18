@@ -1,16 +1,24 @@
 "use client";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Pencil, Trash2 } from "lucide-react";
+import { Pencil, Trash2, X } from "lucide-react";
 import Button from "./button";
 import Toaster from "./toaster";
 
-const RemoveData = ({ sidebarCollapsed }) => {
+const RemoveData = ({
+  sidebarCollapsed,
+  onAddListClick,
+  onAddDataClick,
+  onRemoveDataClick,
+  onVerifyEmailsClick,
+  onManageListsClick,
+}) => {
   const [mounted, setMounted] = useState(false);
   const [toast, setToast] = useState({ message: "", type: "success" });
   const [selectedList, setSelectedList] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedItems, setSelectedItems] = useState([]);
+
   const [lists, setLists] = useState([
     {
       listStatus: "✅ List2",
@@ -53,6 +61,12 @@ const RemoveData = ({ sidebarCollapsed }) => {
       unsubscribed: "2",
     },
   ]);
+  const [editFormData, setEditFormData] = useState({});
+  const [editModal, setEditModal] = useState({
+    isOpen: false,
+    index: null,
+    data: null,
+  });
   const itemsPerPage = 4;
 
   useEffect(() => setMounted(true), []);
@@ -69,7 +83,11 @@ const RemoveData = ({ sidebarCollapsed }) => {
   const showToast = (message, type = "success") => {
     setToast({ message, type });
   };
-
+  // FIX: Update the editFormData state when the user clicks the edit button
+  const handleEditClick = (row, index) => {
+    setEditFormData({ ...row });
+    setEditModal({ isOpen: true, index, data: row });
+  };
   const handleRemove = () => {
     if (!selectedList) {
       showToast("Please select a list", "error");
@@ -106,6 +124,22 @@ const RemoveData = ({ sidebarCollapsed }) => {
       setSelectedItems([...selectedItems, globalIndex]);
     } else {
       setSelectedItems(selectedItems.filter((item) => item !== globalIndex));
+    }
+  };
+
+  const closeEditModal = () => {
+    setEditModal({ isOpen: false, index: null, data: null });
+    setEditFormData({});
+  };
+
+  // FIX: Update the lists state with the new form data
+  const handleEditSubmit = () => {
+    const updatedLists = [...lists];
+    if (editModal.index !== null) {
+      updatedLists[editModal.index] = editFormData;
+      setLists(updatedLists);
+      closeEditModal();
+      showToast("List updated successfully", "success");
     }
   };
 
@@ -184,7 +218,6 @@ const RemoveData = ({ sidebarCollapsed }) => {
                 text="Remove"
                 onClick={handleRemove}
               />
-              
             </div>
           </motion.div>
 
@@ -233,25 +266,41 @@ const RemoveData = ({ sidebarCollapsed }) => {
           {/* Actions Section */}
           <motion.div className="bg-white p-6 rounded-xl shadow space-y-4">
             <div className="flex flex-wrap gap-4 justify-start">
-              {[
-                "➕ Add List",
-                "➕ Add Data",
-                "➖ Remove Data",
-                "✅ Verify Emails",
-                "🛠️ Manage Lists",
-              ].map((action, idx) => (
-                <button
-                  key={idx}
-                  type="button"
-                  className={`${
-                    action === "➖ Remove Data"
-                      ? "bg-red-100 text-red-800 ring-2 ring-red-200"
-                      : "bg-blue-100 text-blue-800"
-                  } rounded-full px-5 py-2 text-sm font-medium shadow hover:scale-105 transition-transform`}
-                >
-                  {action}
-                </button>
-              ))}
+              <button
+                type="button"
+                onClick={onAddListClick}
+                className="bg-green-100 text-green-800 ring-2 ring-green-200 rounded-full px-5 py-2 text-sm font-medium shadow hover:scale-105 transition-transform"
+              >
+                ➕ Add List
+              </button>
+              <button
+                type="button"
+                onClick={onAddDataClick}
+                className="bg-blue-100 text-blue-800 rounded-full px-5 py-2 text-sm font-medium shadow hover:scale-105 transition-transform"
+              >
+                ➕ Add Data
+              </button>
+              <button
+                type="button"
+                onClick={onRemoveDataClick}
+                className="bg-blue-100 text-blue-800 rounded-full px-5 py-2 text-sm font-medium shadow hover:scale-105 transition-transform"
+              >
+                ➖ Remove Data
+              </button>
+              <button
+                type="button"
+                onClick={onVerifyEmailsClick}
+                className="bg-blue-100 text-blue-800 rounded-full px-5 py-2 text-sm font-medium shadow hover:scale-105 transition-transform"
+              >
+                ✅ Verify Emails
+              </button>
+              <button
+                type="button"
+                onClick={onManageListsClick}
+                className="bg-blue-100 text-blue-800 rounded-full px-5 py-2 text-sm font-medium shadow hover:scale-105 transition-transform"
+              >
+                🛠️ Manage Lists
+              </button>
             </div>
           </motion.div>
 
@@ -352,16 +401,19 @@ const RemoveData = ({ sidebarCollapsed }) => {
                           ))}
                           <td className="p-3 align-middle">
                             <div className="flex justify-center gap-3">
-                            <Pencil
-                              size={18}
-                              className="text-yellow-500 cursor-pointer hover:scale-110 transition-transform"
-                            />
-                            <Trash2
-                              size={18}
-                              className="text-red-500 cursor-pointer hover:scale-110 transition-transform"
-                              onClick={() => handleDeleteList(i)}
-                            />
-                          </div>
+                              <Pencil
+                                size={18}
+                                className="text-yellow-500 cursor-pointer hover:scale-110 transition-transform"
+                                onClick={() =>
+                                  handleEditClick(row, globalIndex)
+                                }
+                              />
+                              <Trash2
+                                size={18}
+                                className="text-red-500 cursor-pointer hover:scale-110 transition-transform"
+                                onClick={() => handleDelete(i)}
+                              />
+                            </div>
                           </td>
                         </tr>
                       );
@@ -399,6 +451,208 @@ const RemoveData = ({ sidebarCollapsed }) => {
           </motion.div>
         </div>
       </motion.div>
+
+      {/*Edit Modal*/}
+
+      <AnimatePresence>
+        {editModal.isOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-gray-300/30 backdrop-blur-md flex items-center justify-center z-50 p-4"
+            onClick={closeEditModal}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              transition={{ duration: 0.2 }}
+              className="bg-white rounded-xl shadow-xl p-6 w-full max-w-2xl mx-4 max-h-[90vh] overflow-y-auto"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Header */}
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-xl font-semibold text-gray-800">
+                  ✏️ Edit List Data
+                </h2>
+                <button
+                  onClick={closeEditModal}
+                  className="p-1 hover:bg-gray-100 rounded-full transition-colors"
+                >
+                  <X size={20} className="text-gray-500" />
+                </button>
+              </div>
+
+              {/* Form */}
+              <div className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {/* List Status */}
+                  <div className="md:col-span-2">
+                    <label className="block mb-2 text-sm font-medium text-gray-700">
+                      List Status
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="✅ or ❌ + List Name"
+                      value={editFormData.listStatus || ""}
+                      onChange={(e) =>
+                        setEditFormData({
+                          ...editFormData,
+                          listStatus: e.target.value,
+                        })
+                      }
+                      className="border border-gray-300 rounded-lg p-3 w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    />
+                  </div>
+
+                  {/* Records */}
+                  <div>
+                    <label className="block mb-2 text-sm font-medium text-gray-700">
+                      Records
+                    </label>
+                    <input
+                      type="number"
+                      value={editFormData.records || ""}
+                      onChange={(e) =>
+                        setEditFormData({
+                          ...editFormData,
+                          records: e.target.value,
+                        })
+                      }
+                      className="border border-gray-300 rounded-lg p-3 w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    />
+                  </div>
+
+                  {/* Name */}
+                  <div>
+                    <label className="block mb-2 text-sm font-medium text-gray-700">
+                      Name
+                    </label>
+                    <input
+                      type="number"
+                      value={editFormData.name || ""}
+                      onChange={(e) =>
+                        setEditFormData({
+                          ...editFormData,
+                          name: e.target.value,
+                        })
+                      }
+                      className="border border-gray-300 rounded-lg p-3 w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    />
+                  </div>
+
+                  {/* Emails */}
+                  <div>
+                    <label className="block mb-2 text-sm font-medium text-gray-700">
+                      Emails
+                    </label>
+                    <input
+                      type="number"
+                      value={editFormData.emails || ""}
+                      onChange={(e) =>
+                        setEditFormData({
+                          ...editFormData,
+                          emails: e.target.value,
+                        })
+                      }
+                      className="border border-gray-300 rounded-lg p-3 w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    />
+                  </div>
+
+                  {/* WhatsApp */}
+                  <div>
+                    <label className="block mb-2 text-sm font-medium text-gray-700">
+                      WhatsApp
+                    </label>
+                    <input
+                      type="number"
+                      value={editFormData.whatsapp || ""}
+                      onChange={(e) =>
+                        setEditFormData({
+                          ...editFormData,
+                          whatsapp: e.target.value,
+                        })
+                      }
+                      className="border border-gray-300 rounded-lg p-3 w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    />
+                  </div>
+
+                  {/* Mobile */}
+                  <div>
+                    <label className="block mb-2 text-sm font-medium text-gray-700">
+                      Mobile
+                    </label>
+                    <input
+                      type="number"
+                      value={editFormData.mobile || ""}
+                      onChange={(e) =>
+                        setEditFormData({
+                          ...editFormData,
+                          mobile: e.target.value,
+                        })
+                      }
+                      className="border border-gray-300 rounded-lg p-3 w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    />
+                  </div>
+
+                  {/* Bounced */}
+                  <div>
+                    <label className="block mb-2 text-sm font-medium text-gray-700">
+                      Bounced
+                    </label>
+                    <input
+                      type="number"
+                      value={editFormData.bounced || ""}
+                      onChange={(e) =>
+                        setEditFormData({
+                          ...editFormData,
+                          bounced: e.target.value,
+                        })
+                      }
+                      className="border border-gray-300 rounded-lg p-3 w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    />
+                  </div>
+
+                  {/* Unsubscribed */}
+                  <div>
+                    <label className="block mb-2 text-sm font-medium text-gray-700">
+                      Unsubscribed
+                    </label>
+                    <input
+                      type="number"
+                      value={editFormData.unsubscribed || ""}
+                      onChange={(e) =>
+                        setEditFormData({
+                          ...editFormData,
+                          unsubscribed: e.target.value,
+                        })
+                      }
+                      className="border border-gray-300 rounded-lg p-3 w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    />
+                  </div>
+                </div>
+
+                {/* Footer buttons */}
+                <div className="flex gap-3 pt-4 border-t border-gray-200">
+                  <button
+                    onClick={handleEditSubmit}
+                    className="flex-1 bg-gradient-to-r from-blue-500 to-blue-400 text-white rounded-lg px-4 py-2 text-sm font-medium shadow hover:opacity-90 transition-opacity"
+                  >
+                    Update Data
+                  </button>
+                  <button
+                    onClick={closeEditModal}
+                    className="flex-1 bg-gray-100 text-gray-700 rounded-lg px-4 py-2 text-sm font-medium hover:bg-gray-200 transition-colors"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Toast */}
       <Toaster

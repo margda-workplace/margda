@@ -1,20 +1,332 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Pencil, Trash2 } from "lucide-react"; // Lucide icons
-import Button from "./button";
-import Toaster from "./toaster";
+import { Pencil, Trash2 } from "lucide-react";
 
-const VerifyEmails = () => {
+// Toast component
+const Toaster = ({ message, type, onClose }) => {
+  useEffect(() => {
+    if (message) {
+      const timer = setTimeout(onClose, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [message, onClose]);
+
+  if (!message) return null;
+
+  return (
+    <div className="fixed top-4 right-4 z-50">
+      <div
+        className={`px-4 py-2 rounded-lg shadow-lg text-white ${
+          type === "error" ? "bg-red-500" : "bg-green-500"
+        }`}
+      >
+        {message}
+      </div>
+    </div>
+  );
+};
+
+// EditModal Component - Fixed to match data tables
+const EditModal = ({ isOpen, itemData, onClose, onSave, itemType }) => {
+  const [editedItem, setEditedItem] = useState({});
+
+  // Initialize form data based on item type
+  useEffect(() => {
+    if (isOpen && itemData) {
+      if (itemType === "list") {
+        // For list items - matching the lists table structure
+        setEditedItem({
+          listStatus: itemData.listStatus || "",
+          records: itemData.records || "",
+          name: itemData.name || "",
+          emails: itemData.emails || "",
+          whatsapp: itemData.whatsapp || "",
+          mobile: itemData.mobile || "",
+          bounced: itemData.bounced || "",
+          unsubscribed: itemData.unsubscribed || "",
+          originalIndex: itemData.originalIndex,
+        });
+      } else {
+        // For result items - matching the results table structure
+        setEditedItem({
+          sno: itemData.sno || "",
+          name: itemData.name || "",
+          email: itemData.email || "",
+          mobile: itemData.mobile || "",
+          whatsapp: itemData.whatsapp || "",
+          status: itemData.status || "Valid",
+          originalIndex: itemData.originalIndex,
+        });
+      }
+    }
+  }, [isOpen, itemData, itemType]);
+
+  const handleChange = useCallback((e) => {
+    const { name, value } = e.target;
+    setEditedItem((prev) => ({ ...prev, [name]: value }));
+  }, []);
+
+  const handleSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      onSave(editedItem, itemType);
+    },
+    [editedItem, onSave, itemType]
+  );
+
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50 flex justify-center items-center">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={{ opacity: 0, scale: 0.95 }}
+        transition={{ duration: 0.2 }}
+        className="relative bg-white p-8 rounded-lg shadow-xl w-full max-w-lg mx-4 max-h-[90vh] overflow-y-auto"
+      >
+        <h3 className="text-2xl font-bold mb-4 text-gray-800">
+          Edit {itemType === "list" ? "List" : "Record"}
+        </h3>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          {itemType === "list" ? (
+            // List item form fields
+            <>
+              <div className="flex flex-col">
+                <label className="text-sm font-medium text-gray-700">
+                  List Status
+                </label>
+                <select
+                  name="listStatus"
+                  value={editedItem.listStatus || ""}
+                  onChange={handleChange}
+                  className="mt-1 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  required
+                >
+                  <option value="">Select Status</option>
+                  <option value="✅ List1">✅ List1</option>
+                  <option value="✅ List2">✅ List2</option>
+                  <option value="❌ List1">❌ List1</option>
+                  <option value="❌ List2">❌ List2</option>
+                </select>
+              </div>
+              <div className="flex flex-col">
+                <label className="text-sm font-medium text-gray-700">
+                  Records
+                </label>
+                <input
+                  type="number"
+                  name="records"
+                  value={editedItem.records || ""}
+                  onChange={handleChange}
+                  className="mt-1 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  required
+                />
+              </div>
+              <div className="flex flex-col">
+                <label className="text-sm font-medium text-gray-700">
+                  Name
+                </label>
+                <input
+                  type="number"
+                  name="name"
+                  value={editedItem.name || ""}
+                  onChange={handleChange}
+                  className="mt-1 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  required
+                />
+              </div>
+              <div className="flex flex-col">
+                <label className="text-sm font-medium text-gray-700">
+                  Emails
+                </label>
+                <input
+                  type="number"
+                  name="emails"
+                  value={editedItem.emails || ""}
+                  onChange={handleChange}
+                  className="mt-1 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  required
+                />
+              </div>
+              <div className="flex flex-col">
+                <label className="text-sm font-medium text-gray-700">
+                  WhatsApp
+                </label>
+                <input
+                  type="number"
+                  name="whatsapp"
+                  value={editedItem.whatsapp || ""}
+                  onChange={handleChange}
+                  className="mt-1 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  required
+                />
+              </div>
+              <div className="flex flex-col">
+                <label className="text-sm font-medium text-gray-700">
+                  Mobile
+                </label>
+                <input
+                  type="number"
+                  name="mobile"
+                  value={editedItem.mobile || ""}
+                  onChange={handleChange}
+                  className="mt-1 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  required
+                />
+              </div>
+              <div className="flex flex-col">
+                <label className="text-sm font-medium text-gray-700">
+                  Bounced
+                </label>
+                <input
+                  type="number"
+                  name="bounced"
+                  value={editedItem.bounced || ""}
+                  onChange={handleChange}
+                  className="mt-1 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  required
+                />
+              </div>
+              <div className="flex flex-col">
+                <label className="text-sm font-medium text-gray-700">
+                  Unsubscribed
+                </label>
+                <input
+                  type="number"
+                  name="unsubscribed"
+                  value={editedItem.unsubscribed || ""}
+                  onChange={handleChange}
+                  className="mt-1 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  required
+                />
+              </div>
+            </>
+          ) : (
+            // Result item form fields
+            <>
+              <div className="flex flex-col">
+                <label className="text-sm font-medium text-gray-700">
+                  Serial No.
+                </label>
+                <input
+                  type="number"
+                  name="sno"
+                  value={editedItem.sno || ""}
+                  onChange={handleChange}
+                  className="mt-1 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  required
+                  readOnly
+                />
+              </div>
+              <div className="flex flex-col">
+                <label className="text-sm font-medium text-gray-700">
+                  Name
+                </label>
+                <input
+                  type="text"
+                  name="name"
+                  value={editedItem.name || ""}
+                  onChange={handleChange}
+                  className="mt-1 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  required
+                />
+              </div>
+              <div className="flex flex-col">
+                <label className="text-sm font-medium text-gray-700">
+                  Email
+                </label>
+                <input
+                  type="email"
+                  name="email"
+                  value={editedItem.email || ""}
+                  onChange={handleChange}
+                  className="mt-1 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  required
+                />
+              </div>
+              <div className="flex flex-col">
+                <label className="text-sm font-medium text-gray-700">
+                  Mobile
+                </label>
+                <input
+                  type="tel"
+                  name="mobile"
+                  value={editedItem.mobile || ""}
+                  onChange={handleChange}
+                  className="mt-1 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                />
+              </div>
+              <div className="flex flex-col">
+                <label className="text-sm font-medium text-gray-700">
+                  WhatsApp
+                </label>
+                <input
+                  type="text"
+                  name="whatsapp"
+                  value={editedItem.whatsapp || ""}
+                  onChange={handleChange}
+                  placeholder="—"
+                  className="mt-1 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                />
+              </div>
+              <div className="flex flex-col">
+                <label className="text-sm font-medium text-gray-700">
+                  Status
+                </label>
+                <select
+                  name="status"
+                  value={editedItem.status || "Valid"}
+                  onChange={handleChange}
+                  className="mt-1 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                >
+                  <option value="Valid">Valid</option>
+                  <option value="Bad/Dead">Bad/Dead</option>
+                  <option value="Unverified">Unverified</option>
+                </select>
+              </div>
+            </>
+          )}
+          <div className="mt-6 flex justify-end gap-3">
+            <button
+              type="button"
+              onClick={onClose}
+              className="px-4 py-2 text-sm font-medium rounded-md text-gray-700 bg-gray-200 hover:bg-gray-300 transition-colors"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              className="px-4 py-2 text-sm font-medium rounded-md text-white bg-blue-500 hover:bg-blue-600 transition-colors"
+            >
+              Save Changes
+            </button>
+          </div>
+        </form>
+      </motion.div>
+    </div>
+  );
+};
+
+const VerifyEmails = ({
+  sidebarCollapsed,
+  onAddListClick,
+  onAddDataClick,
+  onRemoveDataClick,
+  onVerifyEmailsClick,
+  onManageListsClick,
+}) => {
   const [mounted, setMounted] = useState(false);
   const [toast, setToast] = useState({ message: "", type: "success" });
   const [currentPageList, setCurrentPageList] = useState(1);
   const [currentPageResults, setCurrentPageResults] = useState(1);
-  const [showResults, setShowResults] = useState(false); // toggle results
+  const [showResults, setShowResults] = useState(false);
   const [showLists, setShowLists] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedList, setSelectedList] = useState("");
   const [selectedItems, setSelectedItems] = useState([]);
+
   const [lists, setLists] = useState([
     {
       listStatus: "✅ List2",
@@ -37,34 +349,6 @@ const VerifyEmails = () => {
       unsubscribed: "1",
     },
   ]);
-
-  const itemsPerPage = 4;
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const currentLists = lists.slice(startIndex, startIndex + itemsPerPage);
-  const isAllCurrentSelected =
-    currentLists.length > 0 &&
-    currentLists.every((_, index) =>
-      selectedItems.includes((currentPage - 1) * itemsPerPage + index)
-    );
-
-  const handleRemove = () => {
-    if (!selectedList) {
-      showToast("Please select a list to remove", "error");
-      return;
-    }
-    setLists((prev) => prev.filter((list) => list.name !== selectedList));
-    setSelectedList("");
-    showToast("List removed successfully", "success");
-  };
-
-  const handlePrevious = () => {
-    if (currentPage > 1) setCurrentPage((prev) => prev - 1);
-  };
-
-  const handleNext = () => {
-    if (currentPage < Math.ceil(lists.length / itemsPerPage))
-      setCurrentPage((prev) => prev + 1);
-  };
 
   const [results, setResults] = useState([
     {
@@ -93,6 +377,31 @@ const VerifyEmails = () => {
     },
   ]);
 
+  // Modal state
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalItemData, setModalItemData] = useState(null);
+  const [modalItemType, setModalItemType] = useState("result"); // 'list' or 'result'
+
+  const itemsPerPage = 4;
+
+  // Memoized calculations
+  const startIndex = useMemo(
+    () => (currentPage - 1) * itemsPerPage,
+    [currentPage, itemsPerPage]
+  );
+  const currentLists = useMemo(
+    () => lists.slice(startIndex, startIndex + itemsPerPage),
+    [lists, startIndex, itemsPerPage]
+  );
+  const startIndexResults = useMemo(
+    () => (currentPageResults - 1) * itemsPerPage,
+    [currentPageResults, itemsPerPage]
+  );
+  const currentResults = useMemo(
+    () => results.slice(startIndexResults, startIndexResults + itemsPerPage),
+    [results, startIndexResults, itemsPerPage]
+  );
+
   useEffect(() => setMounted(true), []);
 
   const variants = {
@@ -104,28 +413,96 @@ const VerifyEmails = () => {
     },
   };
 
-  const showToast = (message, type = "success") => {
+  const showToast = useCallback((message, type = "success") => {
     setToast({ message, type });
-  };
+  }, []);
 
-  const handleDeleteList = (indexToDelete) => {
-    const globalIndex = (currentPageList - 1) * itemsPerPage + indexToDelete;
-    setLists((prev) => prev.filter((_, idx) => idx !== globalIndex));
-    showToast("List deleted successfully", "success");
-  };
+  const handleRemove = useCallback(() => {
+    if (!selectedList) {
+      showToast("Please select a list to remove", "error");
+      return;
+    }
+    setLists((prev) => prev.filter((list) => list.name !== selectedList));
+    setSelectedList("");
+    showToast("List removed successfully", "success");
+  }, [selectedList, showToast]);
 
-  const handleDeleteResult = (indexToDelete) => {
-    const globalIndex = (currentPageResults - 1) * itemsPerPage + indexToDelete;
-    setResults((prev) => prev.filter((_, idx) => idx !== globalIndex));
-    showToast("Result deleted successfully", "success");
-  };
+  const handlePrevious = useCallback(() => {
+    if (currentPage > 1) setCurrentPage((prev) => prev - 1);
+  }, [currentPage]);
 
-  const startIndexList = (currentPageList - 1) * itemsPerPage;
+  const handleNext = useCallback(() => {
+    if (currentPage < Math.ceil(lists.length / itemsPerPage))
+      setCurrentPage((prev) => prev + 1);
+  }, [currentPage, lists.length, itemsPerPage]);
 
-  const startIndexResults = (currentPageResults - 1) * itemsPerPage;
-  const currentResults = results.slice(
-    startIndexResults,
-    startIndexResults + itemsPerPage
+  const handleDeleteList = useCallback(
+    (indexToDelete) => {
+      const globalIndex = (currentPageList - 1) * itemsPerPage + indexToDelete;
+      setLists((prev) => prev.filter((_, idx) => idx !== globalIndex));
+      showToast("List deleted successfully", "success");
+    },
+    [currentPageList, itemsPerPage, showToast]
+  );
+
+  const handleDeleteResult = useCallback(
+    (indexToDelete) => {
+      const globalIndex =
+        (currentPageResults - 1) * itemsPerPage + indexToDelete;
+      setResults((prev) => prev.filter((_, idx) => idx !== globalIndex));
+      showToast("Result deleted successfully", "success");
+    },
+    [currentPageResults, itemsPerPage, showToast]
+  );
+
+  // Modal handlers - updated to handle item type
+  const handleOpenEditModal = useCallback(
+    (item, type, originalIndex = null) => {
+      setModalItemData({ ...item, originalIndex });
+      setModalItemType(type);
+      setIsModalOpen(true);
+    },
+    []
+  );
+
+  const handleCloseModal = useCallback(() => {
+    setIsModalOpen(false);
+    setModalItemData(null);
+    setModalItemType("result");
+  }, []);
+
+  const handleSaveEdit = useCallback(
+    (editedItem, itemType) => {
+      if (itemType === "list") {
+        // Update list item
+        const globalIndex =
+          editedItem.originalIndex !== null
+            ? editedItem.originalIndex
+            : lists.findIndex(
+                (item) => item.listStatus === editedItem.listStatus
+              );
+
+        setLists((prevLists) =>
+          prevLists.map((item, index) =>
+            index === globalIndex ? { ...editedItem } : item
+          )
+        );
+      } else {
+        // Update result item
+        setResults((prevResults) =>
+          prevResults.map((item) =>
+            item.sno === editedItem.sno ? { ...editedItem } : item
+          )
+        );
+      }
+
+      handleCloseModal();
+      showToast(
+        `${itemType === "list" ? "List" : "Record"} updated successfully`,
+        "success"
+      );
+    },
+    [lists, handleCloseModal, showToast]
   );
 
   return (
@@ -156,15 +533,14 @@ const VerifyEmails = () => {
               </button>
             ))}
           </div>
-          {/* //Select List to verify email */}
+
+          {/* Select List to verify email */}
           <motion.div className="bg-white p-6 rounded-xl shadow space-y-4">
             <h2 className="text-xl font-semibold text-gray-700">
               Select List to Verify email
             </h2>
             <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-end">
               <div className="w-full sm:w-2/3">
-                {" "}
-                {/* This is the key change */}
                 <label className="block mb-2 text-sm font-medium text-gray-700">
                   List
                 </label>
@@ -180,11 +556,6 @@ const VerifyEmails = () => {
                   <option value="CustomerList">Customer List</option>
                 </select>
               </div>
-              {/* <Button
-                bgColor="bg-gradient-to-l from-red-500/70 to-red-400/60"
-                text="Remove"
-                onClick={handleRemove}
-              /> */}
               <button
                 className="bg-gradient-to-l from-green-500/70 to-green-400/60 text-gray-800 rounded-full px-5 py-2 text-sm font-medium shadow hover:scale-105 transition-transform h-12 w-auto "
                 type="submit"
@@ -240,38 +611,41 @@ const VerifyEmails = () => {
           {/* Action shortcuts */}
           <motion.div className="bg-white p-6 rounded-xl shadow space-y-4">
             <div className="flex flex-wrap gap-4 justify-start">
-              {[
-                "➕ Add List",
-                "➕ Add Data",
-                "➖ Remove Data",
-                "✅ Verify Emails",
-                "🛠️ Manage Lists",
-                "📊 Show Results",
-              ].map((action) => (
-                <button
-                  key={action}
-                  type="button"
-                  onClick={() => {
-                    if (action === "✅ Verify Emails") {
-                      setShowLists(true);
-                      setShowResults(false);
-                    }
-                    if (action === "📊 Show Results") {
-                      setShowLists(false);
-                      setShowResults(true);
-                    }
-                  }}
-                  className={`${
-                    action === "✅ Verify Emails"
-                      ? "bg-green-100 text-green-800 ring-2 ring-green-200"
-                      : action === "📊 Show Results"
-                      ? "bg-purple-100 text-purple-800"
-                      : "bg-blue-100 text-blue-800"
-                  } rounded-full px-5 py-2 text-sm font-medium shadow hover:scale-105 transition-transform`}
-                >
-                  {action}
-                </button>
-              ))}
+              <button
+                type="button"
+                onClick={onAddListClick}
+                className="bg-green-100 text-green-800 ring-2 ring-green-200 rounded-full px-5 py-2 text-sm font-medium shadow hover:scale-105 transition-transform"
+              >
+                ➕ Add List
+              </button>
+              <button
+                type="button"
+                onClick={onAddDataClick}
+                className="bg-blue-100 text-blue-800 rounded-full px-5 py-2 text-sm font-medium shadow hover:scale-105 transition-transform"
+              >
+                ➕ Add Data
+              </button>
+              <button
+                type="button"
+                onClick={onRemoveDataClick}
+                className="bg-blue-100 text-blue-800 rounded-full px-5 py-2 text-sm font-medium shadow hover:scale-105 transition-transform"
+              >
+                ➖ Remove Data
+              </button>
+              <button
+                type="button"
+                onClick={onVerifyEmailsClick}
+                className="bg-blue-100 text-blue-800 rounded-full px-5 py-2 text-sm font-medium shadow hover:scale-105 transition-transform"
+              >
+                ✅ Verify Emails
+              </button>
+              <button
+                type="button"
+                onClick={onManageListsClick}
+                className="bg-blue-100 text-blue-800 rounded-full px-5 py-2 text-sm font-medium shadow hover:scale-105 transition-transform"
+              >
+                🛠️ Manage Lists
+              </button>
             </div>
           </motion.div>
 
@@ -320,8 +694,7 @@ const VerifyEmails = () => {
                     transition={{ duration: 0.3 }}
                     className="bg-white divide-y divide-gray-100"
                   >
-                    
-                    {currentLists.map((row, i) => (                        
+                    {currentLists.map((row, i) => (
                       <tr key={i} className="text-center align-middle">
                         <td className="p-3">
                           <span
@@ -352,6 +725,9 @@ const VerifyEmails = () => {
                             <Pencil
                               size={18}
                               className="text-yellow-500 cursor-pointer hover:scale-110 transition-transform"
+                              onClick={() =>
+                                handleOpenEditModal(row, "list", startIndex + i)
+                              }
                             />
                             <Trash2
                               size={18}
@@ -418,12 +794,25 @@ const VerifyEmails = () => {
                         <td className="p-3">{row.email}</td>
                         <td className="p-3">{row.mobile}</td>
                         <td className="p-3">{row.whatsapp}</td>
-                        <td className="p-3">{row.status}</td>
+                        <td className="p-3">
+                          <span
+                            className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
+                              row.status === "Valid"
+                                ? "bg-green-100 text-green-700"
+                                : row.status === "Unverified"
+                                ? "bg-yellow-100 text-yellow-700"
+                                : "bg-red-100 text-red-700"
+                            }`}
+                          >
+                            {row.status}
+                          </span>
+                        </td>
                         <td className="p-3">
                           <div className="flex justify-center gap-3">
                             <Pencil
                               size={18}
                               className="text-yellow-500 cursor-pointer hover:scale-110 transition-transform"
+                              onClick={() => handleOpenEditModal(row, "result")}
                             />
                             <Trash2
                               size={18}
@@ -442,7 +831,7 @@ const VerifyEmails = () => {
         </div>
       </motion.div>
 
-      {/* //Pagination */}
+      {/* Pagination */}
       <motion.div className="w-full px-4 sm:px-6 py-10 bg-gray-100">
         <motion.div className="flex flex-col sm:flex-row items-center justify-between text-sm text-gray-700 gap-4">
           <div>
@@ -451,28 +840,16 @@ const VerifyEmails = () => {
             {lists.length} records
           </div>
           <div className="flex gap-2 items-center">
-            {/* <Button
-              text="Previous"
-              bgColor={"bg-gradient-to-l from-blue-500/70 to-blue-400/60"}
+            <button
+              className="bg-gradient-to-l from-blue-500/70 to-blue-400/60 text-gray-800 rounded-full px-5 py-2 text-sm font-medium shadow hover:scale-105 transition-transform disabled:opacity-50 disabled:cursor-not-allowed"
               onClick={handlePrevious}
               disabled={currentPage === 1}
-            /> */}
-            <button
-              className="bg-gradient-to-l from-blue-500/70 to-blue-400/60 text-gray-800 rounded-full px-5 py-2 text-sm font-medium shadow hover:scale-105 transition-transform"
-              onClick={handleNext}
-              disabled={currentPage === Math.ceil(lists.length / itemsPerPage)}
             >
               Prev
             </button>
             <span>Page {currentPage}</span>
-            {/* <Button
-            text="Next"
-            bgColor={"bg-gradient-to-l from-blue-500/70 to-blue-400/60"}
-            onClick={handleNext}
-            disabled={currentPage === Math.ceil(lists.length / itemsPerPage)}
-          /> */}
             <button
-              className="bg-gradient-to-l from-blue-500/70 to-blue-400/60 text-gray-800 rounded-full px-5 py-2 text-sm font-medium shadow hover:scale-105 transition-transform"
+              className="bg-gradient-to-l from-blue-500/70 to-blue-400/60 text-gray-800 rounded-full px-5 py-2 text-sm font-medium shadow hover:scale-105 transition-transform disabled:opacity-50 disabled:cursor-not-allowed"
               onClick={handleNext}
               disabled={currentPage === Math.ceil(lists.length / itemsPerPage)}
             >
@@ -487,6 +864,15 @@ const VerifyEmails = () => {
         message={toast.message}
         type={toast.type}
         onClose={() => setToast({ message: "", type: "success" })}
+      />
+
+      {/* Edit Modal */}
+      <EditModal
+        isOpen={isModalOpen}
+        itemData={modalItemData}
+        itemType={modalItemType}
+        onClose={handleCloseModal}
+        onSave={handleSaveEdit}
       />
     </div>
   );

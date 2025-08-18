@@ -1,11 +1,58 @@
 "use client";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Pencil, Trash2 } from "lucide-react"; // match verifyEmails action icons
-import Button from "./button";
-import Toaster from "./toaster";
+import { Pencil, Trash2, X } from "lucide-react"; // match verifyEmails action icons
 
-const AddData = () => {
+// Self-contained Button component for the immersive
+const Button = ({ bgColor, text, onClick }) => (
+  <button
+    type="submit"
+    onClick={onClick}
+    className={`w-full px-4 py-3 text-white rounded-lg font-medium shadow-lg hover:opacity-90 transition-opacity whitespace-nowrap ${bgColor}`}
+  >
+    {text}
+  </button>
+);
+
+// Self-contained Toaster component for the immersive
+const Toaster = ({ message, type, onClose }) => {
+  useEffect(() => {
+    if (message) {
+      const timer = setTimeout(() => {
+        onClose();
+      }, 3000); // Hide after 3 seconds
+      return () => clearTimeout(timer);
+    }
+  }, [message, onClose]);
+
+  if (!message) return null;
+
+  const colorClass = type === 'success' ? 'bg-green-500' : 'bg-red-500';
+  const icon = type === 'success' ? '✔️' : '❌';
+
+  return (
+    <motion.div
+      initial={{ y: 50, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      exit={{ y: 50, opacity: 0 }}
+      transition={{ duration: 0.3 }}
+      className={`fixed bottom-5 right-5 z-50 p-4 rounded-lg text-white shadow-lg flex items-center gap-3 ${colorClass}`}
+    >
+      <span>{icon}</span>
+      <span>{message}</span>
+    </motion.div>
+  );
+};
+
+// Main AddData component
+const AddData = ({
+  sidebarCollapsed,
+  onAddListClick,
+  onAddDataClick,
+  onRemoveDataClick,
+  onVerifyEmailsClick,
+  onManageListsClick,
+}) => {
   const [mounted, setMounted] = useState(false);
   const [toast, setToast] = useState({ message: "", type: "success" });
 
@@ -17,9 +64,54 @@ const AddData = () => {
   const [whatsapp, setWhatsapp] = useState("");
   const [txtInput, setTxtInput] = useState("");
   const [csvFile, setCsvFile] = useState(null);
+  const [editModal, setEditModal] = useState({ isOpen: false, index: null });
 
   // lists overview state (unchanged content)
   const [currentPage, setCurrentPage] = useState(1);
+
+  const [editFormData, setEditFormData] = useState({
+    sno: "",
+    name: "",
+    email: "",
+    mobile: "",
+    whatsapp: "",
+    list: "",
+  });
+
+  const handleEdit = (index) => {
+    const row = currentData[index];
+    setEditFormData({
+      sno: row.sno,
+      name: row.name,
+      email: row.email,
+      mobile: row.mobile,
+      whatsapp: row.whatsapp,
+      list: row.list,
+    });
+    setEditModal({ isOpen: true, index: startIndexData + index });
+  };
+
+  const closeEditModal = () => {
+    setEditModal({ isOpen: false, index: null });
+  };
+
+
+  const handleEditSubmit = () => {
+    // Corrected logic:
+    // 1. Get the correct index from the editModal state.
+    // 2. Create a new array and update the item at that index.
+    // 3. Update the main dataEntries state with the new array.
+    if (editModal.index !== null) {
+      const updatedData = [...dataEntries];
+      updatedData[editModal.index] = { ...editFormData };
+      setDataEntries(updatedData);
+      showToast("Data updated successfully", "success");
+      closeEditModal();
+    } else {
+      showToast("Error: No item selected to edit", "error");
+    }
+  };
+
   const [lists, setLists] = useState([
     {
       listStatus: "✅ Sample List 1",
@@ -142,6 +234,7 @@ const AddData = () => {
     setDataEntries((prev) => prev.filter((_, idx) => idx !== globalIndex));
     showToast("Row deleted successfully", "success");
   };
+
   const handlePreviousData = () => {
     if (currentPageData > 1) setCurrentPageData((prev) => prev - 1);
   };
@@ -161,13 +254,12 @@ const AddData = () => {
         initial="hidden"
         animate={mounted ? "visible" : "hidden"}
         variants={variants}
-        className="w-full px-4 sm:px-6 py-10 bg-gray-100"
+        className="w-full px-4 sm:px-6 py-10 bg-gray-100 min-h-screen"
       >
         <div className="max-w-full mx-auto space-y-8">
           <h1 className="text-xl font-semibold text-gray-800">➕ Add Data</h1>
 
           {/* top action buttons (match verifyEmails) */}
-          
 
           {/* filters card (exact classes as verifyEmails) */}
           <motion.div className="bg-white p-6 rounded-xl shadow space-y-4">
@@ -214,25 +306,41 @@ const AddData = () => {
           {/* action shortcuts (no Show Lists / Show Data buttons) */}
           <motion.div className="bg-white p-6 rounded-xl shadow space-y-4">
             <div className="flex flex-wrap gap-4 justify-start">
-              {[
-                "➕ Add List",
-                "➕ Add Data",
-                "➖ Remove Data",
-                "✅ Verify Emails",
-                "🛠️ Manage Lists",
-              ].map((action) => (
-                <button
-                  key={action}
-                  type="button"
-                  className={`${
-                    action === "➕ Add Data"
-                      ? "bg-green-100 text-green-800 ring-2 ring-green-200"
-                      : "bg-blue-100 text-blue-800"
-                  } rounded-full px-5 py-2 text-sm font-medium shadow hover:scale-105 transition-transform`}
-                >
-                  {action}
-                </button>
-              ))}
+              <button
+                type="button"
+                onClick={onAddListClick}
+                className="bg-green-100 text-green-800 ring-2 ring-green-200 rounded-full px-5 py-2 text-sm font-medium shadow hover:scale-105 transition-transform"
+              >
+                ➕ Add List
+              </button>
+              <button
+                type="button"
+                onClick={onAddDataClick}
+                className="bg-blue-100 text-blue-800 rounded-full px-5 py-2 text-sm font-medium shadow hover:scale-105 transition-transform"
+              >
+                ➕ Add Data
+              </button>
+              <button
+                type="button"
+                onClick={onRemoveDataClick}
+                className="bg-blue-100 text-blue-800 rounded-full px-5 py-2 text-sm font-medium shadow hover:scale-105 transition-transform"
+              >
+                ➖ Remove Data
+              </button>
+              <button
+                type="button"
+                onClick={onVerifyEmailsClick}
+                className="bg-blue-100 text-blue-800 rounded-full px-5 py-2 text-sm font-medium shadow hover:scale-105 transition-transform"
+              >
+                ✅ Verify Emails
+              </button>
+              <button
+                type="button"
+                onClick={onManageListsClick}
+                className="bg-blue-100 text-blue-800 rounded-full px-5 py-2 text-sm font-medium shadow hover:scale-105 transition-transform"
+              >
+                🛠️ Manage Lists
+              </button>
             </div>
           </motion.div>
 
@@ -328,7 +436,7 @@ const AddData = () => {
                   <select
                     value={list}
                     onChange={(e) => setList(e.target.value)}
-                    className="border border-gray-300 rounded-lg p-3 w-2/3 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    className="border border-gray-300 rounded-lg p-3 w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
                   >
                     <option value="">Select</option>
                     <option value="List1">List 1</option>
@@ -340,7 +448,7 @@ const AddData = () => {
                     type="file"
                     accept=".csv"
                     onChange={(e) => setCsvFile(e.target.files[0])}
-                    className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    className="border border-gray-300 rounded-lg p-3 w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
                   />
                   <a
                     href="/sample.csv"
@@ -357,12 +465,11 @@ const AddData = () => {
             </motion.div>
           </div>
 
-          
-          
-
           {/* data table (always visible) — styled like verifyEmails "Verification Results" */}
           <motion.div className="bg-white p-6 rounded-xl shadow overflow-x-auto">
-            <h2 className="text-xl font-semibold mb-4 text-gray-700">📊 Data Table</h2>
+            <h2 className="text-xl font-semibold mb-4 text-gray-700">
+              📊 Data Table
+            </h2>
             <table className="min-w-full text-sm text-left border rounded-lg overflow-hidden">
               <thead className="bg-gray-100 text-gray-700 font-semibold uppercase text-xs">
                 <tr>
@@ -405,6 +512,7 @@ const AddData = () => {
                         <Pencil
                           size={18}
                           className="text-yellow-500 cursor-pointer hover:scale-110 transition-transform"
+                          onClick={() => handleEdit(i)}
                         />
                         <Trash2
                           size={18}
@@ -422,18 +530,18 @@ const AddData = () => {
       </motion.div>
 
       {/* pagination for lists (match verifyEmails look, correct handlers) */}
-      
 
       {/* pagination for data table (same styling) */}
       <motion.div className="w-full px-4 sm:px-6 pb-10 bg-gray-100">
         <motion.div className="flex flex-col sm:flex-row items-center justify-between text-sm text-gray-700 gap-4">
           <div>
             Showing {dataEntries.length === 0 ? 0 : startIndexData + 1} to{" "}
-            {Math.min(startIndexData + itemsPerPage, dataEntries.length)} of {dataEntries.length} rows
+            {Math.min(startIndexData + itemsPerPage, dataEntries.length)} of{" "}
+            {dataEntries.length} rows
           </div>
           <div className="flex gap-2 items-center">
             <button
-              className="bg-gradient-to-l from-blue-500/70 to-blue-400/60 text-gray-800 rounded-full px-5 py-2 text-sm font-medium shadow hover:scale-105 transition-transform"
+              className="bg-gradient-to-l from-blue-500/70 to-blue-400/60 text-white rounded-full px-5 py-2 text-sm font-medium shadow hover:scale-105 transition-transform"
               onClick={handlePreviousData}
               disabled={currentPageData === 1}
             >
@@ -441,7 +549,7 @@ const AddData = () => {
             </button>
             <span>Page {currentPageData}</span>
             <button
-              className="bg-gradient-to-l from-blue-500/70 to-blue-400/60 text-gray-800 rounded-full px-5 py-2 text-sm font-medium shadow hover:scale-105 transition-transform"
+              className="bg-gradient-to-l from-blue-500/70 to-blue-400/60 text-white rounded-full px-5 py-2 text-sm font-medium shadow hover:scale-105 transition-transform"
               onClick={handleNextData}
               disabled={
                 currentPageData === Math.ceil(dataEntries.length / itemsPerPage)
@@ -452,6 +560,170 @@ const AddData = () => {
           </div>
         </motion.div>
       </motion.div>
+      {/* Edit Modal */}
+      <AnimatePresence>
+        {editModal.isOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-gray-300/30 backdrop-blur-md flex items-center justify-center z-50 p-4"
+            onClick={closeEditModal}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              transition={{ duration: 0.2 }}
+              className="bg-white rounded-xl shadow-xl p-6 w-full max-w-lg mx-4 max-h-[90vh] overflow-y-auto"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Header */}
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-xl font-semibold text-gray-800">
+                  ✏️ Edit Contact
+                </h2>
+                <button
+                  onClick={closeEditModal}
+                  className="p-1 hover:bg-gray-100 rounded-full transition-colors"
+                >
+                  <X size={20} className="text-gray-500" />
+                </button>
+              </div>
+
+              {/* Form */}
+              <div className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {/* Sno. (read-only) */}
+                  <div>
+                    <label className="block mb-2 text-sm font-medium text-gray-700">
+                      Sno.
+                    </label>
+                    <input
+                      type="text"
+                      value={editFormData.sno}
+                      readOnly
+                      className="border border-gray-200 bg-gray-50 rounded-lg p-3 w-full text-gray-500 cursor-not-allowed"
+                    />
+                  </div>
+
+                  {/* Name */}
+                  <div>
+                    <label className="block mb-2 text-sm font-medium text-gray-700">
+                      Name <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      value={editFormData.name}
+                      onChange={(e) =>
+                        setEditFormData({
+                          ...editFormData,
+                          name: e.target.value,
+                        })
+                      }
+                      placeholder="Enter Name"
+                      className="border border-gray-300 rounded-lg p-3 w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
+                      autoFocus
+                    />
+                  </div>
+
+                  {/* Email */}
+                  <div className="md:col-span-2">
+                    <label className="block mb-2 text-sm font-medium text-gray-700">
+                      Email
+                    </label>
+                    <input
+                      type="email"
+                      value={editFormData.email}
+                      onChange={(e) =>
+                        setEditFormData({
+                          ...editFormData,
+                          email: e.target.value,
+                        })
+                      }
+                      placeholder="email@example.com"
+                      className="border border-gray-300 rounded-lg p-3 w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    />
+                  </div>
+
+                  {/* Mobile */}
+                  <div>
+                    <label className="block mb-2 text-sm font-medium text-gray-700">
+                      Mobile
+                    </label>
+                    <input
+                      type="tel"
+                      value={editFormData.mobile}
+                      onChange={(e) =>
+                        setEditFormData({
+                          ...editFormData,
+                          mobile: e.target.value,
+                        })
+                      }
+                      placeholder="+91-9876543210"
+                      className="border border-gray-300 rounded-lg p-3 w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    />
+                  </div>
+
+                  {/* WhatsApp */}
+                  <div>
+                    <label className="block mb-2 text-sm font-medium text-gray-700">
+                      WhatsApp
+                    </label>
+                    <input
+                      type="tel"
+                      value={editFormData.whatsapp}
+                      onChange={(e) =>
+                        setEditFormData({
+                          ...editFormData,
+                          whatsapp: e.target.value,
+                        })
+                      }
+                      placeholder="+91-9876543210"
+                      className="border border-gray-300 rounded-lg p-3 w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    />
+                  </div>
+
+                  {/* List */}
+                  <div className="md:col-span-2">
+                    <label className="block mb-2 text-sm font-medium text-gray-700">
+                      List
+                    </label>
+                    <input
+                      type="text"
+                      value={editFormData.list}
+                      onChange={(e) =>
+                        setEditFormData({
+                          ...editFormData,
+                          list: e.target.value,
+                        })
+                      }
+                      placeholder="Enter list name/category"
+                      className="border border-gray-300 rounded-lg p-3 w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    />
+                  </div>
+                </div>
+
+                {/* Buttons */}
+                <div className="flex gap-3 pt-4 border-t border-gray-200">
+                  <button
+                    onClick={handleEditSubmit}
+                    className="flex-1 bg-gradient-to-r from-blue-500 to-blue-400 text-white rounded-lg px-4 py-2 text-sm font-medium shadow hover:opacity-90 transition-opacity"
+                  >
+                    Update
+                  </button>
+                  <button
+                    onClick={closeEditModal}
+                    className="flex-1 bg-gray-100 text-gray-700 rounded-lg px-4 py-2 text-sm font-medium hover:bg-gray-200 transition-colors"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <Toaster
         message={toast.message}
