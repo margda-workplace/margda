@@ -397,7 +397,7 @@ const AddData = ({
                     <textarea
                       value={txtInput}
                       onChange={(e) => setTxtInput(e.target.value)}
-                      placeholder="Paste your text data here...&#10;&#10;Example format:&#10;John Doe, john@example.com&#10;Jane Smith, jane@example.com&#10;Mike Johnson, mike@example.com"
+                      placeholder="Paste data here"
                       rows={8}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 resize-none"
                     />
