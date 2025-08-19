@@ -1,15 +1,16 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Pencil, Trash2, X } from "lucide-react"; // match verifyEmails action icons
+import { Pencil, Trash2, X, FileText, Upload, Edit3 } from "lucide-react";
 
 // Self-contained Button component for the immersive
-const Button = ({ bgColor, text, onClick }) => (
+const Button = ({ bgColor, text, onClick, icon: Icon }) => (
   <button
     type="submit"
     onClick={onClick}
-    className={`w-full px-4 py-3 text-white rounded-lg font-medium shadow-lg hover:opacity-90 transition-opacity whitespace-nowrap ${bgColor}`}
+    className={`w-full max-w-xs mx-auto px-6 py-3 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl hover:scale-105 transform transition-all duration-200 whitespace-nowrap ${bgColor} flex items-center justify-center gap-2`}
   >
+    {Icon && <Icon size={18} />}
     {text}
   </button>
 );
@@ -20,15 +21,15 @@ const Toaster = ({ message, type, onClose }) => {
     if (message) {
       const timer = setTimeout(() => {
         onClose();
-      }, 3000); // Hide after 3 seconds
+      }, 3000);
       return () => clearTimeout(timer);
     }
   }, [message, onClose]);
 
   if (!message) return null;
 
-  const colorClass = type === 'success' ? 'bg-green-500' : 'bg-red-500';
-  const icon = type === 'success' ? '✔️' : '❌';
+  const colorClass = type === "success" ? "bg-green-500" : "bg-red-500";
+  const icon = type === "success" ? "✔️" : "❌";
 
   return (
     <motion.div
@@ -55,6 +56,7 @@ const AddData = ({
 }) => {
   const [mounted, setMounted] = useState(false);
   const [toast, setToast] = useState({ message: "", type: "success" });
+  const [selectedOption, setSelectedOption] = useState(null);
 
   // original form state
   const [list, setList] = useState("");
@@ -95,12 +97,7 @@ const AddData = ({
     setEditModal({ isOpen: false, index: null });
   };
 
-
   const handleEditSubmit = () => {
-    // Corrected logic:
-    // 1. Get the correct index from the editModal state.
-    // 2. Create a new array and update the item at that index.
-    // 3. Update the main dataEntries state with the new array.
     if (editModal.index !== null) {
       const updatedData = [...dataEntries];
       updatedData[editModal.index] = { ...editFormData };
@@ -259,7 +256,234 @@ const AddData = ({
         <div className="max-w-full mx-auto space-y-8">
           <h1 className="text-xl font-semibold text-gray-800">➕ Add Data</h1>
 
-          {/* top action buttons (match verifyEmails) */}
+          {/* Option Selection Dropdown */}
+          <div className="bg-white p-6 rounded-xl shadow space-y-4">
+            <div className="w-full max-w-sm">
+              <label className="block mb-2 text-sm font-medium text-gray-700">
+                Select Input Method
+              </label>
+              <select
+                value={selectedOption || ""}
+                onChange={(e) => setSelectedOption(e.target.value ? parseInt(e.target.value) : null)}
+                className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
+              >
+                <option value="">Choose method...</option>
+                <option value="1">Input Form</option>
+                <option value="2">Paste Text</option>
+                <option value="3">Import CSV</option>
+              </select>
+            </div>
+          </div>
+
+          {/* Conditional Form Rendering */}
+          <AnimatePresence mode="wait">
+            {selectedOption === 1 && (
+              <motion.div 
+                key="option1"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -30 }}
+                transition={{ duration: 0.4 }}
+                className="bg-white p-6 sm:p-8 rounded-lg shadow border border-gray-200"
+              >
+                <div className="mb-6 border-b pb-4">
+                  <h2 className="text-2xl font-semibold text-gray-900">Input Form</h2>
+                  <p className="text-gray-600 text-sm mt-1">Enter contact details manually</p>
+                </div>
+                
+                <form onSubmit={handleSubmitOption1} className="space-y-6">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                    <div className="space-y-2">
+                      <label className="block text-sm font-semibold text-gray-700">
+                        List <span className="text-red-500">*</span>
+                      </label>
+                      <select
+                        value={list}
+                        onChange={(e) => setList(e.target.value)}
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                      >
+                        <option value="">Select a list</option>
+                        <option value="List1">List 1</option>
+                        <option value="List2">List 2</option>
+                      </select>
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <label className="block text-sm font-semibold text-gray-700">
+                        Full Name <span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="Enter full name"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                      />
+                    </div>
+                    
+                    <div className="space-y-2 sm:col-span-2 lg:col-span-1">
+                      <label className="block text-sm font-semibold text-gray-700">
+                        Email Address <span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        type="email"
+                        placeholder="name@example.com"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                      />
+                    </div>
+                  </div>
+                  
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+                    <div className="space-y-2">
+                      <label className="block text-sm font-semibold text-gray-700">
+                        Mobile Number
+                      </label>
+                      <input
+                        type="tel"
+                        placeholder="+1 (555) 123-4567"
+                        value={mobile}
+                        onChange={(e) => setMobile(e.target.value)}
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                      />
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <label className="block text-sm font-semibold text-gray-700">
+                        WhatsApp Number
+                      </label>
+                      <input
+                        type="tel"
+                        placeholder="+1 (555) 123-4567"
+                        value={whatsapp}
+                        onChange={(e) => setWhatsapp(e.target.value)}
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                      />
+                    </div>
+                  </div>
+                  
+                  <div className="pt-4 border-t border-gray-200">
+                    <button
+                      type="submit"
+                      className="w-full sm:w-auto px-8 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transform transition-all duration-200 hover:scale-105 shadow-lg"
+                    >
+                      Add Contact
+                    </button>
+                  </div>
+                </form>
+              </motion.div>
+            )}
+
+            {selectedOption === 2 && (
+              <motion.div 
+                key="option2"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -30 }}
+                transition={{ duration: 0.4 }}
+                className="bg-white p-6 sm:p-8 rounded-lg shadow border border-gray-200"
+              >
+                <div className="mb-6 border-b pb-4">
+                  <h2 className="text-2xl font-semibold text-gray-900">Paste Text Data</h2>
+                  <p className="text-gray-600 text-sm mt-1">Import name and email from text format</p>
+                </div>
+                
+                <form onSubmit={handleSubmitOption2} className="space-y-6">
+                  <div className="space-y-2">
+                    <label className="block text-sm font-semibold text-gray-700">
+                      Text Data <span className="text-red-500">*</span>
+                    </label>
+                    <textarea
+                      value={txtInput}
+                      onChange={(e) => setTxtInput(e.target.value)}
+                      placeholder="Paste your text data here...&#10;&#10;Example format:&#10;John Doe, john@example.com&#10;Jane Smith, jane@example.com&#10;Mike Johnson, mike@example.com"
+                      rows={8}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 resize-none"
+                    />
+                    <p className="text-xs text-gray-500 mt-2">
+                      💡 Use format: "Name, email@domain.com" (one per line)
+                    </p>
+                  </div>
+                  
+                  <div className="pt-4 border-t border-gray-200">
+                    <button
+                      type="submit"
+                      className="w-full sm:w-auto px-8 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transform transition-all duration-200 hover:scale-105 shadow-lg"
+                    >
+                      Process Text Data
+                    </button>
+                  </div>
+                </form>
+              </motion.div>
+            )}
+
+            {selectedOption === 3 && (
+              <motion.div 
+                key="option3"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -30 }}
+                transition={{ duration: 0.4 }}
+                className="bg-white p-6 sm:p-8 rounded-lg shadow border border-gray-200"
+              >
+                <div className="mb-6 border-b pb-4">
+                  <h2 className="text-2xl font-semibold text-gray-900">Import CSV</h2>
+                  <p className="text-gray-600 text-sm mt-1">Upload a CSV file with contact data</p>
+                </div>
+                
+                <form onSubmit={handleSubmitOption3} className="space-y-6">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+                    <div className="space-y-2">
+                      <label className="block text-sm font-semibold text-gray-700">
+                        Select List <span className="text-red-500">*</span>
+                      </label>
+                      <select
+                        value={list}
+                        onChange={(e) => setList(e.target.value)}
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                      >
+                        <option value="">Select a list</option>
+                        <option value="List1">List 1</option>
+                        <option value="List2">List 2</option>
+                      </select>
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <label className="block text-sm font-semibold text-gray-700">
+                        CSV File <span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        type="file"
+                        accept=".csv"
+                        onChange={(e) => setCsvFile(e.target.files[0])}
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                      />
+                    </div>
+                  </div>
+                  
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                    <div className="pt-4 border-t border-gray-200 w-full sm:w-auto">
+                      <button
+                        type="submit"
+                        className="w-full sm:w-auto px-8 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transform transition-all duration-200 hover:scale-105 shadow-lg"
+                      >
+                        Import CSV
+                      </button>
+                    </div>
+                    <div className="pt-4 border-t border-gray-200 w-full sm:w-auto sm:border-t-0 sm:pt-0">
+                      <a
+                        href="/sample.csv"
+                        className="inline-block text-blue-600 hover:text-blue-800 text-sm font-medium hover:underline transition-colors"
+                      >
+                        📁 Download Sample CSV
+                      </a>
+                    </div>
+                  </div>
+                </form>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           {/* filters card (exact classes as verifyEmails) */}
           <motion.div className="bg-white p-6 rounded-xl shadow space-y-4">
@@ -344,127 +568,6 @@ const AddData = ({
             </div>
           </motion.div>
 
-          {/* add data (forms) */}
-          <div className="space-y-8">
-            {/* option 1 */}
-            <motion.div className="bg-white p-6 rounded-xl shadow space-y-4">
-              <h2 className="text-xl font-semibold text-gray-700">
-                Option 1: Through Input Form
-              </h2>
-              <form onSubmit={handleSubmitOption1} className="space-y-4">
-                <div>
-                  <label className="block mb-2 text-sm font-medium text-gray-700">
-                    List
-                  </label>
-                  <select
-                    value={list}
-                    onChange={(e) => setList(e.target.value)}
-                    className="border border-gray-300 rounded-lg p-3 w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
-                  >
-                    <option value="">Select</option>
-                    <option value="List1">List 1</option>
-                    <option value="List2">List 2</option>
-                  </select>
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <input
-                    type="text"
-                    placeholder="Name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
-                  />
-                  <input
-                    type="email"
-                    placeholder="Email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
-                  />
-                  <input
-                    type="text"
-                    placeholder="Mobile"
-                    value={mobile}
-                    onChange={(e) => setMobile(e.target.value)}
-                    className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
-                  />
-                  <input
-                    type="text"
-                    placeholder="WhatsApp"
-                    value={whatsapp}
-                    onChange={(e) => setWhatsapp(e.target.value)}
-                    className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
-                  />
-                </div>
-                <Button
-                  bgColor="bg-gradient-to-l from-blue-500/70 to-blue-400/60"
-                  text="Submit"
-                />
-              </form>
-            </motion.div>
-
-            {/* option 2 */}
-            <motion.div className="bg-white p-6 rounded-xl shadow space-y-4">
-              <h2 className="text-xl font-semibold text-gray-700">
-                Option 2: Paste TXT (Name & Email only)
-              </h2>
-              <form onSubmit={handleSubmitOption2} className="space-y-4">
-                <textarea
-                  value={txtInput}
-                  onChange={(e) => setTxtInput(e.target.value)}
-                  placeholder="Paste text data here..."
-                  rows={5}
-                  className="border border-gray-300 rounded-lg p-3 w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
-                />
-                <Button
-                  bgColor="bg-gradient-to-l from-blue-500/50 to-blue-400/40"
-                  text="Submit"
-                />
-              </form>
-            </motion.div>
-
-            {/* option 3 */}
-            <motion.div className="bg-white p-6 rounded-xl shadow space-y-4">
-              <h2 className="text-xl font-semibold text-gray-700">
-                Option 3: Import CSV
-              </h2>
-              <form onSubmit={handleSubmitOption3} className="space-y-4">
-                <div>
-                  <label className="block mb-2 text-sm font-medium text-gray-700">
-                    List
-                  </label>
-                  <select
-                    value={list}
-                    onChange={(e) => setList(e.target.value)}
-                    className="border border-gray-300 rounded-lg p-3 w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
-                  >
-                    <option value="">Select</option>
-                    <option value="List1">List 1</option>
-                    <option value="List2">List 2</option>
-                  </select>
-                </div>
-                <div className="flex flex-col sm:flex-row gap-4 items-center">
-                  <input
-                    type="file"
-                    accept=".csv"
-                    onChange={(e) => setCsvFile(e.target.files[0])}
-                    className="border border-gray-300 rounded-lg p-3 w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
-                  />
-                  <a
-                    href="/sample.csv"
-                    className="text-blue-600 hover:underline text-sm"
-                  >
-                    Download sample
-                  </a>
-                </div>
-                <Button
-                  bgColor="bg-gradient-to-l from-blue-500/50 to-blue-400/40"
-                  text="Submit"
-                />
-              </form>
-            </motion.div>
-          </div>
-
           {/* data table (always visible) — styled like verifyEmails "Verification Results" */}
           <motion.div className="bg-white p-6 rounded-xl shadow overflow-x-auto">
             <h2 className="text-xl font-semibold mb-4 text-gray-700">
@@ -529,8 +632,6 @@ const AddData = ({
         </div>
       </motion.div>
 
-      {/* pagination for lists (match verifyEmails look, correct handlers) */}
-
       {/* pagination for data table (same styling) */}
       <motion.div className="w-full px-4 sm:px-6 pb-10 bg-gray-100">
         <motion.div className="flex flex-col sm:flex-row items-center justify-between text-sm text-gray-700 gap-4">
@@ -560,6 +661,7 @@ const AddData = ({
           </div>
         </motion.div>
       </motion.div>
+      
       {/* Edit Modal */}
       <AnimatePresence>
         {editModal.isOpen && (

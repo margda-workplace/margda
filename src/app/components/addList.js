@@ -211,21 +211,24 @@ const AddList = ({
                 <label className="block mb-2 text-sm font-medium text-gray-700">
                   List Name
                 </label>
-                <input
-                  type="text"
-                  placeholder="Enter List Name"
-                  value={listName}
-                  onChange={(e) => setListName(e.target.value)}
-                  onKeyDown={(e) => e.key === "Enter" && handleCreateList(e)}
-                  className="border border-gray-300 rounded-lg p-3 w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
-                />
+                <div className="flex items-left w-full gap-3">
+                  <input
+                    type="text"
+                    placeholder="Enter List Name"
+                    value={listName}
+                    onChange={(e) => setListName(e.target.value)}
+                    onKeyDown={(e) => e.key === "Enter" && handleCreateList(e)}
+                    className="border border-gray-300 rounded-lg p-3 w-2/3 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  />
+                
+                <button
+                  className="bg-gradient-to-l from-blue-500/70 to-blue-400/60 text-gray-800 rounded-full px-5 py-2 text-sm font-medium shadow hover:scale-105 transition-transform"
+                  onClick={handleCreateList}
+                >
+                  Create List
+                </button>
+                </div>
               </div>
-              <button
-                className="bg-gradient-to-l from-blue-500/70 to-blue-400/60 text-gray-800 rounded-full px-5 py-2 text-sm font-medium shadow hover:scale-105 transition-transform"
-                onClick={handleCreateList}
-              >
-                Create List
-              </button>
             </div>
           </motion.div>
 
