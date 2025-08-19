@@ -157,10 +157,3 @@ export default function Navbar({ navItems }) {
   );
 }
 
-// Menu items
-// const menuItems = [
-//   { label: "Smart Tools", icon: "service-tools-rmvd-bg.gif", href: "/smart-tools" },
-//   { label: "Service Exchange", icon: "briefcase-rmvd-bg.gif", href: "/service-exchange" },
-//   { label: "Mart Seva", icon: "shopping-cart-rmvd-bg.gif", href: "/mart-seva" },
-//   { label: "Login", icon: "login-rmvd-bg.gif", href: "/login" }, // localhost:3000/login in dev
-// ];

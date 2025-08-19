@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
+
 import {
   Database,
   Users,
@@ -14,13 +16,15 @@ import {
   Grid3X3,
   Gift,
   LogOut,
-  Menu
+  Menu,
+  LayoutDashboard
 } from 'lucide-react';
 
-const CrmNavbar = ({ sidebarCollapsed, onToggleSidebar, onProfileClick }) => {
+const CrmNavbar = ({ sidebarCollapsed, onToggleSidebar, onProfileClick, onAddDataClick, onDashboardClick }) => {
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
   const [isNavDropdownOpen, setIsNavDropdownOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+
 
   useEffect(() => {
     const checkScreenSize = () => {
@@ -43,11 +47,12 @@ const CrmNavbar = ({ sidebarCollapsed, onToggleSidebar, onProfileClick }) => {
   };
 
   const navItems = [
-    { icon: Database, label: "Data" },
-    { icon: Users, label: "Lead" },
-    { icon: Settings, label: "Service" },
-    { icon: ShoppingCart, label: "Mart" },
-    { icon: Headphones, label: "Team-Support" }
+    {icon: LayoutDashboard , label:"Dashboard",  onClick: () => {onDashboardClick()}},
+    { icon: Database, label: "Data", onClick: ()=>{onAddDataClick()}},
+    { icon: Users, label: "Lead", onClick: ()=>{} },
+    { icon: Settings, label: "Service", onClick: ()=>{}},
+    { icon: ShoppingCart, label: "Mart", onClick: ()=>{} },
+    { icon: Headphones, label: "Team-Support", onClick: ()=>{}  }
   ];
 
   const navClass = `fixed top-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-sm border-b border-gray-200 shadow-sm py-3 sm:py-3 transition-all duration-300`;
@@ -75,6 +80,7 @@ const CrmNavbar = ({ sidebarCollapsed, onToggleSidebar, onProfileClick }) => {
                 key={item.label}
                 icon={item.icon}
                 label={item.label}
+                onClick={item.onClick}
               />
             ))}
           </div>
@@ -177,7 +183,7 @@ const CrmNavbar = ({ sidebarCollapsed, onToggleSidebar, onProfileClick }) => {
                   <DropdownItem icon={Grid3X3} iconColor="text-gray-600" label="WhatsApp Scan" />
                   <DropdownItem icon={Gift} iconColor="text-indigo-400" label="Refer Code DOELN" />
                   <div className="border-t border-gray-100 my-2" />
-                  <DropdownItem icon={LogOut} iconColor="text-red-500" label="Logout" />
+                  <Link href='/login'><DropdownItem icon={LogOut} iconColor="text-red-500" label="Logout" /></Link>
                 </div>
               </div>
             </div>
@@ -188,10 +194,10 @@ const CrmNavbar = ({ sidebarCollapsed, onToggleSidebar, onProfileClick }) => {
   );
 };
 
-const NavButton = ({ icon: Icon, label, isActive = false }) => {
+const NavButton = ({ icon: Icon, label, isActive = false, onClick }) => {
   if (isActive) {
     return (
-      <button className="flex items-center space-x-2 bg-orange-500 text-white px-3 py-2 rounded-lg shadow-sm border border-orange-500">
+      <button className="flex items-center space-x-2 bg-orange-500 text-white px-3 py-2 rounded-lg shadow-sm border border-orange-500" onClick={onClick}>
         <Icon className="w-4 h-4" />
         <span className="font-medium text-sm hidden lg:block">{label}</span>
       </button>
@@ -199,7 +205,7 @@ const NavButton = ({ icon: Icon, label, isActive = false }) => {
   }
 
   return (
-    <button className="group flex items-center space-x-2 bg-transparent hover:bg-orange-500 px-3 py-2 rounded-lg transition-all duration-200">
+    <button className="group flex items-center space-x-2 bg-transparent hover:bg-orange-500 px-3 py-2 rounded-lg transition-all duration-200" onClick={onClick}>
       <Icon className="w-4 h-4 text-gray-600 group-hover:text-gray-800 transition-colors duration-200" />
       <span className="text-gray-700 group-hover:text-gray-900 font-medium text-sm hidden lg:block">
         {label}

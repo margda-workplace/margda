@@ -56,7 +56,7 @@ import MainDashboard from "./mainDashboard";
 import CampaignDashboard from "./campaignDashboard";
 
 
-const Dashboard = ({onAddListClick}) => {
+const Dashboard = ({onAddListClick, onAddDataClick, onVerifyEmailsClick}) => {
   const [mounted, setMounted] = useState(false);
   const [show, setShow] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
@@ -820,7 +820,7 @@ const Dashboard = ({onAddListClick}) => {
               {/* Top Header with Action Buttons */}
               <div className="bg-white rounded-xl shadow-md p-4 sm:p-6 space-y-4">
                 <div className="flex flex-wrap items-center gap-2 sm:gap-4">
-                  <button className="bg-blue-500 text-white rounded-lg px-4 py-2 text-sm font-medium shadow-sm hover:bg-blue-600 transition-colors flex items-center gap-1 w-full sm:w-auto justify-center">
+                  <button className="bg-blue-500 text-white rounded-lg px-4 py-2 text-sm font-medium shadow-sm hover:bg-blue-600 transition-colors flex items-center gap-1 w-full sm:w-auto justify-center" onClick={onAddDataClick}>
                     <UserPlus size={16} /> Add Data
                   </button>
                   <button className="bg-green-500 text-white rounded-lg px-4 py-2 text-sm font-medium shadow-sm hover:bg-green-600 transition-colors flex items-center gap-1 w-full sm:w-auto justify-center" onClick={onAddListClick}>
@@ -832,7 +832,7 @@ const Dashboard = ({onAddListClick}) => {
                   <button className="bg-green-500 text-white rounded-lg px-4 py-2 text-sm font-medium shadow-sm hover:bg-green-600 transition-colors flex items-center gap-1 w-full sm:w-auto justify-center">
                     <MessageCircle size={16} /> WhatsApp
                   </button>
-                  <button className="bg-white border border-gray-300 text-gray-800 rounded-lg px-4 sm:px-5 py-2 text-sm font-medium shadow-sm hover:bg-gray-100 transition-colors w-full sm:w-auto flex items-center gap-2 justify-center">
+                  <button className="bg-white border border-gray-300 text-gray-800 rounded-lg px-4 sm:px-5 py-2 text-sm font-medium shadow-sm hover:bg-gray-100 transition-colors w-full sm:w-auto flex items-center gap-2 justify-center" onClick={onVerifyEmailsClick}>
                     <Mail size={16} className="text-gray-500" />
                     Email
                   </button>
@@ -856,8 +856,10 @@ const Dashboard = ({onAddListClick}) => {
                 show={show}
                 search={search}
                 motion={motion}
+                setShow={setShow}
                 currentData={currentData}
                 currentPage={currentPage}
+                setSearch={setSearch}
                 openMenu={openMenu}
                 tableData={tableData}
                 startIndex={startIndex}

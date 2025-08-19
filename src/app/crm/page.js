@@ -105,11 +105,28 @@ const Page = () => {
           />
         );
       case "emailTemplate":
-        return <EmailTemplate sidebarCollapsed={sidebarCollapsed} />;
+        return (
+          <EmailTemplate
+            sidebarCollapsed={sidebarCollapsed}
+            onAddListClick={() => handleComponentChange("addList")}
+            onAddDataClick={() => handleComponentChange("addData")}
+            onRemoveDataClick={() => handleComponentChange("removeData")}
+            onVerifyEmailsClick={() => handleComponentChange("verifyEmail")}
+            onManageListsClick={() => handleComponentChange("manageLists")}
+            onDataExtractorClick={() => handleComponentChange("dataExtractor")}
+          />
+        );
       case "updateProfile":
         return <CompleteProfile sidebarCollapsed={sidebarCollapsed} />;
       case "dashboard":
-        return <Dashboard sidebarCollapsed={sidebarCollapsed} />;
+        return (
+          <Dashboard
+            sidebarCollapsed={sidebarCollapsed}
+            onAddListClick={() => handleComponentChange("addList")}
+            onAddDataClick={() => handleComponentChange("addData")}
+            onVerifyEmailsClick={() => handleComponentChange("verifyEmail")}
+          />
+        );
       default:
         return (
           // <div className="p-6">
@@ -118,7 +135,12 @@ const Page = () => {
           //     <p className="text-gray-500">Select an option from the sidebar to get started.</p>
           //   </div>
           // </div>
-          <Dashboard sidebarCollapsed={sidebarCollapsed} onAddListClick={() => handleComponentChange("addList")} />
+          <Dashboard
+            sidebarCollapsed={sidebarCollapsed}
+            onAddListClick={() => handleComponentChange("addList")}
+            onAddDataClick={() => handleComponentChange("addData")}
+            onVerifyEmailsClick={() => handleComponentChange("verifyEmail")}
+          />
         );
     }
   };
@@ -128,7 +150,9 @@ const Page = () => {
       {/* Fixed Navbar */}
       <CrmNavbar
         onProfileClick={() => handleComponentChange("updateProfile")}
+        onAddDataClick={() => handleComponentChange("addData")}
         sidebarCollapsed={sidebarCollapsed}
+        onDashboardClick ={()=>handleComponentChange("dashboard")}
       />
 
       {/* Sidebar */}

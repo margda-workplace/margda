@@ -17,16 +17,21 @@ import {
   BookOpen,
   BarChart3,
 } from "lucide-react";
+import Link from "next/link";
 
 export default function Home() {
   const scrollRef = useRef(null);
 
-   const navItems = [
-    { label: "CRM", icon: "crm-rmvd-bg.gif",href: "/smart-tools" },
-    { label: "Smart Tools", icon: "service-tools-rmvd-bg.gif",href: "/smart-tools" },
-    { label: "Service Exchange", icon: "briefcase-rmvd-bg.gif",href: "/smart-tools" },
-    { label: "Mart Seva", icon: "shopping-cart-rmvd-bg.gif",href: "/smart-tools" },
-    { label: "Login", icon: "login-rmvd-bg.gif",href: "/login" },
+  const navItems = [
+    { label: "CRM", icon: "crm-rmvd-bg.gif", href: "/login" },
+    { label: "Smart Tools", icon: "service-tools-rmvd-bg.gif", href: "/login" },
+    {
+      label: "Service Exchange",
+      icon: "briefcase-rmvd-bg.gif",
+      href: "/login",
+    },
+    { label: "Mart Seva", icon: "shopping-cart-rmvd-bg.gif", href: "/login" },
+    { label: "Login", icon: "login-rmvd-bg.gif", href: "/login" },
   ];
 
   // Animation controls for scroll-on-reveal
@@ -294,12 +299,19 @@ export default function Home() {
               </div>
 
               <div className="flex flex-col sm:flex-row gap-4 mt-8">
-                <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg transition-colors font-medium">
+                <Link
+                  href="/login"
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg transition-colors font-medium inline-block"
+                >
                   Request a Demo
-                </button>
-                <button className="border border-blue-600 text-blue-600 hover:bg-blue-50 px-6 py-3 rounded-lg transition-colors font-medium">
+                </Link>
+
+                <Link
+                  href="/login"
+                  className="border border-blue-600 text-blue-600 hover:bg-blue-50 px-6 py-3 rounded-lg transition-colors font-medium inline-block"
+                >
                   Start Free Trial
-                </button>
+                </Link>
               </div>
             </div>
 

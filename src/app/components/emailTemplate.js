@@ -3,7 +3,12 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Pencil, Trash2, Plus, X, Mail, Paperclip, Save, Eye, Copy } from "lucide-react";
 
-const EmailTemplate = () => {
+const EmailTemplate = ({ sidebarCollapsed,
+  onAddListClick,
+  onAddDataClick,
+  onRemoveDataClick,
+  onVerifyEmailsClick,
+  onManageListsClick,}) => {
   const [mounted, setMounted] = useState(false);
   const [toast, setToast] = useState({ message: "", type: "success" });
   const [currentPage, setCurrentPage] = useState(1);
@@ -518,26 +523,41 @@ const EmailTemplate = () => {
           {/* Action shortcuts */}
           <motion.div className="bg-white p-6 rounded-xl shadow space-y-4">
             <div className="flex flex-wrap gap-4 justify-start">
-              {[
-                "➕ Add List",
-                "➕ Add Data",
-                "➖ Remove Data",
-                "✅ Verify Emails",
-                "🛠️ Manage Lists",
-                "📧 Email Template",
-              ].map((action) => (
-                <button
-                  key={action}
-                  type="button"
-                  className={`${
-                    action === "📧 Email Template"
-                      ? "bg-purple-100 text-purple-800 ring-2 ring-purple-200"
-                      : "bg-blue-100 text-blue-800"
-                  } rounded-full px-5 py-2 text-sm font-medium shadow hover:scale-105 transition-transform`}
-                >
-                  {action}
-                </button>
-              ))}
+              <button
+                type="button"
+                onClick={onAddListClick}
+                className="bg-green-100 text-green-800 ring-2 ring-green-200 rounded-full px-5 py-2 text-sm font-medium shadow hover:scale-105 transition-transform"
+              >
+                ➕ Add List
+              </button>
+              <button
+                type="button"
+                onClick={onAddDataClick}
+                className="bg-blue-100 text-blue-800 rounded-full px-5 py-2 text-sm font-medium shadow hover:scale-105 transition-transform"
+              >
+                ➕ Add Data
+              </button>
+              <button
+                type="button"
+                onClick={onRemoveDataClick}
+                className="bg-blue-100 text-blue-800 rounded-full px-5 py-2 text-sm font-medium shadow hover:scale-105 transition-transform"
+              >
+                ➖ Remove Data
+              </button>
+              <button
+                type="button"
+                onClick={onVerifyEmailsClick}
+                className="bg-blue-100 text-blue-800 rounded-full px-5 py-2 text-sm font-medium shadow hover:scale-105 transition-transform"
+              >
+                ✅ Verify Emails
+              </button>
+              <button
+                type="button"
+                onClick={onManageListsClick}
+                className="bg-blue-100 text-blue-800 rounded-full px-5 py-2 text-sm font-medium shadow hover:scale-105 transition-transform"
+              >
+                🛠️ Manage Lists
+              </button>
             </div>
           </motion.div>
 

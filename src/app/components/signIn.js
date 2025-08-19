@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Eye, EyeOff, Lock, Phone, User, MessageCircle, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
 
 const SignIn = ({
   handleSubmit,
@@ -191,13 +192,15 @@ const SignIn = ({
                   </div>
 
                   {/* Submit Button */}
-                  <button
+                  <Link href="/crm">
+                  <button                    
                     type="button"
-                    onClick={handleSubmit}
+                    
                     className="w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 hover:scale-[1.02] transform shadow-lg"
                   >
                     Login
                   </button>
+                  </Link>
 
                   {/* Footer Links */}
                   <div className="flex justify-center items-center pt-4 border-t border-gray-200">

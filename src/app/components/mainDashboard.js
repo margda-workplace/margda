@@ -36,7 +36,7 @@ import {
   ClipboardList,
   Database,
   Share,
-  current
+  current,
 } from "lucide-react";
 
 const MainDashboard = ({
@@ -56,12 +56,11 @@ const MainDashboard = ({
   handleMenuToggle,
   menuRef,
   menuPosition,
-  
-  
+  setShow,
+  setSearch,
 }) => {
   return (
     <>
-    
       <div className="bg-white rounded-xl shadow-md p-4 sm:p-6 flex flex-wrap items-center justify-between gap-4">
         <div className="flex items-center gap-2 text-sm text-gray-700">
           <span>Shortlist</span>
