@@ -402,7 +402,7 @@ const AddData = ({
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 resize-none"
                     />
                     <p className="text-xs text-gray-500 mt-2">
-                      💡 Use format: "Name, email@domain.com" (one per line)
+                      💡 Use format: &ldquo;Name, email@domain.com&ldquo; (one per line)
                     </p>
                   </div>
                   
