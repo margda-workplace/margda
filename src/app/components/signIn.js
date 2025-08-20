@@ -151,14 +151,14 @@ const SignIn = ({
                 </div>
 
                 {/* Demo Credentials */}
-                <div className="mb-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
+                {/* <div className="mb-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
                   <h3 className="text-sm font-semibold text-blue-800 mb-2">Demo Credentials:</h3>
                   <div className="text-xs text-blue-700 space-y-1">
                     <p><strong>Admin:</strong> 9999999999 / admin123</p>
                     <p><strong>User:</strong> 8888888888 / user123</p>
                     <p><strong>Demo:</strong> 7777777777 / demo</p>
                   </div>
-                </div>
+                </div> */}
 
                 {/* Error Message */}
                 {error && (
