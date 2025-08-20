@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Eye, EyeOff, Lock, Phone, User, MessageCircle, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const SignIn = ({
   handleSubmit,
@@ -12,10 +12,20 @@ const SignIn = ({
   setAgreedToTerms,
   setShowPassword,
 }) => {
-  const [activeTab, setActiveTab] = useState('login'); // 'login' or 'register'
+  const router = useRouter();
+  const [activeTab, setActiveTab] = useState('login');
   const [fullName, setFullName] = useState('');
   const [selectedCountry, setSelectedCountry] = useState({ flag: 'in', code: '+91', name: 'India' });
   const [showCountryDropdown, setShowCountryDropdown] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  // Mock users with WhatsApp numbers and tokens
+  const mockUsers = [
+    { whatsappNo: '9999999999', password: 'admin123', token: 'admin-token-123', name: 'Admin User' },
+    { whatsappNo: '8888888888', password: 'user123', token: 'user-token-456', name: 'Test User' },
+    { whatsappNo: '7777777777', password: 'demo', token: 'demo-token-789', name: 'Demo User' }
+  ];
 
   const countries = [
     { flag: 'in', code: '+91', name: 'India' },
@@ -35,19 +45,18 @@ const SignIn = ({
     { flag: 'ru', code: '+7', name: 'Russia' },
   ];
 
-  // Flag component using SVG icons from flagpedia.net
   const FlagIcon = ({ countryCode, className = "w-6 h-4" }) => (
     <img
       src={`https://flagpedia.net/data/flags/emoji/twitter/256x256/${countryCode}.png`}
       alt={`${countryCode} flag`}
       className={`${className} rounded-sm object-cover`}
       onError={(e) => {
-        // Fallback to a default flag or emoji if image fails to load
         e.target.style.display = 'none';
         e.target.nextSibling.style.display = 'inline';
       }}
-    />)
-  // Animation variants for smooth transitions
+    />
+  );
+
   const tabVariants = {
     hidden: { 
       opacity: 0, 
@@ -81,6 +90,38 @@ const SignIn = ({
     }
   };
 
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+
+    // Validate form
+    if (!loginData.whatsappNo || !loginData.password) {
+      setError("Please fill in all fields");
+      setLoading(false);
+      return;
+    }
+
+    try {
+      // Simulate API call delay
+      await new Promise(resolve => setTimeout(resolve, 1000));
+
+      // Check mock credentials
+      const user = mockUsers.find(u => u.whatsappNo === loginData.whatsappNo && u.password === loginData.password);
+      
+      if (user) {
+        // Redirect to CRM with token
+        router.push(`/crm/${user.token}`);
+      } else {
+        setError("Invalid WhatsApp number or password");
+      }
+    } catch (err) {
+      setError("An unexpected error occurred. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <>
       <div className="flex justify-center lg:justify-end order-2 lg:order-2">
@@ -109,8 +150,25 @@ const SignIn = ({
                   </div>
                 </div>
 
+                {/* Demo Credentials */}
+                <div className="mb-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
+                  <h3 className="text-sm font-semibold text-blue-800 mb-2">Demo Credentials:</h3>
+                  <div className="text-xs text-blue-700 space-y-1">
+                    <p><strong>Admin:</strong> 9999999999 / admin123</p>
+                    <p><strong>User:</strong> 8888888888 / user123</p>
+                    <p><strong>Demo:</strong> 7777777777 / demo</p>
+                  </div>
+                </div>
+
+                {/* Error Message */}
+                {error && (
+                  <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+                    <p className="text-red-600 text-sm">{error}</p>
+                  </div>
+                )}
+
                 {/* Login Form */}
-                <div className="space-y-6">
+                <form onSubmit={handleLogin} className="space-y-6">
                   {/* WhatsApp Number Field */}
                   <div className="space-y-2">
                     <div className="relative">
@@ -121,6 +179,7 @@ const SignIn = ({
                             type="button"
                             onClick={() => setShowCountryDropdown(!showCountryDropdown)}
                             className="flex items-center gap-2 pl-3 pr-2 py-3 border-r border-gray-300 hover:bg-gray-50 transition-colors"
+                            disabled={loading}
                           >
                             <FlagIcon countryCode={selectedCountry.flag} />
                             <span className="text-sm text-gray-600">{selectedCountry.code}</span>
@@ -157,6 +216,7 @@ const SignIn = ({
                         value={loginData.whatsappNo || ''}
                         onChange={handleInputChange}
                         className="w-full pl-28 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors outline-none bg-white placeholder-gray-500"
+                        disabled={loading}
                         required
                       />
                     </div>
@@ -175,12 +235,14 @@ const SignIn = ({
                         value={loginData.password}
                         onChange={handleInputChange}
                         className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors outline-none bg-white placeholder-gray-500"
+                        disabled={loading}
                         required
                       />
                       <button
                         type="button"
                         onClick={() => setShowPassword(!showPassword)}
                         className="absolute inset-y-0 right-0 pr-3 flex items-center hover:text-blue-600 transition-colors"
+                        disabled={loading}
                       >
                         {showPassword ? (
                           <EyeOff className="h-5 w-5 text-gray-400" />
@@ -192,15 +254,27 @@ const SignIn = ({
                   </div>
 
                   {/* Submit Button */}
-                  <Link href="/crm">
                   <button                    
-                    type="button"
-                    
-                    className="w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 hover:scale-[1.02] transform shadow-lg"
+                    type="submit"
+                    disabled={loading}
+                    className={`w-full font-semibold py-3 px-4 rounded-lg transition-all duration-200 transform shadow-lg flex items-center justify-center ${
+                      loading
+                        ? "bg-gray-400 cursor-not-allowed"
+                        : "bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 hover:scale-[1.02]"
+                    } text-white`}
                   >
-                    Login
+                    {loading ? (
+                      <>
+                        <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        Logging In...
+                      </>
+                    ) : (
+                      "Login"
+                    )}
                   </button>
-                  </Link>
 
                   {/* Footer Links */}
                   <div className="flex justify-center items-center pt-4 border-t border-gray-200">
@@ -211,7 +285,7 @@ const SignIn = ({
                       Forgot Password?
                     </a>
                   </div>
-                </div>
+                </form>
               </motion.div>
             ) : (
               <motion.div
