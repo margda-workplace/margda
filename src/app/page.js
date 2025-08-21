@@ -1,60 +1,46 @@
 "use client";
+
 import { useEffect, useRef, useState } from "react";
-import CommunicationCard from "./components/CommunicationCards";
-import Footer from "./components/footer";
+import Image from "next/image";
+import Link from "next/link";
 import { motion, useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import Image from "next/image";
-import Navbar from "./components/navbar";
-import Banner from "./components/banner";
-import { Mails } from "lucide-react";
-import { SendHorizontal } from "lucide-react";
-import {
-  FileUser,
-  GraduationCap,
-  TrendingUp,
-  Users,
-  BookOpen,
-  BarChart3,
-} from "lucide-react";
-import Link from "next/link";
+
+import Navbar from "./components/navbar";         // rewritten below
+import Banner from "./components/banner";         // rewritten below
+import Footer from "./components/footer";         // your existing footer
+import CommunicationCard from "./components/CommunicationCards"; // keep as-is
+
+import { Mails, SendHorizontal, FileUser, GraduationCap, TrendingUp, Users, BookOpen, BarChart3 } from "lucide-react";
 
 export default function Home() {
   const scrollRef = useRef(null);
 
+  // Nav items preserved (labels/hrefs/icons)
   const navItems = [
     { label: "CRM", icon: "crm-rmvd-bg.gif", href: "/login" },
     { label: "Smart Tools", icon: "service-tools-rmvd-bg.gif", href: "/login" },
-    {
-      label: "Service Exchange",
-      icon: "briefcase-rmvd-bg.gif",
-      href: "/login",
-    },
+    { label: "Service Exchange", icon: "briefcase-rmvd-bg.gif", href: "/login" },
     { label: "Mart Seva", icon: "shopping-cart-rmvd-bg.gif", href: "/login" },
-    { label: "Login", icon: "login-rmvd-bg.gif", href: "/login" },
+    
   ];
 
-  // Animation controls for scroll-on-reveal
+  // Reveal-on-scroll animation
   const fadeInVariants = {
-    hidden: { opacity: 0, y: 50 },
+    hidden: { opacity: 0, y: 40 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: {
-        duration: 0.5,
-        ease: "easeOut",
-      },
+      transition: { duration: 0.5, ease: "easeOut" },
     },
   };
 
-  const RevealOnScroll = ({ children }) => {
+  const RevealOnScroll = ({ children, className }) => {
     const controls = useAnimation();
-    const [ref, inView] = useInView({ triggerOnce: true });
+    const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.15 });
 
     useEffect(() => {
-      if (inView) {
-        controls.start("visible");
-      }
+      if (inView) controls.start("visible");
     }, [controls, inView]);
 
     return (
@@ -63,12 +49,14 @@ export default function Home() {
         variants={fadeInVariants}
         initial="hidden"
         animate={controls}
+        className={className}
       >
         {children}
       </motion.div>
     );
   };
 
+  // Demo data preserved for CommunicationCard
   const cardData = [
     {
       type: "Call",
@@ -173,203 +161,164 @@ export default function Home() {
 
   return (
     <>
-      <style>
-        {`
-          @keyframes float {
-            0%, 100% {
-              transform: translateY(0);
-            }
-            50% {
-              transform: translateY(-10px);
-            }
-          }
-        `}
-      </style>
+      {/* small utility animation for floating images */}
+      <style>{`
+        @keyframes float {
+          0%, 100% { transform: translateY(0) }
+          50% { transform: translateY(-10px) }
+        }
+      `}</style>
+
+      {/* NAVBAR + HERO (rewritten) */}
       <Navbar navItems={navItems} />
       <Banner />
 
-      <RevealOnScroll>
-        <div className="flex flex-col items-center my-8 lg:my-15 px-4">
-          <h1 className="flex flex-col sm:flex-row items-center text-2xl sm:text-3xl lg:text-4xl mb-4 text-center">
-            <img
-              src="communication.png"
-              className="h-8 sm:h-10 w-auto mb-2 sm:mb-0 sm:mr-2 transition-transform duration-300 hover:-rotate-12"
-              alt="comm"
-              loading="lazy"
-            />
-            <span className="bg-gradient-to-r from-blue-500 to-blue-800 bg-clip-text text-transparent">
-              Unified Communication(CRM):
-            </span>
-          </h1>
-
-          <div className="text-left max-w-xl mb-6 text-sm sm:text-base px-4">
-            Browser-integrated SIM+API-based multichannel communication like
-            Calls, WhatsApp, SMS, Email, Virtual Meetings, and Visit Tracking
-            with clients&apos; timelines.
-            <br />
-            <div className="space-y-2 text-left max-w-xl mb-6 text-sm sm:text-base px-4 my-2">
-              <div className="flex items-center gap-2">
-                <Mails />
-                <span>
-                  <link className="hover:text-blue-500" />
-                  CRM and Campaigns - Email, WhatsApp, SMS, Call and Social.
-                </span>
+      {/* Communication (kept, but placed in a Vinove-like "section" wrapper) */}
+      <RevealOnScroll className="px-6 md:px-8">
+        <section className="max-w-7xl mx-auto py-16">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+            <div>
+              <div className="inline-flex items-center px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-semibold border border-blue-200 mb-4">
+                Unified Communication (CRM)
               </div>
+              <h2 className="text-3xl md:text-4xl font-extrabold leading-tight text-gray-900 mb-4">
+                SIM+API Multichannel Comms with Client Timelines
+              </h2>
+              <p className="text-gray-600 mb-6">
+                Calls, WhatsApp, SMS, Email, Virtual Meetings, and Visit Tracking —
+                all browser-integrated with a single, searchable timeline.
+              </p>
 
-              <div className="flex items-center gap-2">
-                <SendHorizontal />
-                <span>
-                  <link className="hover:text-blue-500" />
-                  Unified communication with timeline.
-                </span>
-              </div>
+              <ul className="space-y-3 text-gray-800">
+                <li className="flex items-start gap-3">
+                  <Mails className="mt-0.5" />
+                  <span>CRM & Campaigns: Email, WhatsApp, SMS, Call & Social</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <SendHorizontal className="mt-0.5" />
+                  <span>Unified communication with end-to-end timeline</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <FileUser className="mt-0.5" />
+                  <span>Teamwork reports & accountability</span>
+                </li>
+              </ul>
 
-              <div className="flex items-center gap-2">
-                <FileUser />
-                <span>
-                  <link className="hover:text-blue-500" />
-                  Teamwork reports
-                </span>
-              </div>
-            </div>
-          </div>
-
-          {/* Sticky Button */}
-          <div className="top-16 sm:top-20 lg:top-24 z-30 flex justify-center mb-4">
-            <button className="flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full text-white text-sm sm:text-base font-semibold bg-gradient-to-r from-blue-500 to-blue-800 shadow-md hover:opacity-90 transition group hover:scale-105">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-3 sm:h-4 w-3 sm:w-4 transition-transform duration-200 group-hover:-rotate-20"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
-              </svg>
-              <span className="hidden sm:inline">
-                Client Timeline Dashboard
-              </span>
-              <span className="sm:hidden">Timeline</span>
-            </button>
-          </div>
-
-          {/* Scrollable Cards Container */}
-          <ScrollableCardsContainer cardData={cardData} scrollRef={scrollRef} />
-        </div>
-      </RevealOnScroll>
-
-      <RevealOnScroll>
-        <div className="flex flex-col items-center my-8 lg:my-15 px-4 my-5">
-          <h1 className="flex flex-col sm:flex-row items-center text-2xl sm:text-3xl lg:text-4xl mb-4 text-center">
-            <img
-              src="tool2.png"
-              className="h-8 sm:h-10 w-auto mb-2 sm:mb-0 sm:mr-2 transition-transform duration-300 hover:-rotate-12"
-              alt="comm"
-              loading="lazy"
-            />
-            <span className="bg-gradient-to-r from-blue-500 to-blue-800 bg-clip-text text-transparent">
-              Smart Tools
-            </span>
-          </h1>
-          <p className="text-lg text-gray-600 mb-8">(AI-powered)</p>
-
-          <div className="flex flex-col-reverse lg:flex-row items-start lg:items-center w-full max-w-6xl gap-8 my-10">
-            <div className="w-full lg:w-1/2">
-              <div className="flex flex-col items-start space-y-3">
-                {[
-                  {
-                    text: "Career and Education Counselling",
-                    icon: GraduationCap,
-                  },
-                  { text: "Marketing and Sales", icon: TrendingUp },
-                  { text: "Hiring and Recruitment", icon: Users },
-                  { text: "Teaching and Training", icon: BookOpen },
-                  { text: "Study and progress meter", icon: BarChart3 },
-                ].map((item, index) => {
-                  const IconComponent = item.icon;
-                  return (
-                    <button
-                      key={index}
-                      className="flex gap-3 bg-gradient-to-r from-[#284E9E] to-[#6C17D3] text-white px-6 py-3 rounded-xl hover:shadow-lg transition-all duration-300 hover:scale-105 text-sm sm:text-base font-medium w-max max-w-full"
-                    >
-                      <IconComponent size={20} />
-                      {item.text}
-                    </button>
-                  );
-                })}
-              </div>
-
-              <div className="flex flex-col sm:flex-row gap-4 mt-8">
+              <div className="mt-8 flex flex-wrap gap-3">
                 <Link
                   href="/login"
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg transition-colors font-medium inline-block"
+                  className="px-6 py-3 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-semibold shadow"
                 >
-                  Request a Demo
+                  Client Timeline Dashboard
                 </Link>
-
                 <Link
                   href="/login"
-                  className="border border-blue-600 text-blue-600 hover:bg-blue-50 px-6 py-3 rounded-lg transition-colors font-medium inline-block"
+                  className="px-6 py-3 rounded-full border border-blue-200 text-blue-700 hover:bg-blue-50 font-semibold"
                 >
                   Start Free Trial
                 </Link>
               </div>
             </div>
 
-            <div className="w-full lg:w-1/2 flex justify-center">
+            {/* Cards rail (unchanged component) */}
+            <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-4">
+              <ScrollableCardsContainer cardData={cardData} scrollRef={scrollRef} />
+            </div>
+          </div>
+        </section>
+      </RevealOnScroll>
+
+      {/* Smart Tools (kept content/images, redesigned layout like Vinove "What we do") */}
+      <RevealOnScroll className="px-6 md:px-8">
+        <section className="max-w-7xl mx-auto py-16">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+            <div className="order-2 lg:order-1">
+              <div className="inline-flex items-center px-3 py-1 rounded-full bg-violet-50 text-violet-700 text-xs font-semibold border border-violet-200 mb-4">
+                Smart Tools (AI-powered)
+              </div>
+              <h3 className="text-3xl md:text-4xl font-extrabold leading-tight text-gray-900 mb-4">
+                Move faster with purpose-built AI assistants
+              </h3>
+              <p className="text-gray-600 mb-6">
+                Your stack for growth: counselling, sales, hiring, training, and progress analytics.
+              </p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {[
+                  { text: "Career & Education Counselling", icon: GraduationCap },
+                  { text: "Marketing & Sales", icon: TrendingUp },
+                  { text: "Hiring & Recruitment", icon: Users },
+                  { text: "Teaching & Training", icon: BookOpen },
+                  { text: "Study & Progress Meter", icon: BarChart3 },
+                ].map((item, idx) => {
+                  const Icon = item.icon;
+                  return (
+                    <div
+                      key={idx}
+                      className="flex items-center gap-3 rounded-xl border border-gray-200 bg-white px-4 py-3 shadow-sm"
+                    >
+                      <Icon size={20} />
+                      <span className="text-sm font-medium">{item.text}</span>
+                    </div>
+                  );
+                })}
+              </div>
+
+              <div className="mt-8 flex flex-wrap gap-3">
+                <Link
+                  href="/login"
+                  className="px-6 py-3 rounded-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold shadow"
+                >
+                  Request a Demo
+                </Link>
+                <Link
+                  href="/login"
+                  className="px-6 py-3 rounded-full border border-indigo-200 text-indigo-700 hover:bg-indigo-50 font-semibold"
+                >
+                  Explore Tools
+                </Link>
+              </div>
+            </div>
+
+            <div className="order-1 lg:order-2 flex justify-center">
               <Image
                 src="/lead-generation-new.png"
-                alt="Illustration"
-                width={500}
-                height={300}
+                alt="Smart Tools Illustration"
+                width={560}
+                height={420}
+                className="w-full max-w-xl rounded-2xl shadow-lg"
                 style={{ animation: "float 3s ease-in-out infinite" }}
-                className="w-full max-w-md"
-                loading="lazy"
+                priority={false}
               />
             </div>
           </div>
-        </div>
-
-        <style jsx>{`
-          @keyframes float {
-            0%,
-            100% {
-              transform: translateY(0px);
-            }
-            50% {
-              transform: translateY(-10px);
-            }
-          }
-        `}</style>
+        </section>
       </RevealOnScroll>
 
-      <RevealOnScroll>
-        <div className="w-screen bg-gradient-to-r from-[#284E9E] to-[#6C17D3] text-white px-6 py-16 md:py-20">
-          <div className="max-w-6xl mx-auto flex flex-col gap-12">
-            {/* Heading */}
-            <div className="flex flex-col items-center text-center gap-3">
-              <img
-                src="customer-service.png"
-                alt="icon"
-                className="h-10 w-10"
-              />
-              <h2 className="text-3xl md:text-5xl font-bold">
-                <span className="text-orange-500">Service</span> Exchange
+      {/* Service Exchange (kept content/image, refreshed container + colors) */}
+      <RevealOnScroll className="px-0">
+        <section className="w-full bg-gradient-to-r from-[#284E9E] to-[#6C17D3] text-white">
+          <div className="max-w-7xl mx-auto px-6 md:px-8 py-16">
+            <div className="text-center mb-12">
+              <div className="inline-flex items-center px-3 py-1 rounded-full bg-white/10 border border-white/20 text-xs font-semibold">
+                Service Exchange
+              </div>
+              <h2 className="mt-4 text-3xl md:text-5xl font-extrabold">
+                <span className="text-orange-300">Service</span> Exchange
               </h2>
+              <p className="mt-2 opacity-90">
+                Outsource work or complete tasks to earn — your on-demand marketplace.
+              </p>
             </div>
 
-            {/* Two-Column Layout */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 items-start lg:gap-12">
-              {/* Left Column - Service Required */}
-              <div className="max-w-md w-full mx-auto text-lg text-center lg:text-left lg:mx-0">
-                <div className="mb-6">
-                  <span className="bg-orange-500 px-8 py-3 rounded-md font-semibold inline-block text-xl">
-                    Service Required
-                  </span>
-                  <p className="mt-2 text-base opacity-80">
-                    Outsource and get work done
-                  </p>
-                </div>
-                <div className="flex flex-col gap-3">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+              <div className="max-w-xl mx-auto lg:mx-0">
+                <span className="bg-orange-500 px-6 py-2 rounded-md font-semibold inline-block text-lg">
+                  Service Required
+                </span>
+                <p className="mt-2 opacity-90">Outsource and get work done</p>
+
+                <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {[
                     "Computer, I.T. and Apps",
                     "Career, Education and Training",
@@ -387,7 +336,7 @@ export default function Home() {
                     <a
                       key={index}
                       href="#"
-                      className="block text-white/90 hover:text-orange-400 transition-transform transform hover:scale-105 hover:font-bold text-lg"
+                      className="block text-white/90 hover:text-orange-300 transition font-medium"
                     >
                       {item}
                     </a>
@@ -395,107 +344,82 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Right Column - Service Offered */}
-              <div className="flex flex-col items-center text-center lg:items-end lg:text-right lg:pl-8 ">
-                <div className="mb-6 my-5">
-                  <span className="bg-orange-500 px-8 py-3 rounded-md font-semibold inline-block text-xl">
-                    Service Offered
-                  </span>
-                  <p className="mt-2 text-base opacity-80">
-                    Complete tasks to earn instantly
-                  </p>
-                </div>
-                <img
-                  src="/serviceExchange.png"
-                  alt="Service Exchange Illustration"
-                  className="rounded-lg shadow-lg w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-2xl animate-float"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </RevealOnScroll>
+              <div className="text-center lg:text-right">
+                <span className="bg-orange-500 px-6 py-2 rounded-md font-semibold inline-block text-lg">
+                  Service Offered
+                </span>
+                <p className="mt-2 opacity-90">Complete tasks to earn instantly</p>
 
-      <RevealOnScroll>
-        <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
-          <div className="bg-[linear-gradient(to_right,_#284E9E,_#6C17D3)]  rounded-2xl sm:rounded-3xl px-6 sm:px-8 lg:px-12 py-10 sm:py-12 lg:py-16 text-center text-white shadow-2xl">
-            {/* Heading */}
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl mb-4 sm:mb-6 leading-tight">
-              Ready to <span className="text-orange-400">boost</span> your
-              business?
-            </h2>
-
-            {/* Subtext */}
-            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-200 mb-6 sm:mb-8 lg:mb-10 max-w-xs sm:max-w-md lg:max-w-lg xl:max-w-xl mx-auto leading-relaxed">
-              Book a demo to see Margda Workplace in action.
-            </p>
-
-            {/* Buttons */}
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 lg:gap-6 justify-center items-center">
-              <button
-                className="w-full sm:w-auto bg-gradient-to-l from-white/30 to-orange-400/30
-                backdrop-blur-md hover:border-1 border-orange-200 hover:from-orange-500/70  hover:to-orange-400/60 text-white font-semibold px-6 sm:px-8 lg:px-10 py-3 sm:py-4 lg:py-5 rounded-full hover:scale-105 transition-transform transition-colors duration-200 flex items-center justify-center gap-2 shadow-lg text-sm sm:text-base lg:text-lg"
-              >
-                Request a demo
-                <svg
-                  className="w-4 h-4 sm:w-5 sm:h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 5l7 7-7 7"
+                <div className="mt-6 flex justify-center lg:justify-end">
+                  <img
+                    src="/serviceExchange.png"
+                    alt="Service Exchange Illustration"
+                    className="rounded-xl shadow-2xl w-full max-w-2xl animate-[float_3s_ease-in-out_infinite]"
+                    loading="lazy"
                   />
-                </svg>
-              </button>
-
-              <button
-                className="w-full sm:w-auto hover:border-1 border-white bg-gradient-to-l from-white/30 to-orange-400/30 hover:from-orange-500/70  hover:to-orange-400/60
-                backdrop-blur-md text-white font-semibold px-6 sm:px-8 lg:px-10 py-3 sm:py-4 lg:py-5 rounded-full hover:text-white hover:scale-105 transition-transform transition-all duration-200 shadow-lg text-sm sm:text-base lg:text-lg"
-              >
-                Start Free Trial
-              </button>
+                </div>
+              </div>
             </div>
           </div>
         </section>
       </RevealOnScroll>
 
-      <RevealOnScroll>
-        <section className="w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="bg-white rounded-3xl shadow-sm border border-orange-200 p-6 sm:p-10 backdrop-blur-lg">
-            {/* Heading */}
+      {/* Big CTA (Vinove-style bold band) */}
+      <RevealOnScroll className="px-6 md:px-8">
+        <section className="max-w-7xl mx-auto py-16">
+          <div className="rounded-3xl px-8 md:px-12 py-14 text-center text-white shadow-2xl bg-[linear-gradient(to_right,_#284E9E,_#6C17D3)]">
+            <h2 className="text-3xl md:text-5xl font-extrabold mb-4">
+              Ready to <span className="text-orange-300">boost</span> your business?
+            </h2>
+            <p className="text-white/90 max-w-2xl mx-auto mb-8">
+              Book a demo to see Margda Workplace in action.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link
+                href="/login"
+                className="px-8 py-3 rounded-full bg-white/20 hover:bg-white/30 border border-white/40 font-semibold"
+              >
+                Request a Demo
+              </Link>
+              <Link
+                href="/login"
+                className="px-8 py-3 rounded-full bg-white text-indigo-700 font-semibold hover:bg-gray-100"
+              >
+                Start Free Trial
+              </Link>
+            </div>
+          </div>
+        </section>
+      </RevealOnScroll>
+
+      {/* Subscribe (kept) */}
+      <RevealOnScroll className="px-6 md:px-8">
+        <section className="max-w-5xl mx-auto py-16">
+          <div className="bg-white rounded-3xl shadow-sm border border-orange-200 p-6 sm:p-10">
             <div className="text-center mb-8">
-              <h3 className="text-2xl sm:text-3xl font-bold text-blue-500">
-                Stay Updated
-              </h3>
-              <p className="text-blue-400 mt-2 text-sm sm:text-base">
-                Subscribe for the latest updates and offers.
-              </p>
+              <h3 className="text-2xl sm:text-3xl font-bold text-blue-600">Stay Updated</h3>
+              <p className="text-blue-500 mt-2">Subscribe for the latest updates and offers.</p>
             </div>
 
-            {/* Form */}
             <form className="flex flex-col sm:flex-row flex-wrap gap-4 justify-center">
               <input
                 type="text"
                 placeholder="Your Name"
-                className="flex-1 min-w-[220px] px-5 py-3 rounded-full bg-white/15 placeholder-blue/70 text-black border border-orange-300  focus:ring-orange-400 transition"
+                className="flex-1 min-w-[220px] px-5 py-3 rounded-full border border-orange-300 text-gray-900"
               />
               <input
                 type="text"
                 placeholder="WhatsApp"
-                className="flex-1 min-w-[220px] px-5 py-3 rounded-full bg-white/15 placeholder-blue/70 text-black border border-orange-300  focus:ring-orange-400 transition"
+                className="flex-1 min-w-[220px] px-5 py-3 rounded-full border border-orange-300 text-gray-900"
               />
               <input
                 type="email"
                 placeholder="Email"
-                className="flex-1 min-w-[220px] px-5 py-3 rounded-full bg-white/15 placeholder-blue/70 text-black border border-orange-300  focus:ring-orange-400 transition"
+                className="flex-1 min-w-[220px] px-5 py-3 rounded-full border border-orange-300 text-gray-900"
               />
               <button
                 type="submit"
-                className="w-full sm:w-auto px-8 py-3 rounded-full bg-gradient-to-r from-orange-500 to-orange-400 hover:from-orange-600 hover:to-orange-500 text-white font-semibold transition-all duration-200 hover:scale-105 shadow-lg"
+                className="w-full sm:w-auto px-8 py-3 rounded-full bg-gradient-to-r from-orange-500 to-orange-400 hover:from-orange-600 hover:to-orange-500 text-white font-semibold shadow-lg"
               >
                 Subscribe
               </button>
@@ -504,19 +428,17 @@ export default function Home() {
         </section>
       </RevealOnScroll>
 
-      <RevealOnScroll>
-        <Footer />
-      </RevealOnScroll>
+      <Footer />
     </>
   );
 }
 
-const ScrollableCardsContainer = ({ cardData, scrollRef }) => {
+function ScrollableCardsContainer({ cardData, scrollRef }) {
   const [hovering, setHovering] = useState(false);
+
   useEffect(() => {
     let frame;
     let direction = 1;
-
     const scrollContainer = scrollRef.current;
     if (!scrollContainer) return;
 
@@ -527,53 +449,36 @@ const ScrollableCardsContainer = ({ cardData, scrollRef }) => {
       const speed = 1.2;
 
       if (isDesktop) {
-        // Desktop: horizontal scroll
-        const maxScroll =
-          scrollContainer.scrollWidth - scrollContainer.clientWidth;
-
+        const maxScroll = scrollContainer.scrollWidth - scrollContainer.clientWidth;
         scrollContainer.scrollLeft += direction * speed;
-
-        if (
-          scrollContainer.scrollLeft >= maxScroll ||
-          scrollContainer.scrollLeft <= 0
-        ) {
+        if (scrollContainer.scrollLeft >= maxScroll || scrollContainer.scrollLeft <= 0) {
           direction *= -1;
         }
       } else {
-        // Mobile: vertical scroll
-        const maxScroll =
-          scrollContainer.scrollHeight - scrollContainer.clientHeight;
-
+        const maxScroll = scrollContainer.scrollHeight - scrollContainer.clientHeight;
         scrollContainer.scrollTop += direction * speed;
-
-        if (
-          scrollContainer.scrollTop >= maxScroll ||
-          scrollContainer.scrollTop <= 0
-        ) {
+        if (scrollContainer.scrollTop >= maxScroll || scrollContainer.scrollTop <= 0) {
           direction *= -1;
         }
       }
-
       frame = requestAnimationFrame(animateScroll);
     };
 
     frame = requestAnimationFrame(animateScroll);
-
     return () => cancelAnimationFrame(frame);
   }, [hovering, scrollRef]);
+
   return (
     <div
       ref={scrollRef}
-      className="relative w-full max-w-7xl px-2 sm:px-4 pt-4 sm:pt-6 pb-6 sm:pb-10 bg-white rounded-xl shadow-md 
-                       overflow-y-auto lg:overflow-y-visible lg:overflow-x-auto 
-                       max-h-96 lg:max-h-none
-                       scrollbar-thin hover:scrollbar-thumb-gray-500 scrollbar-thumb-gray-300 scrollbar-track-gray-100 
-                       border border-green-200"
+      className="relative w-full px-2 sm:px-3 pt-4 sm:pt-5 pb-6 sm:pb-8 bg-white rounded-xl shadow-md
+                 overflow-y-auto lg:overflow-y-visible lg:overflow-x-auto max-h-96 lg:max-h-none
+                 scrollbar-thin hover:scrollbar-thumb-gray-500 scrollbar-thumb-gray-300 scrollbar-track-gray-100
+                 border border-gray-200"
       onMouseEnter={() => setHovering(true)}
       onMouseLeave={() => setHovering(false)}
     >
-      {/* Mobile: Vertical Stack, Desktop: Horizontal Scroll */}
-      <div className="flex flex-col lg:flex-row items-center lg:items-start space-y-6 lg:space-y-0 lg:space-x-4 lg:min-w-[1200px]">
+      <div className="flex flex-col lg:flex-row items-stretch lg:items-start gap-4 lg:min-w-[1200px]">
         {cardData.map((card, index) => (
           <CommunicationCard
             key={index}
@@ -586,4 +491,4 @@ const ScrollableCardsContainer = ({ cardData, scrollRef }) => {
       </div>
     </div>
   );
-};
+}

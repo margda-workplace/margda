@@ -1,159 +1,113 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
-import { motion } from "framer-motion";
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { Menu, X } from "lucide-react";
 
-export default function Navbar({ navItems }) {
-  const [isOpen, setIsOpen] = useState(false);
-  const [isTop, setIsTop] = useState(true);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsTop(window.scrollY === 0);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+export default function Navbar({ navItems = [] }) {
+  const [open, setOpen] = useState(false);
 
   return (
-    <>
-      {/* NAVBAR */}
-      <motion.nav
-        initial={{ y: -80, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{
-          duration: 0.3,
-          ease: "easeOut",
-        }}
-        className={`fixed top-0 w-full z-50 px-4 sm:px-6 py-3 flex items-center justify-between ${
-          isTop ? "bg-transparent" : "bg-gray-100"
-        }`}
-      >
-        {/* Logo */}
-        <Link
-          href="/"
-          className={`group flex items-center 
-                       ${isTop ? "bg-white" : "bg-transparent"}                       
-                       rounded-2xl 
-                       px-6 py-3 
-                       shadow-lg                       
-                       hover:scale-105 
-                       hover:shadow-xl
-                       hover:-translate-y-1
-                       active:scale-100
-                       active:translate-y-0
-                       transition-all 
-                       duration-300 
-                       ease-out`}
-        >
-          <img
-            src="/logo.webp"
-            alt="Margda Workplace"
-            className="h-8 sm:h-10 lg:h-12 w-auto"
-          />
-        </Link>
+    <header className="sticky top-0 z-50">
+      <div className="backdrop-blur supports-[backdrop-filter]:bg-white/60 bg-white/80 border-b border-gray-200">
+        <nav className="max-w-7xl mx-auto px-6 md:px-8 h-20 flex items-center justify-between">
+          
+          {/* Brand on the left */}
+          <Link href="/" className="flex items-center">
+            <Image
+              src="/logo.webp"
+              alt="Logo"
+              width={0}
+              height={0}
+              sizes="100vw"
+              className="w-80 h-auto object-contain"
+            />
+          </Link>
 
-        {/* Desktop Menu */}
-        <div className="hidden xl:flex gap-4">
-          {navItems.map((item, idx) => (
-            <Link
-              key={idx}
-              href={item.href}
-              className={`group flex items-center gap-2 
-             ${isTop ? "bg-white" : "bg-[linear-gradient(to_right,_#284E9E,_#6C17D3)] text-white"}
-             rounded-xl 
-             px-3 py-2 
-             shadow-lg           
-              
-             hover:scale-105 
-             hover:shadow-xl
-             hover:-translate-y-1
-             active:scale-100
-             active:translate-y-0
-             transition-all 
-             duration-300 
-             ease-out
-             text-black
-             font-medium`}
-            >
-              <span className="relative h-10 w-10 flex-shrink-0">
-                <img src={item.icon} alt={item.label} className="h-10 w-auto" />
-              </span>
-              <span className="font-bold">{item.label}</span>
-            </Link>
-          ))}
-        </div>
+          {/* Right side nav + CTA */}
+          <div className="flex items-center gap-10">
+            {/* Desktop nav */}
+            <ul className="hidden md:flex items-center gap-6">
+              {navItems.map((item) => (
+                <li key={item.label}>
+                  <Link
+                    href={item.href || "#"}
+                    className="flex items-center gap-2 px-4 py-2 text-lg md:text-xl font-semibold text-gray-800 rounded-full transition hover:bg-indigo-50 hover:text-indigo-700"
+                  >
+                    {item.icon && (
+                      <Image
+                        src={`/${item.icon}`}
+                        alt={item.label}
+                        width={26}
+                        height={26}
+                        className="rounded-sm"
+                      />
+                    )}
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
 
-        {/* Hamburger Button */}
-        <button
-          className="xl:hidden flex items-center justify-center rounded-lg p-2 hover:bg-white/20 transition bg-gradient-to-l from-blue-500/70 to-blue-400/60
-                backdrop-blur-md"
-          onClick={() => setIsOpen(!isOpen)}
-        >
-          {isOpen ? (
-            <X className="h-6 w-6 text-white" />
-          ) : (
-            <Menu className="h-6 w-6 text-white" />
-          )}
-        </button>
-      </motion.nav>
-
-      {/* SIDEBAR */}
-      <div
-        className={`fixed top-0 right-0 h-full w-64 shadow-2xl bg-white transform transition-transform duration-300 ease-in-out z-[9999] xl:hidden ${
-          isOpen ? "translate-x-0" : "translate-x-full"
-        }`}
-      >
-        <div className="flex flex-col p-6 gap-4 h-full bg-white my-4">
-          {/* Close Button */}
-          <div className="flex justify-end">
-            <div className="h-8 sm:h-10 lg:h-12 w-auto">
-              <img src="/logo.webp" alt="logo" />
+            {/* CTA */}
+            <div className="hidden md:flex items-center">
+              <Link
+                href="/login"
+                className="px-6 py-2 rounded-full bg-indigo-600 text-white text-lg font-semibold hover:bg-indigo-700 transition"
+              >
+                Login
+              </Link>
             </div>
+
+            {/* Mobile toggle */}
             <button
-              onClick={() => setIsOpen(false)}
-              className="text-black hover:text-red-500"
+              className="md:hidden inline-flex items-center justify-center p-2 rounded-md"
+              onClick={() => setOpen((v) => !v)}
+              aria-label="Toggle menu"
             >
-              <X className="h-6 w-6" />
+              {open ? <X size={28} /> : <Menu size={28} />}
             </button>
           </div>
-
-          {/* Menu Items */}
-          {navItems.map((item, idx) => (
-            <Link
-              key={idx}
-              href={item.href}
-              className="group flex items-center gap-2 
-             bg-gradient-to-l from-orange-500/70 to-orange-400/60
-             rounded-xl 
-             px-3 py-2 
-             shadow-lg             
-             hover:from-white/30 hover:to-orange-400/40
-             hover:scale-105 
-             hover:shadow-xl
-             hover:-translate-y-1
-             active:scale-100
-             active:translate-y-0
-             transition-all 
-             duration-300 
-             ease-out
-             text-black
-             font-medium"
-              onClick={() => setIsOpen(false)}
-            >
-              <span className="h-10 w-10">
-                <img src={item.icon} alt={item.label} className="h-10 w-auto" />
-              </span>
-              <span className="font-bold text-black">{item.label}</span>
-            </Link>
-          ))}
-        </div>
+        </nav>
       </div>
-    </>
+
+      {/* Mobile menu */}
+      {open && (
+        <div className="md:hidden bg-white border-b border-gray-200">
+          <div className="max-w-7xl mx-auto px-6 md:px-8 py-4 space-y-2">
+            {navItems.map((item) => (
+              <Link
+                key={item.label}
+                href={item.href || "#"}
+                className="block px-4 py-2 rounded-full text-lg font-semibold text-gray-800 hover:bg-indigo-50 hover:text-indigo-700 transition"
+                onClick={() => setOpen(false)}
+              >
+                <div className="flex items-center gap-3">
+                  {item.icon && (
+                    <Image
+                      src={`/${item.icon}`}
+                      alt={item.label}
+                      width={24}
+                      height={24}
+                      className="rounded-sm"
+                    />
+                  )}
+                  {item.label}
+                </div>
+              </Link>
+            ))}
+
+            <Link
+              href="/login"
+              className="inline-flex mt-3 px-6 py-2 rounded-full bg-indigo-600 text-white text-lg font-semibold hover:bg-indigo-700 transition"
+              onClick={() => setOpen(false)}
+            >
+              Login
+            </Link>
+          </div>
+        </div>
+      )}
+    </header>
   );
 }
-
