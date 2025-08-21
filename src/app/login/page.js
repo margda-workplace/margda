@@ -16,12 +16,12 @@ export default function LoginPage() {
   const [agreedToTerms, setAgreedToTerms] = useState(false);
   const [isExiting, setIsExiting] = useState(false);
 
-  const navItems = [
+    const navItems = [
     { label: "CRM", icon: "crm-rmvd-bg.gif", href: "/login" },
     { label: "Smart Tools", icon: "service-tools-rmvd-bg.gif", href: "/login" },
     { label: "Service Exchange", icon: "briefcase-rmvd-bg.gif", href: "/login" },
     { label: "Mart Seva", icon: "shopping-cart-rmvd-bg.gif", href: "/login" },
-    { label: "Login", icon: "login-rmvd-bg.gif", href: "/login" },
+    
   ];
 
   const handleInputChange = (e) => {
