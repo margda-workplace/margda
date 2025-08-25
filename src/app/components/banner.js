@@ -25,7 +25,7 @@ export default function Banner() {
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.1 }}
-              className="mt-8 text-3xl font-bold"
+              className="mt-8 text-4xl font-bold"
             >
               Business: Achieve More with Less Effort
             </motion.h2>
@@ -42,7 +42,7 @@ export default function Banner() {
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
-              className="mt-8 text-3xl font-bold"
+              className="mt-8 text-4xl font-bold"
             >
               Professional: Create Multiple Income Streams
             </motion.h2>
