@@ -6,12 +6,21 @@ import Link from "next/link";
 import { motion, useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 
-import Navbar from "./components/navbar";         // rewritten below
-import Banner from "./components/banner";         // rewritten below
-import Footer from "./components/footer";         // your existing footer
+import Navbar from "./components/navbar"; // rewritten below
+import Banner from "./components/banner"; // rewritten below
+import Footer from "./components/footer"; // your existing footer
 import CommunicationCard from "./components/CommunicationCards"; // keep as-is
 
-import { Mails, SendHorizontal, FileUser, GraduationCap, TrendingUp, Users, BookOpen, BarChart3 } from "lucide-react";
+import {
+  Mails,
+  SendHorizontal,
+  FileUser,
+  GraduationCap,
+  TrendingUp,
+  Users,
+  BookOpen,
+  BarChart3,
+} from "lucide-react";
 
 export default function Home() {
   const scrollRef = useRef(null);
@@ -20,9 +29,12 @@ export default function Home() {
   const navItems = [
     { label: "CRM", icon: "crm-rmvd-bg.gif", href: "/login" },
     { label: "Smart Tools", icon: "service-tools-rmvd-bg.gif", href: "/login" },
-    { label: "Service Exchange", icon: "briefcase-rmvd-bg.gif", href: "/login" },
+    {
+      label: "Service Exchange",
+      icon: "briefcase-rmvd-bg.gif",
+      href: "/login",
+    },
     { label: "Mart Seva", icon: "shopping-cart-rmvd-bg.gif", href: "/login" },
-    
   ];
 
   // Reveal-on-scroll animation
@@ -172,6 +184,33 @@ export default function Home() {
       {/* NAVBAR + HERO (rewritten) */}
       <Navbar navItems={navItems} />
       <Banner />
+      <RevealOnScroll className="px-6 md:px-8">
+        <section className="max-w-7xl mx-auto py-16">
+          <div className="rounded-3xl px-8 md:px-12 py-14 text-center text-white shadow-2xl bg-[linear-gradient(to_right,_#284E9E,_#6C17D3)]">
+            <h2 className="text-3xl md:text-5xl font-extrabold mb-4">
+              Ready to <span className="text-orange-300">boost</span> your
+              business?
+            </h2>
+            <p className="text-white/90 max-w-2xl mx-auto mb-8">
+              Book a demo to see Margda Workplace in action.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link
+                href="/login"
+                className="px-8 py-3 rounded-full bg-white/20 hover:bg-white/30 border border-white/40 font-semibold"
+              >
+                Request a Demo
+              </Link>
+              <Link
+                href="/login"
+                className="px-8 py-3 rounded-full bg-white text-indigo-700 font-semibold hover:bg-gray-100"
+              >
+                Start Free Trial
+              </Link>
+            </div>
+          </div>
+        </section>
+      </RevealOnScroll>
 
       {/* Communication (kept, but placed in a Vinove-like "section" wrapper) */}
       <RevealOnScroll className="px-6 md:px-8">
@@ -185,14 +224,17 @@ export default function Home() {
                 SIM+API Multichannel Comms with Client Timelines
               </h2>
               <p className="text-gray-600 mb-6">
-                Calls, WhatsApp, SMS, Email, Virtual Meetings, and Visit Tracking —
-                all browser-integrated with a single, searchable timeline.
+                Calls, WhatsApp, SMS, Email, Virtual Meetings, and Visit
+                Tracking — all browser-integrated with a single, searchable
+                timeline.
               </p>
 
               <ul className="space-y-3 text-gray-800">
                 <li className="flex items-start gap-3">
                   <Mails className="mt-0.5" />
-                  <span>CRM & Campaigns: Email, WhatsApp, SMS, Call & Social</span>
+                  <span>
+                    CRM & Campaigns: Email, WhatsApp, SMS, Call & Social
+                  </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <SendHorizontal className="mt-0.5" />
@@ -222,7 +264,10 @@ export default function Home() {
 
             {/* Cards rail (unchanged component) */}
             <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-4">
-              <ScrollableCardsContainer cardData={cardData} scrollRef={scrollRef} />
+              <ScrollableCardsContainer
+                cardData={cardData}
+                scrollRef={scrollRef}
+              />
             </div>
           </div>
         </section>
@@ -240,12 +285,16 @@ export default function Home() {
                 Move faster with purpose-built AI assistants
               </h3>
               <p className="text-gray-600 mb-6">
-                Your stack for growth: counselling, sales, hiring, training, and progress analytics.
+                Your stack for growth: counselling, sales, hiring, training, and
+                progress analytics.
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {[
-                  { text: "Career & Education Counselling", icon: GraduationCap },
+                  {
+                    text: "Career & Education Counselling",
+                    icon: GraduationCap,
+                  },
                   { text: "Marketing & Sales", icon: TrendingUp },
                   { text: "Hiring & Recruitment", icon: Users },
                   { text: "Teaching & Training", icon: BookOpen },
@@ -307,7 +356,8 @@ export default function Home() {
                 <span className="text-orange-300">Service</span> Exchange
               </h2>
               <p className="mt-2 opacity-90">
-                Outsource work or complete tasks to earn — your on-demand marketplace.
+                Outsource work or complete tasks to earn — your on-demand
+                marketplace.
               </p>
             </div>
 
@@ -348,7 +398,9 @@ export default function Home() {
                 <span className="bg-orange-500 px-6 py-2 rounded-md font-semibold inline-block text-lg">
                   Service Offered
                 </span>
-                <p className="mt-2 opacity-90">Complete tasks to earn instantly</p>
+                <p className="mt-2 opacity-90">
+                  Complete tasks to earn instantly
+                </p>
 
                 <div className="mt-6 flex justify-center lg:justify-end">
                   <img
@@ -365,11 +417,12 @@ export default function Home() {
       </RevealOnScroll>
 
       {/* Big CTA (Vinove-style bold band) */}
-      <RevealOnScroll className="px-6 md:px-8">
+      {/* <RevealOnScroll className="px-6 md:px-8">
         <section className="max-w-7xl mx-auto py-16">
           <div className="rounded-3xl px-8 md:px-12 py-14 text-center text-white shadow-2xl bg-[linear-gradient(to_right,_#284E9E,_#6C17D3)]">
             <h2 className="text-3xl md:text-5xl font-extrabold mb-4">
-              Ready to <span className="text-orange-300">boost</span> your business?
+              Ready to <span className="text-orange-300">boost</span> your
+              business?
             </h2>
             <p className="text-white/90 max-w-2xl mx-auto mb-8">
               Book a demo to see Margda Workplace in action.
@@ -390,15 +443,19 @@ export default function Home() {
             </div>
           </div>
         </section>
-      </RevealOnScroll>
+      </RevealOnScroll> */}
 
       {/* Subscribe (kept) */}
       <RevealOnScroll className="px-6 md:px-8">
         <section className="max-w-5xl mx-auto py-16">
           <div className="bg-white rounded-3xl shadow-sm border border-orange-200 p-6 sm:p-10">
             <div className="text-center mb-8">
-              <h3 className="text-2xl sm:text-3xl font-bold text-blue-600">Stay Updated</h3>
-              <p className="text-blue-500 mt-2">Subscribe for the latest updates and offers.</p>
+              <h3 className="text-2xl sm:text-3xl font-bold text-blue-600">
+                Stay Updated
+              </h3>
+              <p className="text-blue-500 mt-2">
+                Subscribe for the latest updates and offers.
+              </p>
             </div>
 
             <form className="flex flex-col sm:flex-row flex-wrap gap-4 justify-center">
@@ -449,15 +506,23 @@ function ScrollableCardsContainer({ cardData, scrollRef }) {
       const speed = 1.2;
 
       if (isDesktop) {
-        const maxScroll = scrollContainer.scrollWidth - scrollContainer.clientWidth;
+        const maxScroll =
+          scrollContainer.scrollWidth - scrollContainer.clientWidth;
         scrollContainer.scrollLeft += direction * speed;
-        if (scrollContainer.scrollLeft >= maxScroll || scrollContainer.scrollLeft <= 0) {
+        if (
+          scrollContainer.scrollLeft >= maxScroll ||
+          scrollContainer.scrollLeft <= 0
+        ) {
           direction *= -1;
         }
       } else {
-        const maxScroll = scrollContainer.scrollHeight - scrollContainer.clientHeight;
+        const maxScroll =
+          scrollContainer.scrollHeight - scrollContainer.clientHeight;
         scrollContainer.scrollTop += direction * speed;
-        if (scrollContainer.scrollTop >= maxScroll || scrollContainer.scrollTop <= 0) {
+        if (
+          scrollContainer.scrollTop >= maxScroll ||
+          scrollContainer.scrollTop <= 0
+        ) {
           direction *= -1;
         }
       }

@@ -12,20 +12,20 @@ export default function Banner() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Text Content */}
           <div>
-            <motion.h1
+            {/* <motion.h1
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
               className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight"
             >
               <span className="text-orange-300">Margda Workplace</span> - One Platform for Everything
-            </motion.h1>
+            </motion.h1> */}
             
             <motion.h2
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.1 }}
-              className="mt-8 text-xl font-bold"
+              className="mt-8 text-3xl font-bold"
             >
               Business: Achieve More with Less Effort
             </motion.h2>
@@ -42,7 +42,7 @@ export default function Banner() {
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
-              className="mt-8 text-xl font-bold"
+              className="mt-8 text-3xl font-bold"
             >
               Professional: Create Multiple Income Streams
             </motion.h2>
@@ -75,14 +75,14 @@ export default function Banner() {
               </Link>
             </motion.div>
 
-            <motion.div
+            {/* <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.6 }}
               className="mt-6 text-sm text-white/80"
             >
               ✨ No setup fees • 🌐 Works in your browser • 📈 Scales with your needs
-            </motion.div>
+            </motion.div> */}
           </div>
 
           {/* Visual */}
