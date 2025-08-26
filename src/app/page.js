@@ -28,13 +28,13 @@ export default function Home() {
   // Nav items preserved (labels/hrefs/icons)
   const navItems = [
     { label: "CRM", icon: "crm-rmvd-bg.gif", href: "/login" },
-    { label: "Smart Tools", icon: "service-tools-rmvd-bg.gif", href: "/login" },
+    { label: "Tools", icon: "service-tools-rmvd-bg.gif", href: "/login" },
     {
-      label: "Service Exchange",
+      label: "Service ",
       icon: "briefcase-rmvd-bg.gif",
       href: "/login",
     },
-    { label: "Mart Seva", icon: "shopping-cart-rmvd-bg.gif", href: "/login" },
+    { label: "Mart", icon: "shopping-cart-rmvd-bg.gif", href: "/login" },
   ];
 
   // Reveal-on-scroll animation
