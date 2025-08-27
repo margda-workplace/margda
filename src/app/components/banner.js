@@ -11,7 +11,7 @@ export default function Banner() {
       <div className="max-w-7xl mx-auto px-6 md:px-8 py-20 md:py-28 relative">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Text Content */}
-          <div className="space-y-8">
+          <div className="space-y-12">
             <motion.h2
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
@@ -21,7 +21,7 @@ export default function Banner() {
               <span className="text-orange-400">Margda</span> Workplace
             </motion.h2>
             
-            <div className="space-y-6">
+            <div className="space-y-8">
               <motion.p
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -74,7 +74,7 @@ export default function Banner() {
                 src="/heroimage.webp"
                 alt="Margda Workplace Platform"
                 width={620}
-                height={460}
+                height={400}
                 className="w-full max-w-xl rounded-2xl shadow-2xl"
                 style={{ animation: "float 3s ease-in-out infinite" }}
                 priority
