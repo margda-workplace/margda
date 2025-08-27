@@ -30,7 +30,7 @@ export default function Banner() {
                 transition={{ duration: 0.8, delay: 0.2 }}
                 className="text-white/90 max-w-xl text-base sm:text-lg lg:text-xl leading-relaxed flex items-start gap-3"
               >
-                <Zap className="w-5 h-5 sm:w-6 sm:h-6 text-orange-400 mt-1 flex-shrink-0" />
+                <Zap className="w-5 h-5 sm:w-6 sm:h-6 mt-1 flex-shrink-0" />
                 Margda Workplace is a SaaS platform integrated with a Unified CRM, Smart Tools, and Service Exchange — to help businesses streamline operations, enhance productivity, and drive growth by outsourcing their requirements and getting the work done.
               </motion.p>            
               
@@ -40,7 +40,7 @@ export default function Banner() {
                 transition={{ duration: 0.8, delay: 0.4 }}
                 className="text-white/90 max-w-xl text-base sm:text-lg lg:text-xl leading-relaxed flex items-start gap-3"
               >
-                <Globe className="w-5 h-5 sm:w-6 sm:h-6 text-orange-400 mt-1 flex-shrink-0" />
+                <Globe className="w-5 h-5 sm:w-6 sm:h-6 mt-1 flex-shrink-0" />
                 Margda Workplace platform empowers people to work from anywhere, at any time, flexibly and complete the tasks based on their interest, skills, and ability for instant payouts, fixed long-term earnings and 24/7 automated income.
               </motion.p>
             </div>
@@ -53,17 +53,17 @@ export default function Banner() {
             >
               <Link
                 href="/login"
-                className="px-6 sm:px-8 py-3 sm:py-4 rounded-full bg-orange-400 text-blue-800 font-bold hover:scale-105 transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2 text-sm sm:text-base"
+                className="px-6 sm:px-8 py-3 sm:py-4 rounded-full text-blue-800 bg-gradient-to-r from-orange-500 to-orange-400 hover:from-orange-600 hover:to-orange-500 font-bold hover:scale-105 transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2 text-sm sm:text-base"
               >
                 <Rocket className="w-4 h-4 sm:w-5 sm:h-5" />
-                Start Your Journey
+                Try it for free
               </Link>
               <Link
                 href="/"
                 className="px-6 sm:px-8 py-3 sm:py-4 rounded-full border-1 border-white/60 hover:scale-105 hover:bg-orange-400 hover:border-orange-400 hover:text-blue-800 font-semibold transition-all flex items-center justify-center gap-2 text-sm sm:text-base"
               >
                 <Play className="w-4 h-4 sm:w-5 sm:h-5" />
-                Request Demo
+                Get a demo
               </Link>
             </motion.div>
           </div>

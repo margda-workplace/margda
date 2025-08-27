@@ -184,7 +184,7 @@ export default function Home() {
       {/* NAVBAR + HERO (rewritten) */}
       <Navbar navItems={navItems} />
       <Banner />
-      <RevealOnScroll className="px-6 md:px-8">
+      {/* <RevealOnScroll className="px-6 md:px-8">
         <section className="max-w-7xl mx-auto py-16">
           <div className="rounded-3xl px-8 md:px-12 py-14 text-center text-white shadow-2xl bg-[linear-gradient(to_right,_#284E9E,_#6C17D3)]">
             <h2 className="text-3xl md:text-5xl font-extrabold mb-4">
@@ -210,7 +210,7 @@ export default function Home() {
             </div>
           </div>
         </section>
-      </RevealOnScroll>
+      </RevealOnScroll> */}
 
       {/* Communication (kept, but placed in a Vinove-like "section" wrapper) */}
       <RevealOnScroll className="px-6 md:px-8">
@@ -257,7 +257,7 @@ export default function Home() {
                   href="/login"
                   className="px-6 py-3 rounded-full border border-blue-200 text-blue-700 hover:bg-blue-50 font-semibold"
                 >
-                  Start Free Trial
+                  Try for free
                 </Link>
               </div>
             </div>
@@ -318,7 +318,7 @@ export default function Home() {
                   href="/login"
                   className="px-6 py-3 rounded-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold shadow"
                 >
-                  Request a Demo
+                  Get a Demo
                 </Link>
                 <Link
                   href="/login"
