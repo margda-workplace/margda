@@ -8,7 +8,7 @@ import { useInView } from "react-intersection-observer";
 
 import Navbar from "./components/navbar"; // rewritten below
 import Banner from "./components/banner"; // rewritten below
-import Footer from "./components/footer"; // your existing footer
+import Footer from "./components/footer"; // existing footer
 import CommunicationCard from "./components/CommunicationCards"; // keep as-is
 
 import {

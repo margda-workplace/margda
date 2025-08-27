@@ -11,55 +11,41 @@ export default function Banner() {
       <div className="max-w-7xl mx-auto px-6 md:px-8 py-20 md:py-28 relative">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Text Content */}
-          <div>
-            {/* <motion.h1
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight"
-            >
-              <span className="text-orange-300">Margda Workplace</span> - One Platform for Everything
-            </motion.h1> */}
-            
+          <div className="space-y-8">
             <motion.h2
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.1 }}
-              className="mt-8 text-4xl font-bold"
+              className="text-5xl font-bold leading-tight"
             >
-              Business: Achieve More with Less Effort
+              <span className="text-orange-400">Margda</span> Workplace
             </motion.h2>
-            <motion.p
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="mt-4 text-white/90 max-w-xl"
-            >
-              Margda Workplace is a SaaS platform integrated with a Unified CRM, Smart Tools, and Service Exchange — to help businesses streamline operations, enhance productivity, and drive growth by outsourcing their requirements and getting the work done.
-            </motion.p>
-
-            <motion.h2
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              className="mt-8 text-4xl font-bold"
-            >
-              Professional: Create Multiple Income Streams
-            </motion.h2>
-            <motion.p
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              className="mt-4 text-white/90 max-w-xl"
-            >
-              Margda Workplace platform empowers people to work from anywhere, at any time, flexibly and complete the tasks based on their interest, skills, and ability for instant payouts, fixed long-term earnings and  24/7 automated income.
-            </motion.p>
+            
+            <div className="space-y-6">
+              <motion.p
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                className="text-white/90 max-w-xl text-xl leading-relaxed"
+              >
+                Margda Workplace is a SaaS platform integrated with a Unified CRM, Smart Tools, and Service Exchange — to help businesses streamline operations, enhance productivity, and drive growth by outsourcing their requirements and getting the work done.
+              </motion.p>            
+              
+              <motion.p
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+                className="text-white/90 max-w-xl text-xl leading-relaxed"
+              >
+                Margda Workplace platform empowers people to work from anywhere, at any time, flexibly and complete the tasks based on their interest, skills, and ability for instant payouts, fixed long-term earnings and 24/7 automated income.
+              </motion.p>
+            </div>
 
             <motion.div
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.5 }}
-              className="mt-8 flex flex-wrap gap-4"
+              className="flex flex-wrap gap-4"
             >
               <Link
                 href="/login"
@@ -74,15 +60,6 @@ export default function Banner() {
                 Request Demo
               </Link>
             </motion.div>
-
-            {/* <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
-              className="mt-6 text-sm text-white/80"
-            >
-              ✨ No setup fees • 🌐 Works in your browser • 📈 Scales with your needs
-            </motion.div> */}
           </div>
 
           {/* Visual */}
@@ -92,7 +69,7 @@ export default function Banner() {
             transition={{ duration: 0.8, delay: 0.3 }}
             className="flex justify-center lg:justify-end"
           >
-                          <div className="relative">
+            <div className="relative">
               <Image
                 src="/heroimage.webp"
                 alt="Margda Workplace Platform"
