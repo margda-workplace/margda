@@ -9,7 +9,11 @@ dotenv.config();
 
 const app = express();
 app.use(express.json());
-app.use(cors("*"))
+app.use(cors({
+  origin: ["https://margda.org", "http://localhost:3000"],
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
+}));
 // 🔹 Env variables
 const PORT = process.env.PORT || 5000;
 const SALT_ROUNDS = 12; // Higher number = more secure but slower
@@ -21,7 +25,7 @@ const pool = new Pool({
   database: process.env.DB_NAME,
   password: process.env.DB_PASSWORD,
   port: parseInt(process.env.DB_PORT),
-  ssl: false // Since you're using a direct IP, likely no SSL needed
+  ssl: process.env.NODE_ENV === "production" ? { rejectUnauthorized: false } : false
 });
 
 // 🔹 Function to generate random password
