@@ -10,8 +10,8 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 app.use(cors({
-  origin: ["https://margda.org", "http://localhost:3000"],
-  methods: ["GET", "POST", "PUT", "DELETE"],
+  origin: ["https://www.margda.org", "http://localhost:3000"],
+  methods: ["GET", "POST", "PUT", "DELETE","OPTIONS"],
   credentials: true
 }));
 // 🔹 Env variables
