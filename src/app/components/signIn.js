@@ -225,7 +225,7 @@ const SignIn = ({
       // Format the complete WhatsApp number with country code
       const completeWhatsAppNumber = formatWhatsAppNumber(whatsappNo, selectedCountry.code);
       
-      const response = await fetch('http://localhost:5000/api/users', {
+      const response = await fetch('https://margda.onrender.com/api/users', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -288,7 +288,7 @@ const SignIn = ({
       const loginWhatsAppNumber = formatWhatsAppNumber(loginData.whatsappNo, selectedCountry.code);
 
       // Call your login API
-      const response = await fetch('http://localhost:5000/api/login', {
+      const response = await fetch('https://margda.onrender.com/api/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -358,16 +358,7 @@ const SignIn = ({
                       Login
                     </h1>
                   </div>
-                </div>
-
-                {/* Demo Credentials - Update these based on actual test users in your database */}
-                {/* <div className="mb-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
-                  <h3 className="text-sm font-semibold text-blue-800 mb-2">Demo Credentials:</h3>
-                  <div className="text-xs text-blue-700 space-y-1">
-                    <p><strong>Test User:</strong> +919999999999 / password123</p>
-                    <p className="text-blue-600">Note: Update with actual test users from your database</p>
-                  </div>
-                </div> */}
+                </div>               
 
                 {/* Error Message */}
                 {error && (
