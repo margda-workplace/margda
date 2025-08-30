@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Eye, EyeOff, Lock, SendHorizonal, User, MessageCircle, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
@@ -30,6 +30,16 @@ const SignIn = ({
     password: '',
     confirmPassword: ''
   });
+
+  useEffect(() => {
+    if (error) {
+      const timer = setTimeout(() => {
+        setError(null);
+      }, 3000);
+
+      return () => clearTimeout(timer); // cleanup if component unmounts
+    }
+  }, [error]);
 
   const countries = [
     { flag: 'in', code: '+91', name: 'India' },
